@@ -1,0 +1,20 @@
+.hover-eye {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .timing{
+      background: #e67b2a;
+     margin-top: 1rem;
+  
+  }
+  .hover-tobe  .hover-eye{
+      transition: all 1s ease;
+  }
+  
+  .hover-tobe:hover .hover-eye{
+      display: block;
+     
+  }
+  
