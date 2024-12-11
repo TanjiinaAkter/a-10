@@ -47,7 +47,7 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">Title</span>
+                <span className="label-text font-semibold text-[1rem]">Title</span>
               </label>
               <input
                 type="text"
@@ -59,7 +59,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Brand name
                 </span>
               </label>
@@ -76,7 +76,7 @@ const AddProduct = () => {
           <div className="md:flex md:gap-3 my-3">
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold  text-lg">
+                <span className="label-text font-semibold  text-[1rem]">
                   Top level category
                 </span>
               </label>
@@ -104,7 +104,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Second level category
                 </span>
               </label>
@@ -140,7 +140,7 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Short Description
                 </span>
               </label>
@@ -154,7 +154,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">Rating</span>
+                <span className="label-text font-semibold text-[1rem]">Rating</span>
               </label>
 
               <input
@@ -170,7 +170,7 @@ const AddProduct = () => {
           <div className="md:flex justify-between gap-3 my-3">
             <div className="form-control md:w-1/2 lg:w-1/3">
               <label className="label">
-                <span className="label-text font-semibold text-lg">Price</span>
+                <span className="label-text font-semibold text-[1rem]">Price</span>
               </label>
 
               <input
@@ -183,7 +183,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control md:w-1/2 lg:w-1/3">
               <label className="label">
-                <span className="label-text font-semibold md:text-base lg:text-lg">
+                <span className="label-text font-semibold md:text-base lg:text-[1rem]">
                   Discounted Percentage
                 </span>
               </label>
@@ -198,7 +198,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control md:w-full lg:w-1/3">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Discounted Price
                 </span>
               </label>
@@ -216,7 +216,7 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control  w-full ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">Color</span>
+                <span className="label-text font-semibold text-[1rem]">Color</span>
               </label>
               <input
                 type="text"
@@ -231,7 +231,7 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size name
                 </span>
               </label>
@@ -240,18 +240,20 @@ const AddProduct = () => {
                 placeholder="Size name"
                 name="sizenamesmall"
                 defaultValue={"S"}
+                readOnly
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size Quantity
                 </span>
               </label>
               <input
                 type="number"
+
                 name="quantitysmall"
                 placeholder="quantity"
                 className="input border-none rounded-none w-full input-bordered"
@@ -263,12 +265,13 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size name
                 </span>
               </label>
               <input
                 type="text"
+                readOnly
                 placeholder="Size name"
                 name="sizenamemedium"
                 defaultValue={"M"}
@@ -278,7 +281,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size Quantity
                 </span>
               </label>
@@ -295,14 +298,14 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size name
                 </span>
               </label>
               <input
                 type="text"
                 placeholder="Size name"
-                name="sizenamelarge"
+                name="sizenamelarge" readOnly
                 defaultValue={"L"}
                 className="input border-none rounded-none w-full input-bordered"
                 required
@@ -310,7 +313,7 @@ const AddProduct = () => {
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-lg">
+                <span className="label-text font-semibold text-[1rem]">
                   Size Quantity
                 </span>
               </label>
@@ -326,7 +329,7 @@ const AddProduct = () => {
           {/* ====================== Nineth ROW ================*/}
           <div className="form-control  w-full ">
             <label className="label">
-              <span className="label-text font-semibold text-lg">
+              <span className="label-text font-semibold text-[1rem]">
                 Image URL
               </span>
             </label>
@@ -343,7 +346,7 @@ const AddProduct = () => {
           <div className="form-control mt-6">
             <input
               type="submit"
-              className="btn inline-block bg-[#b7c940] text-white"
+              className="btn inline-block bg-black text-white"
               value="Add Product"
             />
           </div>

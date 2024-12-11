@@ -1,0 +1,15 @@
+.react-tabs__tab:focus {
+  background-color: #b7c940;
+  color: white;
+  border-radius: 0;
+}
+.react-tabs__tab {
+  padding: 1rem 2rem;
+  border: 2px solid rgb(236, 231, 231);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background-color: black;
+  color: white;
+  border-radius: 0;
+}
