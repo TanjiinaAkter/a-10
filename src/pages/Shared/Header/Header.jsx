@@ -7,20 +7,27 @@ import { Link, NavLink } from "react-router-dom";
 // import { AuthContext } from "../../../AuthProvider/AuthProvider";
 //bg-[#9dad37]
 const Header = () => {
-//   const { user, logout } = useContext(AuthContext);
+  //   const { user, logout } = useContext(AuthContext);
   const lists = (
     <div className="flex flex-col  lg:flex-row justify-between items-center  lg:text-white">
-      <li className="mr-4 text-green text-lg font-semibold">
+      <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li className="mr-4 text-green text-lg font-semibold">
-        <NavLink to="/addproduct">Add Product</NavLink>
+      <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
+        <NavLink to="/addproduct">Add product</NavLink>
       </li>
-      <li className="mr-4 text-green text-lg font-semibold">
-        <NavLink to="/shop">Shop</NavLink>
+
+      <li className="mr-4 text-green text-[1rem] font-semibold">
+        <NavLink to="/brandproducts">MEN</NavLink>
       </li>
-      <li className="mr-4 text-green text-lg font-semibold">
-        <NavLink to="/contact">Contact Us</NavLink>
+      <li className="mr-4 text-green text-[1rem] font-semibold">
+        <NavLink to="/brandproducts">WOMEN</NavLink>
+      </li>
+      <li className="mr-4 text-green text-[1rem] font-semibold">
+        <NavLink to="/brandproducts">KIDS</NavLink>
+      </li>
+      <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
+        <NavLink to="/brandproducts">Home Décor</NavLink>
       </li>
     </div>
   );
@@ -68,7 +75,7 @@ const Header = () => {
           </div>
         </div>
         {/*==================== NAVBAR-1==================== */}
-        <div className="flex items-center md:flex-1  justify-center   gap-1">
+        <div className="flex mt-1 md:flex-1  justify-center   gap-1">
           <img className="w-[2rem] h-[2rem] mt-1" src={logo} alt="" />
           <Link to="/">
             <span className="font-extrabold text-3xl md:text-4xl mt-3 text-white">
@@ -93,25 +100,25 @@ const Header = () => {
           </div>
           <div>
             {/* {user ? ( */}
-              <button
-                onClick={handleLogOut}
-                className="bg-[#9dad37] py-1 px-4 ml-4  font-semibold text-lg text-white">
-                LogOut
-              </button>
+            <button
+              onClick={handleLogOut}
+              className="bg-[#9dad37] py-1 px-4 ml-4  font-semibold text-lg text-white">
+              LogOut
+            </button>
             {/* ) : ( */}
-              <details className="dropdown">
-                <summary className="text-white flex m-1 list-none cursor-pointer font-semiboldi">
-                  My Account <RiArrowDropDownLine className="text-2xl" />
-                </summary>
-                <ul className="menu dropdown-content bg-base-100 rounded-none z-[1] w-52 p-2 shadow space-y-2">
-                  <li>
-                    <NavLink to="/login">Sign In</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/registration">Register</NavLink>
-                  </li>
-                </ul>
-              </details>
+            <details className="dropdown">
+              <summary className="text-white flex m-1 list-none cursor-pointer font-semiboldi">
+                My Account <RiArrowDropDownLine className="text-2xl" />
+              </summary>
+              <ul className="menu dropdown-content bg-base-100 rounded-none z-[1] w-52 p-2 shadow space-y-2">
+                <li>
+                  <NavLink to="/login">Sign In</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/registration">Register</NavLink>
+                </li>
+              </ul>
+            </details>
             {/* )} */}
           </div>
         </div>
