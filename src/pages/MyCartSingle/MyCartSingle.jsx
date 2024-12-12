@@ -67,19 +67,25 @@ const MycartSingle = ({ item, handleDelete, onTotalChange }) => {
   //   }, [quantity, _id, initialQuantity]);
 
   return (
-    <div className="item pr-1 flex items-center md:flex-row justify-between lg:col-span-2 md:col-span-3 gap-[8px]">
-      <div>
+    <div className="item pr-1 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
+      <div className=" bg-[#f3f3f3] flex justify-between">
         {/* {item.photo} */}
-        <img className="w-[5rem] h-20 object-cover" src="" alt="" />
+        <img
+          className="w-[6rem] h-full  object-contain"
+          src="https://i.ibb.co.com/QMtgGxK/images-removebg-preview.png"
+          alt=""
+        />
       </div>
-      <div>
+      <div className="flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-4">
         {/* {name}  */}
-        <h3 className="text-[19px] md:text-lg font-semibold"> name: </h3>
+        <h3 className="text-[19px] md:text-[1.1rem] text-gray-400 ">
+          Rose Holdback
+        </h3>
         {/* {price} */}
-        <h6 className="text-[19px] md:text-lg ">price </h6>
+        <h6 className="text-[19px] md:text-lg  text-gray-400">$560 </h6>
         {/* {item.brandname} */}
         <h2 className="text-[1rem] py-2 md:text-lg ">brandname</h2>
-        <div className="flex flex-row items-center ">
+        <div className="flex flex-row items-center justify-center">
           <button className="border border-gray-300 p-3">
             {/* onClick={minusTo} */}
             <IoIosArrowDown className="text-gray-600" />
@@ -98,8 +104,12 @@ const MycartSingle = ({ item, handleDelete, onTotalChange }) => {
             <IoIosArrowUp className="text-gray-600" />
           </button>
         </div>
+        <h6 className="text-[19px] md:text-lg  text-gray-400"> total $560 </h6>
       </div>
       <div className="flex flex-row items-center">
+        <div className="bg-[#b7c940] text-xl text-white px-2 py-[8px]">
+          <MdEdit />
+        </div>
         <div className="bg-red-500 text-xl rounded-r-sm text-white px-2 py-[8px]">
           <MdDeleteOutline onClick={() => handleDelete(_id)} />
         </div>

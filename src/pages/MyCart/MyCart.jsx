@@ -10,6 +10,7 @@ import "./MyCart.css";
 // import MycartSingle from "../MycartSingle/MycartSingle";
 import Breadcrumb from "../../components/Breadcrumb";
 import MycartSingle from "../MyCartSingle/MyCartSingle";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   //   const [totals, setTotals] = useState({}); // Store totals for each item
@@ -85,10 +86,10 @@ const MyCart = () => {
             <div>
               {/* {cartItems.map((item) => ( */}
               <MycartSingle
-                // key={item._id}
-                // item={item}
-                // onTotalChange={handleTotalChange}
-                //  handleDelete={handleDelete}
+              // key={item._id}
+              // item={item}
+              // onTotalChange={handleTotalChange}
+              //  handleDelete={handleDelete}
               ></MycartSingle>
               {/* ))} */}
             </div>
@@ -118,12 +119,16 @@ const MyCart = () => {
               Tax included & shipping calculated at checkout
             </p>
             <div className=" w-full">
-              <button className=" px-3 py-[8px] uppercase text-sm transition-all duration-500 hover:bg-gray-300 hover:text-black font-semibold  mb-4 w-full bg-black text-white inline-block">
-                Proceed to checkout
-              </button>
-              <button className="px-3 py-[6px] border-black hover:bg-black hover:text-white border text-sm uppercase font-semibold  mb-1 w-full bg-white text-black inline-block">
-                Continue to shopping
-              </button>
+              <Link to="/checkout">
+                <button className=" px-3 py-[8px] uppercase text-sm transition-all duration-500 hover:bg-gray-300 hover:text-black font-semibold  mb-4 w-full bg-black text-white inline-block">
+                  Proceed to checkout
+                </button>
+              </Link>
+              <Link to="/">
+                <button className="px-3 py-[6px] border-black hover:bg-black hover:text-white border text-sm uppercase font-semibold  mb-1 w-full bg-white text-black inline-block">
+                  Continue to shopping
+                </button>
+              </Link>
             </div>
           </div>
         </div>
