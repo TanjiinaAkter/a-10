@@ -1,4 +1,4 @@
-import  {  useState } from "react";
+import { useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -12,7 +12,8 @@ import "./ProductDetail.css";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import Breadcrumb from "../../components/Breadcrumb";
-import { FaHeart, FaShoppingBag } from "react-icons/fa";
+import { FaHeart, FaShoppingBag, FaStar } from "react-icons/fa";
+
 const ProductDetail = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const images = [
@@ -159,6 +160,12 @@ const ProductDetail = () => {
             </button>
             <button className="btn text-[12px] uppercase border-1 rounded-none border-black text-gray-400 bg-transparent hover:bg-[#b7c940] hover:text-white">
               Add to wishlist <FaHeart></FaHeart>
+            </button>
+          </div>
+          <div>
+            <button className="text-blue-600 flex items-center gap-3 underline font-semibold text-[1rem]">
+              <FaStar className="" />
+              Write a Review
             </button>
           </div>
         </div>

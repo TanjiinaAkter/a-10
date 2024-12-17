@@ -8,7 +8,6 @@ import "./MyCart.css";
 // import { MdDeleteOutline, MdEdit } from "react-icons/md";
 // import { useState } from "react";
 // import MycartSingle from "../MycartSingle/MycartSingle";
-import Breadcrumb from "../../components/Breadcrumb";
 import MycartSingle from "../MyCartSingle/MyCartSingle";
 import { Link } from "react-router-dom";
 
@@ -69,16 +68,16 @@ const MyCart = () => {
   //   const subtotal = calculateSubtotal();
   return (
     <div>
-      <Breadcrumb></Breadcrumb>
+     
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
         <Link to="/" className="flex items-center gap-1">
           <FaArrowLeftLong />
           Back To Home
         </Link>
       </button> */}
-      <div className="mx-auto md:w-[80%]">
+      <div className="mx-auto my-32 md:w-[80%]">
         <h1 className="text-center mb-8 text-3xl font-semibold">
-          Your <span className="text-[#b7c940]">Shopping</span> bag
+          My <span className="text-[#b7c940]">Shopping</span> bag
         </h1>
         {/* ============== 2nd row ================*/}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mb-5">

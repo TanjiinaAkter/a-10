@@ -13,9 +13,9 @@ const Header = () => {
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
+      {/* <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
         <NavLink to="/addproduct">Add product</NavLink>
-      </li>
+      </li> */}
 
       <li className="mr-4 text-green text-[1rem] font-semibold">
         <NavLink to="/brandproducts">MEN</NavLink>
@@ -100,6 +100,15 @@ const Header = () => {
           </div>
           <div>
             {/* {user ? ( */}
+            <div className=" w-full">
+              <Link to="/dashboard/adminprofile">
+                <img
+                  className="w-[2.7rem]  h-[2.7rem] object-cover hover:scale-95 transition-all duration-500 border-2 border-green-500 rounded-full"
+                  src="https://i.pinimg.com/736x/4e/4b/48/4e4b48446ba1375e6f116a64742ea49f.jpg"
+                  alt=""
+                />
+              </Link>
+            </div>
             <button
               onClick={handleLogOut}
               className="bg-[#9dad37] py-1 px-4 ml-4  font-semibold text-lg text-white">

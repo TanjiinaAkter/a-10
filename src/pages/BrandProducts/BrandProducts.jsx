@@ -122,6 +122,16 @@ const BrandProducts = () => {
               </ul>
             </div>
             <div>
+              <h1 className="text-[1rem] uppercase">SIZE</h1>
+              <ul className="mt-5 text-gray-400 ">
+                <li>red()</li>
+                <li>red</li>
+                <li>red</li>
+                <li>red</li>
+                <li>red</li>
+              </ul>
+            </div>
+            <div>
               <h1 className="text-[1rem] uppercase">Color</h1>
               <ul className="mt-5 text-gray-400 ">
                 <li>red()</li>

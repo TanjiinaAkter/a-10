@@ -1,40 +1,39 @@
-import Breadcrumb from "../../components/Breadcrumb";
+// https://i.ibb.co.com/K0RxRCx/vecteezy-woman-working-on-computer-notebook-planner-3444482.jpg
 const AddProduct = () => {
-  const handleAddProduct = (e) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const name = form.name.value;
-    const brandname = form.brandname.value;
-    const type = form.type.value;
-    const price = form.price.value;
-    const description = form.description.value;
-    const rating = Number(form.rating.value);
-    console.log(typeof rating);
-    const photo = form.photo.value;
-    console.log(name, price, brandname, type, description, rating, photo);
-    const product = {
-      name,
-      brandname,
-      type,
-      price,
-      description,
-      rating,
-      photo,
-    };
-    fetch("http://localhost:5000/brands", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(product),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+  //e
+  const handleAddProduct = () => {
+    // e.preventDefault();
+    // const form = e.currentTarget;
+    // const name = form.name.value;
+    // const brandname = form.brandname.value;
+    // const type = form.type.value;
+    // const price = form.price.value;
+    // const description = form.description.value;
+    // const rating = Number(form.rating.value);
+    // console.log(typeof rating);
+    // const photo = form.photo.value;
+    // console.log(name, price, brandname, type, description, rating, photo);
+    // const product = {
+    //   name,
+    //   brandname,
+    //   type,
+    //   price,
+    //   description,
+    //   rating,
+    //   photo,
+    // };
+    // fetch("http://localhost:5000/brands", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(product),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
   };
   return (
-    <div>
-      <Breadcrumb></Breadcrumb>
+  
       <div className="mx-auto w-[90%] md:w-[70%]">
         <h1 className="text-[#b7c940] font-semibold text-3xl md:text-4xl text-center mt-12 mb-3">
           <span className="text-gray-500">Add</span> Product
@@ -42,12 +41,14 @@ const AddProduct = () => {
         <hr className="bg-[#b7c940] h-[2px] w-[10%] mx-auto" />
         <form
           onSubmit={handleAddProduct}
-          className="card-body p-[1rem] md:p-[2rem] bg-[#f3f3f3] my-12">
+          className="card-body p-[1rem] md:p-[2rem] bg-[#edf5f9] my-12">
           {/* ====================== FIRST ROW ================*/}
           <div className="md:flex gap-3 my-3">
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text font-semibold text-[1rem]">Title</span>
+                <span className="label-text font-semibold text-[1rem]">
+                  Title
+                </span>
               </label>
               <input
                 type="text"
@@ -74,7 +75,7 @@ const AddProduct = () => {
           </div>
           {/* ====================== SECOND ROW ================*/}
           <div className="md:flex md:gap-3 my-3">
-            <div className="form-control md:w-1/2">
+            <div className="form-control md:w-1/3">
               <label className="label">
                 <span className="label-text font-semibold  text-[1rem]">
                   Top level category
@@ -102,10 +103,28 @@ const AddProduct = () => {
                 </option>
               </select>
             </div>
-            <div className="form-control md:w-1/2">
+            <div className="form-control md:w-1/3">
               <label className="label">
                 <span className="label-text font-semibold text-[1rem]">
                   Second level category
+                </span>
+              </label>
+              <select
+                name=""
+                id=""
+                className="border text-gray-400 border-none rounded-sm px-3 py-2">
+                <option className="text-gray-400" value="tshirts">
+                  Clothing
+                </option>
+                <option className="text-gray-400" value="jeans">
+                  decor
+                </option>
+              </select>
+            </div>
+            <div className="form-control md:w-1/3">
+              <label className="label">
+                <span className="label-text font-semibold text-[1rem]">
+                  Third level category
                 </span>
               </label>
               <select
@@ -154,7 +173,9 @@ const AddProduct = () => {
             </div>
             <div className="form-control  md:w-1/2 ">
               <label className="label">
-                <span className="label-text font-semibold text-[1rem]">Rating</span>
+                <span className="label-text font-semibold text-[1rem]">
+                  Rating
+                </span>
               </label>
 
               <input
@@ -170,7 +191,9 @@ const AddProduct = () => {
           <div className="md:flex justify-between gap-3 my-3">
             <div className="form-control md:w-1/2 lg:w-1/3">
               <label className="label">
-                <span className="label-text font-semibold text-[1rem]">Price</span>
+                <span className="label-text font-semibold text-[1rem]">
+                  Price
+                </span>
               </label>
 
               <input
@@ -216,7 +239,9 @@ const AddProduct = () => {
           <div className="md:flex gap-3 my-3">
             <div className="form-control  w-full ">
               <label className="label">
-                <span className="label-text font-semibold text-[1rem]">Color</span>
+                <span className="label-text font-semibold text-[1rem]">
+                  Color
+                </span>
               </label>
               <input
                 type="text"
@@ -253,7 +278,6 @@ const AddProduct = () => {
               </label>
               <input
                 type="number"
-
                 name="quantitysmall"
                 placeholder="quantity"
                 className="input border-none rounded-none w-full input-bordered"
@@ -305,7 +329,8 @@ const AddProduct = () => {
               <input
                 type="text"
                 placeholder="Size name"
-                name="sizenamelarge" readOnly
+                name="sizenamelarge"
+                readOnly
                 defaultValue={"L"}
                 className="input border-none rounded-none w-full input-bordered"
                 required
@@ -352,7 +377,7 @@ const AddProduct = () => {
           </div>
         </form>
       </div>
-    </div>
+ 
   );
 };
 

@@ -14,7 +14,7 @@ const Pyment = () => {
             </h2>
             <div className="divider "></div>
             <div className="card-actions justify-center mt-2">
-              <Link to='/paymenthistory'>
+              <Link to='/dashboard/orderhistory'>
                 <button className="btn bg-black text-white rounded-none ">
                   Complete Purchase
                 </button>

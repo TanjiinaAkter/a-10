@@ -1,16 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
-import AddProduct from "../pages/AddProduct/AddProduct";
 
 import BrandProducts from "../pages/BrandProducts/BrandProducts";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import MyCart from "../pages/MyCart/MyCart";
 import CheckOut from "../pages/CheckOut/CheckOut";
 import Pyment from "../pages/Pyment/Pyment";
-import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
+//import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
+import Registration from "../pages/Registration/Registration";
+import Login from "../pages/Login/Login";
+import Dashboard from "../Layout/Dashboard";
+import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
+import AdminProfile from "../pages/Dashboard/AdminProfile/AdminProfile";
+import Stats from "../pages/Dashboard/Stats/Stats";
+import ManageProducts from "../pages/Dashboard/ManageProducts/ManageProducts";
+import OrderManagement from "../pages/Dashboard/OrderManagement/OrderManagement";
+import Users from "../pages/Dashboard/Users/Users";
+import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
+import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
+import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
+import ReviewProducts from "../pages/Dashboard/ReviewProducts/ReviewProducts";
+import WishList from "../pages/Dashboard/WishList/WishList";
 
 const router = createBrowserRouter([
+  //======================= UI PART=====================//
   {
     path: "/",
     element: <Main></Main>,
@@ -19,10 +33,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
-      {
-        path: "/addproduct",
-        element: <AddProduct></AddProduct>,
-      },
+
       {
         path: "/brandproducts",
         element: <BrandProducts></BrandProducts>,
@@ -43,9 +54,66 @@ const router = createBrowserRouter([
         path: "/payment",
         element: <Pyment></Pyment>,
       },
+
       {
-        path: "/paymenthistory",
-        element: <PaymentHistory></PaymentHistory>,
+        path: "/registration",
+        element: <Registration></Registration>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+    ],
+  },
+  //================ADMIN DASHBOARD====================//
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "addproduct",
+        element: <AddProduct></AddProduct>,
+      },
+      {
+        path: "adminprofile",
+        element: <AdminProfile></AdminProfile>,
+      },
+      {
+        path: "stats",
+        element: <Stats></Stats>,
+      },
+      {
+        path: "manageproduct",
+        element: <ManageProducts></ManageProducts>,
+      },
+      {
+        path: "ordermanagement",
+        element: <OrderManagement></OrderManagement>,
+      },
+      {
+        path: "users",
+        element: <Users></Users>,
+      },
+      //================USER DASHBOARD====================//
+      {
+        path: "userprofile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "editprofile",
+        element: <EditProfile></EditProfile>,
+      },
+      {
+        path: "orderhistory",
+        element: <OrderHistory></OrderHistory>,
+      },
+      {
+        path: "review",
+        element:<ReviewProducts></ReviewProducts>,
+      },
+      {
+        path: "wishlist",
+        element:<WishList></WishList>,
       },
     ],
   },

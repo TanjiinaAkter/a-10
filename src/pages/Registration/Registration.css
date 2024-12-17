@@ -1,0 +1,10 @@
+.bg-img {
+  background-image: url("https://i.ibb.co.com/K0RxRCx/vecteezy-woman-working-on-computer-notebook-planner-3444482.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+.bg-darker {
+  background: rgba(11, 11, 19, 0.5);
+}
