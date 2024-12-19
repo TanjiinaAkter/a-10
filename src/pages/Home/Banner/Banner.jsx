@@ -79,7 +79,7 @@ const Banner = ({ handleScroll }) => {
                   Big Sale Upto 50% Off
                 </h2>
                 <button
-                  className="px-4 py-2 bg-[#9dad37]  my-5 text-white"
+                  className="px-4 py-2 bg-[#9dad37]   my-5 text-white"
                   data-aos="fade-up-right">
                   Shopping Now
                 </button>
@@ -96,7 +96,7 @@ const Banner = ({ handleScroll }) => {
                   Big Sale Upto 50% Off
                 </h2>
                 <button
-                  className="px-4 py-2 bg-[#9dad37]  my-5 text-white"
+                  className="px-4 py-2 bg-[#9dad37]   my-5 text-white"
                   data-aos="fade-up-right">
                   Shopping Now
                 </button>

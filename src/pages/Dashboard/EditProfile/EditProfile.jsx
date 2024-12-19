@@ -1,7 +1,7 @@
 const EditProfile = () => {
   return (
     <div className="md:mt-12">
-      <p className="text-center mb-4">Wanna Update?</p>
+       <p className="text-center mb-4 mt-[3rem] md:mt-0">Wanna Update?</p>
       <hr className="w-[20%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
         Update <span className="text-[#9dad37]">profile</span>

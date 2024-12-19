@@ -1,3 +1,5 @@
+import DashboardBtn from "../../../components/dashboardBtn";
+
 // https://i.ibb.co.com/K0RxRCx/vecteezy-woman-working-on-computer-notebook-planner-3444482.jpg
 const AddProduct = () => {
   //e
@@ -33,12 +35,16 @@ const AddProduct = () => {
     //   .then((data) => console.log(data));
   };
   return (
-  
-      <div className="mx-auto w-[90%] md:w-[70%]">
-        <h1 className="text-[#b7c940] font-semibold text-3xl md:text-4xl text-center mt-12 mb-3">
-          <span className="text-gray-500">Add</span> Product
-        </h1>
-        <hr className="bg-[#b7c940] h-[2px] w-[10%] mx-auto" />
+    <div className="md:mt-12">
+      <DashboardBtn></DashboardBtn>
+
+      <div className="mx-auto w-[90%] md:w-[70%] ">
+        <p className="text-center mb-4">Start adding products</p>
+        <hr className="w-[30%] mx-auto h-[3px] bg-black" />
+        <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
+          Your <span className="text-[#9dad37]">Add Product</span>
+        </h2>
+        <hr className="w-[30%] mx-auto h-[3px] bg-black" />
         <form
           onSubmit={handleAddProduct}
           className="card-body p-[1rem] md:p-[2rem] bg-[#edf5f9] my-12">
@@ -377,7 +383,7 @@ const AddProduct = () => {
           </div>
         </form>
       </div>
- 
+    </div>
   );
 };
 

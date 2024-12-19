@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import DashboardBtn from "../../../components/dashboardBtn";
 
 const OrderHistory = () => {
   return (
     <div className="md:mt-12">
-      <p className="text-center mb-4">Everything you've ordered</p>
+       <DashboardBtn></DashboardBtn>
+       <p className="text-center mb-4 mt-[3rem] md:mt-0">Everything you've ordered</p>
       <hr className="w-[30%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
         Your <span className="text-[#9dad37]">Order History</span>

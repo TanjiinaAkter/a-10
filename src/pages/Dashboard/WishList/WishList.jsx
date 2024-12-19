@@ -1,9 +1,11 @@
 import { MdDelete } from "react-icons/md";
+import DashboardBtn from "../../../components/dashboardBtn";
 
 const WishList = () => {
   return (
     <div className="md:mt-12">
-      <p className="text-center mb-4">Items you love</p>
+       <DashboardBtn></DashboardBtn>
+      <p className="text-center mb-4 mt-[3rem] md:mt-0">Items you love</p>
       <hr className="w-[20%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
         Your <span className="text-[#9dad37]">Wishlist</span>
