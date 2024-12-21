@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Banner from "./Banner/Banner";
 import BrandOne from "./BrandOne/BrandOne";
 import Brands from "./Brands/Brands";
@@ -15,6 +16,9 @@ const Home = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>TechWorld | Home</title>
+      </Helmet>
       <Banner handleScroll={handleScroll}></Banner>
       <Brands></Brands>
       <Deals></Deals>

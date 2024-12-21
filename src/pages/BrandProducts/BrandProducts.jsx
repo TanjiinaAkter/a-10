@@ -11,6 +11,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // import BrandProd from "../BrandProd/BrandProd";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaHeart } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const BrandProducts = () => {
   // const { brandname } = location.state || {};
@@ -34,6 +35,9 @@ const BrandProducts = () => {
   //   console.log(matched);
   return (
     <div className="mt-24">
+      <Helmet>
+        <title>TechWorld | Men</title>
+      </Helmet>
       <Breadcrumb></Breadcrumb>
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
         <Link to="/" className="flex items-center gap-1">

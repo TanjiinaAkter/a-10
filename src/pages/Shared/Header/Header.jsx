@@ -3,11 +3,20 @@ import { FaRegHeart, FaSearch } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import logo from "../../../assets/log.png";
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import { MdLogout } from "react-icons/md";
 // import { useContext } from "react";
 // import { AuthContext } from "../../../AuthProvider/AuthProvider";
 //bg-[#9dad37]
 const Header = () => {
-  //   const { user, logout } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const lists = (
     <div className="flex flex-col  lg:flex-row justify-between items-center  lg:text-white">
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
@@ -31,15 +40,11 @@ const Header = () => {
       </li>
     </div>
   );
-  const handleLogOut = () => {
-    // logout()
-    //   .then(() => {})
-    //   .catch(() => {});
-  };
+
   return (
     //bg-[#B58753]
 
-    <div className="py-4 bg-[rgba(0,0,0,0.7)] top-0 w-full fixed  z-10 mb-[18rem]   mx-auto items-center ">
+    <div className="py-4 bg-[rgba(0,0,0,0.8)] top-0 w-full fixed  z-10 mb-[18rem]   mx-auto items-center ">
       <div className="w-[90%] mx-auto flex flex-col md:flex-row md:justify-between">
         {/* ====================NAVBAR-1======================= */}
 
@@ -84,7 +89,7 @@ const Header = () => {
           </Link>
         </div>
         {/* ====================NAVBAR-3======================= */}
-        <div className="flex mt-4 md:mt-0 items-center md:flex-1 md:justify-end justify-center">
+        <div className="flex mt-4 md:mt-0 items-center  md:justify-center justify-center">
           <FaSearch className="text-4xl mr-3 md:text-[2.5rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full"></FaSearch>
           <FaRegHeart className="text-4xl mr-3 md:text-[2.5rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
           <span className=" text-3xl hidden md:block text-white text-center mx-2">
@@ -99,35 +104,39 @@ const Header = () => {
             </span>
           </div>
           <div>
-            {/* {user ? ( */}
-            <div className=" w-full">
-              <Link to="/dashboard/adminprofile">
-                <img
-                  className="w-[2.7rem]  h-[2.7rem] object-cover hover:scale-95 transition-all duration-500 border-2 border-green-500 rounded-full"
-                  src="https://i.pinimg.com/736x/4e/4b/48/4e4b48446ba1375e6f116a64742ea49f.jpg"
-                  alt=""
-                />
-              </Link>
-            </div>
-            <button
-              onClick={handleLogOut}
-              className="bg-[#9dad37] py-1 px-4 ml-4  font-semibold text-lg text-white">
-              LogOut
-            </button>
-            {/* ) : ( */}
-            <details className="dropdown">
-              <summary className="text-white flex m-1 list-none cursor-pointer font-semiboldi">
-                My Account <RiArrowDropDownLine className="text-2xl" />
-              </summary>
-              <ul className="menu dropdown-content bg-base-100 rounded-none z-[1] w-52 p-2 shadow space-y-2">
-                <li>
-                  <NavLink to="/login">Sign In</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/registration">Register</NavLink>
-                </li>
-              </ul>
-            </details>
+            {user ? (
+              <>
+                <div className=" w-full flex justify-between gap-6 items-center">
+                  <Link to="/dashboard/adminprofile">
+                    <img
+                      className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
+                      src={user.photoURL}
+                      alt=""
+                    />
+                  </Link>
+                  <button
+                    onClick={handleLogOut}
+                    className=" font-semibold text-lg text-white px-3 py-1 rounded-sm bg-[#9dad37]">
+                    logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <details className="dropdown">
+                <summary className="text-white flex m-1 list-none cursor-pointer font-semiboldi">
+                  My Account <RiArrowDropDownLine className="text-2xl" />
+                </summary>
+                <ul className="menu dropdown-content bg-base-100 rounded-none z-[1] w-52 p-2 shadow space-y-2">
+                  <li>
+                    <NavLink to="/login">Login</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/registration">Register</NavLink>
+                  </li>
+                </ul>
+              </details>
+            )}
+
             {/* )} */}
           </div>
         </div>

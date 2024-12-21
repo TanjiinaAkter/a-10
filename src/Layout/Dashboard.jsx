@@ -6,20 +6,24 @@ import {
   FaHome,
   FaShoppingBag,
   FaTasks,
+  FaUserEdit,
   FaUsers,
 } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { BiLogOut } from "react-icons/bi";
+import { MdHistoryEdu, MdRateReview } from "react-icons/md";
+// import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
-   const isAdmin = false;
-  //const isAdmin = true;
+  //const isAdmin = false;
+  const isAdmin = true;
   return (
     <div className="flex flex-col md:flex-row ">
+     
       {/* ========================== SIDEBAR CONTENT  ==========================*/}
-      <div className="w-full bg-img1 md:max-w-64 bg-black min-h-screen font-semibold text-white">
-        <ul className=" menu space-y-3 p-3">
+      <div className="w-full  bg-img1 md:max-w-64 bg-black min-h-screen font-semibold text-white">
+        <ul className="fixed menu space-y-3 p-3">
           {isAdmin ? (
             <>
               <li className="text-[1rem]">
@@ -68,13 +72,13 @@ const Dashboard = () => {
               </li>
               <li className="text-[1rem]">
                 <NavLink to="/dashboard/editprofile">
-                  <IoStatsChart className="text-2xl text-[#9dad37]" /> Profile
+                  <FaUserEdit className="text-2xl text-[#9dad37]" /> Profile
                   Edit
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/orderhistory">
-                  <FaBoxOpen className="text-2xl text-[#9dad37]" /> Order
+                  <MdHistoryEdu className="text-2xl text-[#9dad37]" /> Order
                   History
                 </NavLink>
               </li>
@@ -86,7 +90,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="/dashboard/review">
-                  <FaClipboardList className="text-2xl text-[#9dad37]" />
+                  <MdRateReview className="text-2xl text-[#9dad37]" />
                   Review Products
                 </NavLink>
               </li>

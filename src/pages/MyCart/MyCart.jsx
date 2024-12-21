@@ -10,6 +10,7 @@ import "./MyCart.css";
 // import MycartSingle from "../MycartSingle/MycartSingle";
 import MycartSingle from "../MyCartSingle/MyCartSingle";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const MyCart = () => {
   //   const [totals, setTotals] = useState({}); // Store totals for each item
@@ -68,7 +69,9 @@ const MyCart = () => {
   //   const subtotal = calculateSubtotal();
   return (
     <div>
-     
+      <Helmet>
+        <title>TechWorld | MyCart</title>
+      </Helmet>
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
         <Link to="/" className="flex items-center gap-1">
           <FaArrowLeftLong />
