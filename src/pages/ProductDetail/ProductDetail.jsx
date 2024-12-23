@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -13,15 +13,32 @@ import "./ProductDetail.css";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaHeart, FaShoppingBag, FaStar } from "react-icons/fa";
+import useAllproducts from "../../hooks/useAllproducts";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
+  const [allproducts] = useAllproducts();
+
+  const { id } = useParams();
+  const [singleDetail, setSingleDetail] = useState(null);
+  console.log(singleDetail);
+  useEffect(() => {
+    if (id) {
+      const prodDetail = allproducts.find((prod) => prod._id === id);
+      console.log(prodDetail);
+      setSingleDetail(prodDetail);
+    }
+  }, [allproducts, id]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const images = [
-    "https://i.ibb.co.com/R4S4BY4/51d-R5-N2fe6-L-SS1000-removebg-preview.png",
-    "https://i.ibb.co.com/jRbBC9Q/Bright-Blue-3-piece-wedding-suit-removebg-preview.png",
-    "https://i.ibb.co.com/RjkZdxd/Rectangle-11.png",
-    "https://i.ibb.co.com/fxZz0pz/pexels-divinetechygirl-1181405.jpg",
-  ];
+  const images = singleDetail
+    ? [singleDetail.photo, singleDetail.photo, singleDetail.photo]
+    : [];
+  // const images = [
+  //   "https://i.ibb.co.com/R4S4BY4/51d-R5-N2fe6-L-SS1000-removebg-preview.png",
+  //   "https://i.ibb.co.com/jRbBC9Q/Bright-Blue-3-piece-wedding-suit-removebg-preview.png",
+  //   "https://i.ibb.co.com/RjkZdxd/Rectangle-11.png",
+  //   "https://i.ibb.co.com/fxZz0pz/pexels-divinetechygirl-1181405.jpg",
+  // ];
   return (
     <div className="mx-auto w-[90%] p-5 pt-0">
       <Breadcrumb></Breadcrumb>
@@ -71,15 +88,19 @@ const ProductDetail = () => {
         <div className="flex md:w-1/2 justify-start items-s md:px-12 flex-col   ">
           {/* {name} */}
           <div className="my-2">
-            <h3 className="text-3xl uppercase font-semibold ">product name</h3>
+            <h3 className="text-3xl uppercase font-semibold ">
+              {singleDetail?.title}
+            </h3>
             <div className="flex justify-start items-center pt-2 gap-6">
-              <p className="text-lg text-black ">$400</p>
+              <p className="text-lg text-black ">${singleDetail?.price}</p>
               {/* //[discounted price] */}
               <p className="text-lg text-gray-400 ">
-                <del>$400</del>{" "}
+                <del>${singleDetail?.discountedPrice}</del>
               </p>
               {/* [discounted %] */}
-              <p className="text-lg text-green-500 ">40% off</p>
+              <p className="text-lg text-green-500 ">
+                {singleDetail?.discountedPercentage}% off
+              </p>
             </div>
           </div>
           <div className="my-12">
@@ -124,7 +145,10 @@ const ProductDetail = () => {
 
           <div>
             <h4 className="mb-1">
-              Color- <span className="text-gray-500 capitalize">blue</span>
+              Color-{" "}
+              <span className="text-gray-500 capitalize">
+                {singleDetail?.color}
+              </span>
             </h4>
             <div className="flex items-center gap-4">
               <h4>Size</h4>

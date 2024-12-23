@@ -6,6 +6,7 @@ import BrandThree from "./BrandThree/BrandThree";
 import BrandTwo from "./BrandTwo/BrandTwo";
 import Deals from "./Deals/Deals";
 import NewSection from "./NewSection/NewSection";
+import BrandFour from "./BrandFour/BrandFour";
 
 const Home = () => {
   const handleScroll = (sectionId) => {
@@ -23,14 +24,17 @@ const Home = () => {
       <Brands></Brands>
       <Deals></Deals>
       <NewSection></NewSection>
-      <div id="router">
+      <div id="mens">
         <BrandOne></BrandOne>
       </div>
-      <div id="laptop">
+      <div id="women">
         <BrandTwo></BrandTwo>
       </div>
-      <div id="camera">
+      <div id="kids">
         <BrandThree></BrandThree>
+      </div>
+      <div id="decor">
+        <BrandFour></BrandFour>
       </div>
     </div>
   );

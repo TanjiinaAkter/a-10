@@ -5,7 +5,9 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Registration = () => {
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const { createUser, emailVerify, logOut, updateUserProfile } = useAuth();
   const {
@@ -20,6 +22,7 @@ const Registration = () => {
       // user create done
       .then((result) => {
         console.log(result.user);
+
         if (result.user) {
           // email verify
           emailVerify(data.email)
@@ -51,7 +54,20 @@ const Registration = () => {
 
         updateUserProfile(data.name, data.photo)
           .then(() => {
-            Swal.fire("profile updated");
+            const userInfo = {
+              email: data.email,
+              name: data.name,
+              photo: data.photo,
+              role: "user",
+            };
+            console.log(userInfo);
+            axiosPublic.post("/users", userInfo).then((res) => {
+              console.log(res.data);
+              if (res.data.insertedId) {
+                Swal.fire("user profile created & updated !!");
+              }
+            });
+            navigate("/login");
           })
           .catch((error) => {
             console.log("error during updating profile", error);

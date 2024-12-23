@@ -35,20 +35,16 @@ const Banner = ({ handleScroll }) => {
           </summary>
           <ul className="menu w-full left-0 top-[100%] dropdown-content bg-base-100 rounded-none z-[1] p-2 shadow">
             <li>
-              <a onClick={() => handleScroll("laptop")}>laptop</a>
+              <a onClick={() => handleScroll("mens")}>Mens wear</a>
             </li>
             <li>
-              <a onClick={() => handleScroll("router")}>Router</a>
+              <a onClick={() => handleScroll("women")}>Womens wear</a>
             </li>
             <li>
-              <a onClick={() => handleScroll("camera")}>Camera</a>
+              <a onClick={() => handleScroll("kids")}>Kids wear</a>
             </li>
             <li>
-              <a>Fridge</a>
-            </li>
-
-            <li>
-              <a>Smart TV</a>
+              <a onClick={() => handleScroll("decor")}>Home Decor</a>
             </li>
           </ul>
         </details>

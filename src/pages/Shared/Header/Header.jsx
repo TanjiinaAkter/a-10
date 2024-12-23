@@ -114,6 +114,7 @@ const Header = () => {
                       alt=""
                     />
                   </Link>
+                  <span className="text-[#9dad37] text-lg font-semibold">Hi! {user.displayName}</span>
                   <button
                     onClick={handleLogOut}
                     className=" font-semibold text-lg text-white px-3 py-1 rounded-sm bg-[#9dad37]">

@@ -1,38 +1,34 @@
+import { useForm } from "react-hook-form";
 import DashboardBtn from "../../../components/dashboardBtn";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 // https://i.ibb.co.com/K0RxRCx/vecteezy-woman-working-on-computer-notebook-planner-3444482.jpg
 const AddProduct = () => {
-  //e
-  const handleAddProduct = () => {
-    // e.preventDefault();
-    // const form = e.currentTarget;
-    // const name = form.name.value;
-    // const brandname = form.brandname.value;
-    // const type = form.type.value;
-    // const price = form.price.value;
-    // const description = form.description.value;
-    // const rating = Number(form.rating.value);
-    // console.log(typeof rating);
-    // const photo = form.photo.value;
-    // console.log(name, price, brandname, type, description, rating, photo);
-    // const product = {
-    //   name,
-    //   brandname,
-    //   type,
-    //   price,
-    //   description,
-    //   rating,
-    //   photo,
-    // };
-    // fetch("http://localhost:5000/brands", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(product),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    axiosSecure.post("/allproducts", data).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Product added successfully!!!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
   return (
     <div className="md:mt-12">
@@ -46,7 +42,7 @@ const AddProduct = () => {
         </h2>
         <hr className="w-[30%] mx-auto h-[3px] bg-black" />
         <form
-          onSubmit={handleAddProduct}
+          onSubmit={handleSubmit(onSubmit)}
           className="card-body p-[1rem] md:p-[2rem] bg-[#edf5f9] my-12">
           {/* ====================== FIRST ROW ================*/}
           <div className="md:flex gap-3 my-3">
@@ -57,12 +53,13 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("title", { required: true })}
                 type="text"
                 placeholder="name"
-                name="name"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.title && <span>This field is required</span>}
             </div>
             <div className="form-control  md:w-1/2 ">
               <label className="label">
@@ -71,12 +68,13 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("brandname", { required: true })}
                 type="text"
                 placeholder="brand name"
-                name="brandname"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.brandname && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== SECOND ROW ================*/}
@@ -87,12 +85,12 @@ const AddProduct = () => {
                   Top level category
                 </span>
               </label>
-
               <select
+                {...register("topCategory")}
                 className="border text-gray-400 border-gray-300 border-none rounded-sm px-3 py-2"
                 name=""
                 id="">
-                <option className="text-gray-400" value="category type">
+                <option className="text-gray-400" value="categorytype">
                   Category type
                 </option>
                 <option className="text-gray-400" value="men">
@@ -108,6 +106,7 @@ const AddProduct = () => {
                   Home Décor & Accessories
                 </option>
               </select>
+              {errors.topCategory && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/3">
               <label className="label">
@@ -116,6 +115,7 @@ const AddProduct = () => {
                 </span>
               </label>
               <select
+                {...register("secondCategory")}
                 name=""
                 id=""
                 className="border text-gray-400 border-none rounded-sm px-3 py-2">
@@ -126,6 +126,7 @@ const AddProduct = () => {
                   decor
                 </option>
               </select>
+              {errors.secondCategory && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/3">
               <label className="label">
@@ -134,6 +135,7 @@ const AddProduct = () => {
                 </span>
               </label>
               <select
+                {...register("thirdCategory")}
                 name=""
                 id=""
                 className="border text-gray-400 border-none rounded-sm px-3 py-2">
@@ -158,7 +160,11 @@ const AddProduct = () => {
                 <option className="text-gray-400" value="pants">
                   Pants
                 </option>
+                <option className="text-gray-400" value="decor">
+                  Decor
+                </option>
               </select>
+              {errors.thirdCategory && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== THIRD ROW ================*/}
@@ -170,27 +176,30 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("description", { required: true })}
                 type="text"
                 placeholder="description"
                 name="description"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.description && <span>This field is required</span>}
             </div>
-            <div className="form-control  md:w-1/2 ">
+            <div className="form-control md:w-1/2 w-full ">
               <label className="label">
                 <span className="label-text font-semibold text-[1rem]">
-                  Rating
+                  Color
                 </span>
               </label>
-
               <input
-                type="number"
-                placeholder="rating"
-                name="rating"
+                {...register("color", { required: true })}
+                type="text"
+                placeholder="Color"
+                name="color"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.color && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== Fourth ROW ================*/}
@@ -203,12 +212,14 @@ const AddProduct = () => {
               </label>
 
               <input
+                {...register("price", { required: true })}
                 type="number"
                 placeholder="price"
                 name="price"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.price && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/2 lg:w-1/3">
               <label className="label">
@@ -218,12 +229,15 @@ const AddProduct = () => {
               </label>
 
               <input
+                {...register("discountedPercentage", { required: true })}
                 type="number"
                 placeholder="discounted Percentage"
-                name="discountedpercentage"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.discountedPercentage && (
+                <span>This field is required</span>
+              )}
             </div>
             <div className="form-control md:w-full lg:w-1/3">
               <label className="label">
@@ -233,16 +247,17 @@ const AddProduct = () => {
               </label>
 
               <input
+                {...register("discountedPrice", { required: true })}
                 type="number"
                 placeholder="discounted price"
-                name="discountedprice"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.discountedPrice && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== Fifth ROW ================*/}
-          <div className="md:flex gap-3 my-3">
+          {/* <div className="md:flex gap-3 my-3">
             <div className="form-control  w-full ">
               <label className="label">
                 <span className="label-text font-semibold text-[1rem]">
@@ -250,14 +265,16 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("color", { required: true })}
                 type="text"
                 placeholder="Color"
                 name="color"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.color && <span>This field is required</span>}
             </div>
-          </div>
+          </div> */}
           {/* ====================== Sixth ROW ================*/}
           <div className="md:flex gap-3 my-3">
             <div className="form-control  md:w-1/2 ">
@@ -267,6 +284,7 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("sizenamesmall", { required: true })}
                 type="text"
                 placeholder="Size name"
                 name="sizenamesmall"
@@ -275,6 +293,7 @@ const AddProduct = () => {
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.sizenamesmall && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
@@ -283,12 +302,14 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("quantitysmall", { required: true })}
                 type="number"
                 name="quantitysmall"
                 placeholder="quantity"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.quantitysmall && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== Seventh ROW ================*/}
@@ -300,6 +321,7 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("sizenamemedium", { required: true })}
                 type="text"
                 readOnly
                 placeholder="Size name"
@@ -308,6 +330,7 @@ const AddProduct = () => {
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.sizenamemedium && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
@@ -316,12 +339,14 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("quantitymedium", { required: true })}
                 type="number"
                 name="quantitymedium"
                 placeholder="quantity"
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.quantitymedium && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== Eighth ROW ================*/}
@@ -333,6 +358,7 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("sizenamelarge", { required: true })}
                 type="text"
                 placeholder="Size name"
                 name="sizenamelarge"
@@ -341,6 +367,7 @@ const AddProduct = () => {
                 className="input border-none rounded-none w-full input-bordered"
                 required
               />
+              {errors.sizenamelarge && <span>This field is required</span>}
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
@@ -349,12 +376,14 @@ const AddProduct = () => {
                 </span>
               </label>
               <input
+                {...register("quantitylarge", { required: true })}
                 type="number"
                 name="quantitylarge"
                 placeholder="quantity"
                 className="input border-none rounded-none w-full input-bordered"
                 required
-              />
+              />{" "}
+              {errors.quantitylarge && <span>This field is required</span>}
             </div>
           </div>
           {/* ====================== Nineth ROW ================*/}
@@ -366,12 +395,14 @@ const AddProduct = () => {
             </label>
 
             <input
+              {...register("photo", { required: true })}
               type="text"
               placeholder="photo"
               name="photo"
               className="input border-none rounded-none w-full input-bordered"
               required
             />
+            {errors.photo && <span>This field is required</span>}
           </div>
 
           <div className="form-control mt-6">
