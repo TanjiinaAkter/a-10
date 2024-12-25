@@ -5,33 +5,14 @@ import logo from "../../../assets/log.png";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useEffect } from "react";
+
 // import { MdLogout } from "react-icons/md";
 // import { useContext } from "react";
 // import { AuthContext } from "../../../AuthProvider/AuthProvider";
 //bg-[#9dad37]
 const Header = () => {
   const { user, logOut } = useAuth();
-
-  const [cart] = useCarts()
-  // const { data: singleUserCart = [], refetch } = useQuery({
-  //   queryKey: ["singleUserCart", user?.email],
-  //   enabled: !!user?.email,
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/carts/single?email=${user?.email}`);
-  //     console.log(res.data);
-  //     return res.data;
-  //   },
-  // });
-  // console.log(singleUserCart);
-  // useEffect(() => {
-  //   if (singleUserCart) {
-  //     refetch();
-  //   }
-  // }, [singleUserCart, refetch]);
-console.log(cart)
+  const [cart] = useCarts();
   const handleLogOut = () => {
     logOut()
       .then(() => {})

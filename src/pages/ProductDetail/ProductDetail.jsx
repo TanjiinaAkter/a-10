@@ -21,7 +21,6 @@ import Swal from "sweetalert2";
 // import { useQuery } from "@tanstack/react-query";
 import useCarts from "../../hooks/useCarts";
 
-
 const ProductDetail = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
@@ -72,12 +71,13 @@ const ProductDetail = () => {
         name: user?.displayName,
         email: user?.email,
       };
-      console.log("item info", itemData);
+      //console.log("item info", itemData);
       axiosSecure
         .post("/carts", itemData)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.insertedId) {
+            refetch();
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -85,7 +85,6 @@ const ProductDetail = () => {
               showConfirmButton: false,
               timer: 1500,
             });
-            refetch();
           }
         })
         .catch((error) => {
