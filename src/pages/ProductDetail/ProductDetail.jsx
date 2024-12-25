@@ -11,37 +11,106 @@ import "swiper/css/thumbs";
 import "./ProductDetail.css";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import Breadcrumb from "../../components/Breadcrumb";
+// import Breadcrumb from "../../components/Breadcrumb";
 import { FaHeart, FaShoppingBag, FaStar } from "react-icons/fa";
 import useAllproducts from "../../hooks/useAllproducts";
-import { useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate, useParams } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+// import { useQuery } from "@tanstack/react-query";
+import useCarts from "../../hooks/useCarts";
+
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const [allproducts] = useAllproducts();
-
   const { id } = useParams();
   const [singleDetail, setSingleDetail] = useState(null);
-  console.log(singleDetail);
+  const [, refetch] = useCarts();
+  // const { data: singleUserCart = [], refetch } = useQuery({
+  //   queryKey: ["singleUserCart", user?.email],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/carts/single?email=${user?.email}`);
+  //     console.log(res.data);
+  //     return res.data;
+  //   },
+  // });
+  // console.log(singleUserCart);
+  //console.log(singleDetail);
   useEffect(() => {
     if (id) {
       const prodDetail = allproducts.find((prod) => prod._id === id);
-      console.log(prodDetail);
+      //console.log(prodDetail);
       setSingleDetail(prodDetail);
     }
   }, [allproducts, id]);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+    // console.log("Selected Size:", size); // This is where you can handle the size value
+  };
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const images = singleDetail
     ? [singleDetail.photo, singleDetail.photo, singleDetail.photo]
     : [];
-  // const images = [
-  //   "https://i.ibb.co.com/R4S4BY4/51d-R5-N2fe6-L-SS1000-removebg-preview.png",
-  //   "https://i.ibb.co.com/jRbBC9Q/Bright-Blue-3-piece-wedding-suit-removebg-preview.png",
-  //   "https://i.ibb.co.com/RjkZdxd/Rectangle-11.png",
-  //   "https://i.ibb.co.com/fxZz0pz/pexels-divinetechygirl-1181405.jpg",
-  // ];
+  const handleAddToCart = (singleDetail) => {
+    // console.log("item info", singleDetail);
+
+    if (user && user?.email) {
+      const itemData = {
+        title: singleDetail.title,
+        price: singleDetail.price,
+        photo: singleDetail.photo,
+        brandname: singleDetail.brandname,
+        color: singleDetail.color,
+        size: selectedSize,
+        name: user?.displayName,
+        email: user?.email,
+      };
+      console.log("item info", itemData);
+      axiosSecure
+        .post("/carts", itemData)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${itemData.title} id added to the cart`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            refetch();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      Swal.fire({
+        title: "You are not logged in",
+        text: "Please login to add to cart",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //{ state: { from: location } }
+          navigate("/login");
+        }
+      });
+    }
+  };
   return (
-    <div className="mx-auto w-[90%] p-5 pt-0">
-      <Breadcrumb></Breadcrumb>
+    <div className="mx-auto w-[90%] p-5 mt-[12rem] md:mt-[8rem] pt-0">
+      {/* <Breadcrumb></Breadcrumb> */}
       <div className="md:flex  mb-12 mt-5 md:justify-between gap-12 ">
         <div className=" md:w-1/2 md:flex md:flex-col gap-5 bg-gray-100 ">
           <Swiper
@@ -145,39 +214,39 @@ const ProductDetail = () => {
 
           <div>
             <h4 className="mb-1">
-              Color-{" "}
+              Color-
               <span className="text-gray-500 capitalize">
                 {singleDetail?.color}
               </span>
             </h4>
             <div className="flex items-center gap-4">
               <h4>Size</h4>
-
-              <div className="join gap-3">
-                <input
-                  className="btn rounded-full"
-                  type="radio"
-                  name="options"
-                  aria-label="S"
-                />
-                <input
-                  className="btn rounded-full"
-                  type="radio"
-                  name="options"
-                  aria-label="M"
-                />
-                <input
-                  className="btn rounded-full"
-                  type="radio"
-                  name="options"
-                  aria-label="L"
-                />
+              <div className="flex space-x-4">
+                {/* proti ta size er jonno btn toiri hocche */}
+                {["S", "M", "L"].map((size) => (
+                  <button
+                    type="button"
+                    key={size}
+                    className={`px-4 py-2 border rounded-full font-medium transition-all ${
+                      selectedSize === size
+                        ? "bg-purple-600 text-white "
+                        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                    }`}
+                    onClick={() => handleSizeClick(size)}>
+                    {/* ekahne amra key theke pawa btn name ta diye dicchi ui te
+                    show korar jonno */}
+                    {size}
+                  </button>
+                ))}
               </div>
+              <input type="hidden" name="size" value={selectedSize} readOnly />
             </div>
+            {selectedSize && <p>Selected Size: {selectedSize}</p>}
           </div>
 
           <div className="join flex flex-wrap gap-2 my-12">
             <button
+              onClick={() => handleAddToCart(singleDetail)}
               // onClick={addInCartPage} //Add full product to cart on button click
               className="btn uppercase rounded-none  border-1 text-[12px] text-white bg-black hover:bg-[#b7c940] hover:text-white">
               Add To Cart <FaShoppingBag></FaShoppingBag>

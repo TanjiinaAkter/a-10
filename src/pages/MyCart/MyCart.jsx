@@ -11,8 +11,14 @@ import "./MyCart.css";
 import MycartSingle from "../MyCartSingle/MyCartSingle";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../hooks/useAuth";
 
 const MyCart = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+ 
   //   const [totals, setTotals] = useState({}); // Store totals for each item
 
   // ekhane jegulo add to cart korechi seta nicchi

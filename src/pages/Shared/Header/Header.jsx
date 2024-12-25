@@ -4,12 +4,34 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import logo from "../../../assets/log.png";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import { MdLogout } from "react-icons/md";
+import useCarts from "../../../hooks/useCarts";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect } from "react";
+// import { MdLogout } from "react-icons/md";
 // import { useContext } from "react";
 // import { AuthContext } from "../../../AuthProvider/AuthProvider";
 //bg-[#9dad37]
 const Header = () => {
   const { user, logOut } = useAuth();
+
+  const [cart] = useCarts()
+  // const { data: singleUserCart = [], refetch } = useQuery({
+  //   queryKey: ["singleUserCart", user?.email],
+  //   enabled: !!user?.email,
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/carts/single?email=${user?.email}`);
+  //     console.log(res.data);
+  //     return res.data;
+  //   },
+  // });
+  // console.log(singleUserCart);
+  // useEffect(() => {
+  //   if (singleUserCart) {
+  //     refetch();
+  //   }
+  // }, [singleUserCart, refetch]);
+console.log(cart)
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -95,14 +117,25 @@ const Header = () => {
           <span className=" text-3xl hidden md:block text-white text-center mx-2">
             |
           </span>
-          <div className="relative">
-            <Link to="/mycart">
-              <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
-            </Link>
-            <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
-              0
-            </span>
-          </div>
+          {user && user?.email ? (
+            <div className="relative">
+              <Link to="/mycart">
+                <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
+              </Link>
+              <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
+                {cart.length}
+              </span>
+            </div>
+          ) : (
+            <div className="relative">
+              <Link to="/mycart">
+                <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
+              </Link>
+              <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
+                0
+              </span>
+            </div>
+          )}
           <div>
             {user ? (
               <>
@@ -114,7 +147,9 @@ const Header = () => {
                       alt=""
                     />
                   </Link>
-                  <span className="text-[#9dad37] text-lg font-semibold">Hi! {user.displayName}</span>
+                  <span className="text-[#9dad37] text-lg font-semibold">
+                    Hi! {user.displayName}
+                  </span>
                   <button
                     onClick={handleLogOut}
                     className=" font-semibold text-lg text-white px-3 py-1 rounded-sm bg-[#9dad37]">

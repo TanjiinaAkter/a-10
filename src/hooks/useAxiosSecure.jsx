@@ -12,7 +12,7 @@ const useAxiosSecure = () => {
       const token = localStorage.getItem("access-token");
 
       config.headers.authorization = `Barear ${token}`;
-      console.log("axios secure token", token);
+      //console.log("axios secure token", token);
       return config;
     },
     function (error) {
@@ -30,7 +30,7 @@ const useAxiosSecure = () => {
         navigate("/login");
         await logOut();
       }
-      return Promise.reject(error); 
+      return Promise.reject(error);
     }
   );
 
