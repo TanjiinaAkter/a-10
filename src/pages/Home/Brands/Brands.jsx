@@ -28,7 +28,7 @@ const Brands = () => {
       </h2>
       <hr className="bg-[#9dad37]  h-[2.8px]  mb-5 " />
 
-      <div>
+      <div className="p-4">
         <Swiper
           slidesPerView={4}
           spaceBetween={30}

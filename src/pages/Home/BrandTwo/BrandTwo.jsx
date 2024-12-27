@@ -5,7 +5,7 @@ import { IoIosPhonePortrait } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import useAllproducts from "../../../hooks/useAllproducts";
 import { useEffect, useState } from "react";
-import { key } from "localforage";
+
 import { Link } from "react-router-dom";
 
 const BrandTwo = () => {
