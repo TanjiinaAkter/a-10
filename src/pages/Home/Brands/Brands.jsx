@@ -1,63 +1,74 @@
-// import { useEffect, useState } from "react";
-// // import PropTypes from "prop-types";
-// import UniqueBrand from "../UniqueBrand/UniqueBrand";
-// import "./Brands.css";
-// // import { useLoaderData } from "react-router-dom";
-
-// const Brands = () => {
-//   //  console.log(datas);
-// //   const datas = useLoaderData();
-//   //console.log(datas);
-
-// //   const [brandshow, setBransShow] = useState([]);
-//   //console.log("data in brand unique", brandshow);
-// //   useEffect(() => {
-// //     const store = [];
-// //     datas.forEach((data) => {
-// //       const add = store.some((st) => st.brandname === data.brandname);
-// //       // mille output true, noyto false hoye output ashbe ... 6ta false mane mile nai 6 ta...baki gulo true ashbe.. then condotion dibo jodi false hoy tahole false gulo push koro store array te
-// //       //console.log(add);
-// //       if (!add) {
-// //         store.push(data);
-// //       }
-// //       // console.log(store);
-// //       setBransShow(store);
-// //     });
-// //   }, [datas]);
-//   return (
-//     <div className="mx-auto md:w-[80%] my-[5rem]">
-//       <h2 className="text-center text-3xl md:text-4xl text-gray-500 font-semibold">
-//         Find Your <span className="text-[#9dad37]">Perfect Fit</span>
-//       </h2>
-//       <hr className="mx-auto w-[5%] my-6 h-[3px] bg-[#b7c940]" />
-//       <div className="flex flex-wrap gap-6 justify-center p-6">
-//         <div className="flex flex-wrap md:flex-nowrap  w-full justify-center gap-6">
-//           {brandshow.slice(0, 3).map((brand) => (
-//             <UniqueBrand
-            
-//               key={brand._id}
-//               brand={brand}></UniqueBrand>
-//           ))}
-//         </div>
-//         <div className="flex flex-wrap md:flex-nowrap w-full justify-center gap-6 ">
-//           {brandshow.slice(3, 5).map((brand) => (
-//             <UniqueBrand key={brand._id} brand={brand}></UniqueBrand>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Brands;
-
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { HiMiniShoppingBag } from "react-icons/hi2";
+import useAllproducts from "../../../hooks/useAllproducts";
+import { useEffect, useState } from "react";
+import "./Brands.css";
 const Brands = () => {
-    return (
-        <div>
-            <h2>brands</h2>
-        </div>
-    );
+  const [allproducts] = useAllproducts();
+  const [brands, setBrands] = useState([]);
+
+  useEffect(() => {
+    if (allproducts) {
+      const brandData = allproducts.map((brand) => ({
+        brandname: brand.brandname,
+        photo: brand.photo,
+      }));
+      setBrands(brandData);
+    }
+  }, [allproducts]);
+  console.log(brands);
+  return (
+    <div className="mx-auto md:w-[80%] my-[5rem]">
+      <h2 className="text-xl flex text-gray-500 md:text-3xl font-semibold mb-4">
+        <HiMiniShoppingBag className="text-xl mr-2 md:text-3xl" /> Shop by{" "}
+        <span className="text-[#9dad37] ml-1"> Brands</span>
+      </h2>
+      <hr className="bg-[#9dad37]  h-[2.8px]  mb-5 " />
+
+      <div>
+        <Swiper
+          slidesPerView={4}
+          spaceBetween={30}
+          loop={true}
+          speed={1000}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={{ clickable: true }}
+          modules={[Navigation]}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 3,
+            },
+            1024: {
+              slidesPerView: 7,
+            },
+          }}
+          className="mySwiper custom-swiper">
+          {brands.map((brand) => (
+            <SwiperSlide key={brand._id}>
+              <div className="flex flex-col  md:w-[10rem] p-3  justify-center items-center bg-[#f3f3f3]">
+                <img
+                  className="md:w-full h-[14rem] md:h-[10rem] object-cover"
+                  src={brand.photo}
+                  alt=""
+                />
+              </div>
+              <h2 className="text-gray-500 font-semibold text-center my-1">
+                {brand.brandname}
+              </h2>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
 };
 
 export default Brands;

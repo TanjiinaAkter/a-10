@@ -1,0 +1,36 @@
+/* Position arrows above the slider */
+.custom-swiper .swiper-button-next,
+.custom-swiper .swiper-button-prev {
+  top: -50px; /* Adjust based on how high above the slider you want the arrows */
+  transform: translateY(-50%);
+  overflow: visible;
+  top: 90px;
+  right: 0px;
+  color: #000; /* Change arrow color */
+}
+
+.custom-swiper .swiper-button-next {
+  right: 10px; /* Adjust right arrow position */
+}
+
+.custom-swiper .swiper-button-prev {
+  left: 10px; /* Adjust left arrow position */
+}
+
+/* Optional: Adjust the size */
+.custom-swiper .swiper-button-next::after,
+.custom-swiper .swiper-button-prev::after {
+  font-size: 20px; /* Adjust arrow size */
+  color: #9dad37;
+  font-weight:bold
+}
+.custom-swiper .swiper-button-prev {
+  right: 30px;
+  top: 45px;
+  left: 92%;
+}
+.custom-swiper .swiper-button-next {
+  right: 0px;
+  top: 45px;
+  left: 94%;
+}
