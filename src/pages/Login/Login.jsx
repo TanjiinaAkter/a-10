@@ -96,7 +96,7 @@ const Login = () => {
   return (
     <div className="bg-img  w-full">
       <Helmet>
-        <title>TechWorld | Login</title>
+        <title>Havenique | Login</title>
       </Helmet>
       <div className="bg-darker h-screen top-0 left-0 right-0 bottom-0 p-3">
         <div className="">

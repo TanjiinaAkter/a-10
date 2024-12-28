@@ -22,15 +22,15 @@
 .custom-swiper .swiper-button-prev::after {
   font-size: 20px; /* Adjust arrow size */
   color: #9dad37;
-  font-weight:bold
+  font-weight: bold;
 }
 .custom-swiper .swiper-button-prev {
   right: 30px;
-  top: 45px;
+  top: 35px;
   left: 92%;
 }
 .custom-swiper .swiper-button-next {
   right: 0px;
-  top: 45px;
+  top: 35px;
   left: 94%;
 }

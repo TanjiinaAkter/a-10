@@ -18,7 +18,7 @@ import useAuth from "../../hooks/useAuth";
 const MyCart = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
- 
+
   //   const [totals, setTotals] = useState({}); // Store totals for each item
 
   // ekhane jegulo add to cart korechi seta nicchi
@@ -76,7 +76,7 @@ const MyCart = () => {
   return (
     <div>
       <Helmet>
-        <title>TechWorld | MyCart</title>
+        <title>Havenique | MyCart</title>
       </Helmet>
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
         <Link to="/" className="flex items-center gap-1">

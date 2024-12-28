@@ -36,7 +36,7 @@ const BrandProducts = () => {
   return (
     <div className="mt-24">
       <Helmet>
-        <title>TechWorld | Men</title>
+        <title>Havenique | Men</title>
       </Helmet>
       <Breadcrumb></Breadcrumb>
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
@@ -80,29 +80,29 @@ const BrandProducts = () => {
               <figure className="">
                 <img
                   className=" w-full h-[10rem] object-cover md:h-[15rem] "
-                  src="https://i.ibb.co/XS1g4mM/5dqmkigttwx6h9q0-0-0-desktop-0-1-X.webp"
+                  src="https://i.ibb.co.com/cF7dhQ7/banner.png"
                   alt="Movie"
                 />
               </figure>
             </div>
           </SwiperSlide>
           <SwiperSlide className=" md:h-[30rem] mb-8 mt-8">
-            <div className="card  bg-red-100 shadow-xl">
+            <div className="card rounded-none bg-red-100 shadow-xl">
               <figure className="">
                 <img
                   className=" w-full h-[10rem] object-cover md:h-[15rem] "
-                  src="https://i.ibb.co/6Nhtzzf/194349-OZ79-DC-363.jpg"
+                  src="https://i.ibb.co.com/ZLRLZh9/3d-black-friday-celebration.jpg"
                   alt="Movie"
                 />
               </figure>
             </div>
           </SwiperSlide>
           <SwiperSlide className=" md:h-[30rem] mb-8 mt-8">
-            <div className="card  bg-red-100 shadow-xl">
+            <div className="card rounded-none bg-red-100 shadow-xl">
               <figure className="">
                 <img
                   className=" w-full h-[10rem] object-cover md:h-[15rem] "
-                  src="https://img.freepik.com/free-vector/realism-hand-drawn-horizontal-banner_23-2150203461.jpg?t=st=1721146769~exp=1721150369~hmac=e98b5fa0210c02186348c9eaf52614096606e88ab17066b8d2e530a7ace41596&w=1380"
+                  src="https://i.ibb.co.com/8sjzRyn/3d-black-friday-celebration-1.jpg"
                   alt="Movie"
                 />
               </figure>

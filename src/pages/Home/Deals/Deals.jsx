@@ -96,8 +96,8 @@ const Deals = () => {
               </div>
               <div className="flex items-center  justify-normal gap-2">
                 <div className="">
-                  <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-[#9dad37]  px-2 py-[6px] rounded-sm text-white text-sm md:text-[17px] lg:text-[15px]">
-                    <HiOutlineShoppingBag /> Add To Cart
+                <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-black font-semibold  px-2 py-[6px] rounded-sm text-[#9dad37] text-sm md:text-[17px] lg:text-[15px]">
+                    <HiOutlineShoppingBag  className="font-semibold text-lg"/> Add To Cart
                   </button>
                 </div>
                 <div className="flex gap-2 items-center ">
@@ -140,8 +140,8 @@ const Deals = () => {
               </div>
               <div className="flex items-center  justify-normal gap-2">
                 <div className="">
-                  <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-[#9dad37]  px-2 py-[6px] rounded-sm text-white text-sm md:text-[17px] lg:text-[15px]">
-                    <HiOutlineShoppingBag /> Add To Cart
+                  <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-black font-semibold  px-2 py-[6px] rounded-sm text-[#9dad37] text-sm md:text-[17px] lg:text-[15px]">
+                    <HiOutlineShoppingBag  className="font-semibold text-lg"/> Add To Cart
                   </button>
                 </div>
                 <div className="flex gap-2 items-center ">
@@ -184,8 +184,8 @@ const Deals = () => {
               </div>
               <div className="flex items-center  justify-normal gap-2">
                 <div className="">
-                  <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-[#9dad37]  px-2 py-[6px] rounded-sm text-white text-sm md:text-[17px] lg:text-[15px]">
-                    <HiOutlineShoppingBag /> Add To Cart
+                <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-black font-semibold  px-2 py-[6px] rounded-sm text-[#9dad37] text-sm md:text-[17px] lg:text-[15px]">
+                    <HiOutlineShoppingBag  className="font-semibold text-lg"/> Add To Cart
                   </button>
                 </div>
                 <div className="flex gap-2 items-center ">
@@ -228,8 +228,8 @@ const Deals = () => {
               </div>
               <div className="flex items-center  justify-normal gap-2">
                 <div className="">
-                  <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-[#9dad37]  px-2 py-[6px] rounded-sm text-white text-sm md:text-[17px] lg:text-[15px]">
-                    <HiOutlineShoppingBag /> Add To Cart
+                <button className="ml-3 flex flex-row items-center justify-start gap-2 bg-black font-semibold  px-2 py-[6px] rounded-sm text-[#9dad37] text-sm md:text-[17px] lg:text-[15px]">
+                    <HiOutlineShoppingBag  className="font-semibold text-lg"/> Add To Cart
                   </button>
                 </div>
                 <div className="flex gap-2 items-center ">

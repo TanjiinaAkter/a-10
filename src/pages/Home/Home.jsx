@@ -7,6 +7,7 @@ import BrandTwo from "./BrandTwo/BrandTwo";
 import Deals from "./Deals/Deals";
 import NewSection from "./NewSection/NewSection";
 import BrandFour from "./BrandFour/BrandFour";
+import ExtraSection from "./ExtraSection/ExtraSection";
 
 const Home = () => {
   const handleScroll = (sectionId) => {
@@ -18,11 +19,12 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title>TechWorld | Home</title>
+        <title>Havenique | Home</title>
       </Helmet>
       <Banner handleScroll={handleScroll}></Banner>
       <Brands></Brands>
       <Deals></Deals>
+      <ExtraSection></ExtraSection>
       <NewSection></NewSection>
       <div id="mens">
         <BrandOne></BrandOne>

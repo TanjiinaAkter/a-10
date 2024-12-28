@@ -80,7 +80,7 @@ const Registration = () => {
   return (
     <div className="bg-img w-full">
       <Helmet>
-        <title>TechWorld | Registration</title>
+        <title>Havenique | Registration</title>
       </Helmet>
       <div className="bg-darker top-0 left-0 right-0 bottom-0 p-3">
         <div>
