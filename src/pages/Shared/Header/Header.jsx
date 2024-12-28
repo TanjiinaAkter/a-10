@@ -5,13 +5,12 @@ import logo from "../../../assets/log.png";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
-
-// import { MdLogout } from "react-icons/md";
-// import { useContext } from "react";
-// import { AuthContext } from "../../../AuthProvider/AuthProvider";
-//bg-[#9dad37]
+import { useState } from "react";
+// import useAllproducts from "../../../hooks/useAllproducts";
 const Header = () => {
+  // const [allproducts] = useAllproducts();
   const { user, logOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   const [cart] = useCarts();
   const handleLogOut = () => {
     logOut()
@@ -20,26 +19,110 @@ const Header = () => {
         console.log(error);
       });
   };
+  //========= DROPDOWN TOGGLE =========//
+  const toggleDropDown = (category) => {
+    // category jodi theke thake then kichui dekhabo na ar na thakle category show korbo
+    setIsOpen(isOpen === category ? null : category);
+  };
   const lists = (
-    <div className="flex flex-col  lg:flex-row justify-between items-center  lg:text-white">
+    <div className="flex flex-col space-y-4 md:space-y-0 lg:flex-row justify-between items-center  lg:text-white">
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      {/* <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
-        <NavLink to="/addproduct">Add product</NavLink>
-      </li> */}
+      <li
+        className="flex items-center cursor-pointer select-none"
+        onClick={() => toggleDropDown("Men")}>
+        <span className="text-[1rem] font-semibold">MEN</span>
+        {isOpen === "Men" && (
+          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px] top-[27px] left-[-5rem] md:top-16 md:left-[-5rem] md:bg-[#000000C6] text-white  w-48 ">
+            {["tshirts", "jeans", "jackets", "pants"].map((category, index) => (
+              <li
+                key={index}
+                onClick={() => setIsOpen(null)}
+                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+                {category}
+              </li>
+            ))}
 
-      <li className="mr-4 text-green text-[1rem] font-semibold">
-        <NavLink to="/brandproducts">MEN</NavLink>
+            {/* <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+              shirt
+            </li>
+            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+              shirt
+            </li>
+            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+              shirt
+            </li>
+            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+              shirt
+            </li> */}
+          </ul>
+        )}
       </li>
-      <li className="mr-4 text-green text-[1rem] font-semibold">
+      <li
+        onClick={() => toggleDropDown("Women")}
+        className="mr-4 relative text-[1rem] ">
         <NavLink to="/brandproducts">WOMEN</NavLink>
+        {isOpen === "Women" && (
+          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
+            {[
+              "tshirts",
+              "jeans",
+              "jackets",
+              "tops",
+              "dresses",
+              "skirts",
+              "pants",
+            ].map((category, index) => (
+              <li
+                key={index}
+                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+                {category}{" "}
+              </li>
+            ))}
+          </ul>
+        )}
       </li>
-      <li className="mr-4 text-green text-[1rem] font-semibold">
+      <li
+        onClick={() => toggleDropDown("Kids")}
+        className="mr-4  text-[1rem] font-semibold">
         <NavLink to="/brandproducts">KIDS</NavLink>
+
+        {isOpen === "Kids" && (
+          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
+            {[
+              "tshirts",
+              "jeans",
+              "jackets",
+              "tops",
+              "dresses",
+              "skirts",
+              "pants",
+            ].map((category, index) => (
+              <li
+                key={index}
+                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+                {category}
+              </li>
+            ))}
+          </ul>
+        )}
       </li>
-      <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
+      <li
+        onClick={() => toggleDropDown("Decor")}
+        className="mr-4  uppercase text-[1rem] font-semibold">
         <NavLink to="/brandproducts">Home Décor</NavLink>
+        {isOpen === "Decor" && (
+          <ul className=" absolute cursor-pointer  z-40 shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
+            {["decor"].map((decor, index) => (
+              <li
+                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full"
+                key={index}>
+                {decor}
+              </li>
+            ))}
+          </ul>
+        )}
       </li>
     </div>
   );

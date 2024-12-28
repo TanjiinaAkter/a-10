@@ -1,7 +1,9 @@
 const CategorySubTypes = () => {
-    return <div>
-      
-  </div>;
+  return (
+    <div>
+      <h2>all sjkawd</h2>
+    </div>
+  );
 };
 
 export default CategorySubTypes;

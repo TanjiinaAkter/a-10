@@ -22,6 +22,7 @@ import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
 import ReviewProducts from "../pages/Dashboard/ReviewProducts/ReviewProducts";
 import WishList from "../pages/Dashboard/WishList/WishList";
+import CategorySubTypes from "../pages/CategorySubTypes/CategorySubTypes";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/brandproducts",
         element: <BrandProducts></BrandProducts>,
+      },
+      {
+        path: "/categorysubtypes",
+        element:<CategorySubTypes></CategorySubTypes>,
       },
       {
         path: "/productdetails/:id",
