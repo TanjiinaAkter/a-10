@@ -37,7 +37,7 @@ const BrandOne = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 h-full ">
-        {mens.map((item) => (
+        {mens.slice(0,4).map((item) => (
           <div key={item._id}>
             <Link to={`/productdetails/${item._id}`}>
               <div className="card   overflow-hidden  mt-6  relative flex  hover:scale-105 duration-500 transition-transform justify-between items-center h-[20rem] border rounded-none bg-[#f3f3f3]">

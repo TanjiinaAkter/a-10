@@ -23,7 +23,7 @@ const Dashboard = () => {
      
       {/* ========================== SIDEBAR CONTENT  ==========================*/}
       <div className="w-full  bg-img1 md:max-w-64 bg-black min-h-screen font-semibold text-white">
-        <ul className="fixed menu space-y-3 p-3">
+        <ul className="md:fixed menu space-y-3 p-3">
           {isAdmin ? (
             <>
               <li className="text-[1rem]">

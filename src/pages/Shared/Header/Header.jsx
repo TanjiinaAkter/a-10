@@ -6,9 +6,9 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
 import { useState } from "react";
-// import useAllproducts from "../../../hooks/useAllproducts";
+import useAllproducts from "../../../hooks/useAllproducts";
 const Header = () => {
-  // const [allproducts] = useAllproducts();
+  const [allproducts] = useAllproducts();
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +25,18 @@ const Header = () => {
     // category jodi theke thake then kichui dekhabo na ar na thakle category(men, women, kids, or decor r ki) show korbo
     setIsOpen(isOpen === category ? null : category);
   };
+
+  const categoryMapping = {};
+  allproducts.forEach((product) => {
+    const { topCategory, thirdCategory } = product;
+    if (!categoryMapping[topCategory]) {
+      categoryMapping[topCategory] = [];
+    }
+    if (!categoryMapping[topCategory].includes(thirdCategory)) {
+      categoryMapping[topCategory].push(thirdCategory);
+    }
+  });
+  console.log(categoryMapping);
   const lists = (
     <div className="flex flex-col space-y-4 md:space-y-0 lg:flex-row justify-between items-center  lg:text-white">
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">

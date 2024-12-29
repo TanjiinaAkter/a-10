@@ -87,22 +87,20 @@ const AddProduct = () => {
               </label>
               <select
                 {...register("topCategory")}
-                className="border text-gray-400 border-gray-300 border-none rounded-sm px-3 py-2"
-                name=""
-                id="">
-                <option className="text-gray-400" value="categorytype">
+                className="border text-gray-400 border-gray-300 border-none rounded-sm px-3 py-2">
+                <option className="text-gray-400" disabled>
                   Category type
                 </option>
-                <option className="text-gray-400" value="men">
+                <option className="text-gray-400" value="Men">
                   Men
                 </option>
-                <option className="text-gray-400" value="women">
+                <option className="text-gray-400" value="Women">
                   Women
                 </option>
-                <option className="text-gray-400" value="kids">
+                <option className="text-gray-400" value="Kids">
                   Kids
                 </option>
-                <option className="text-gray-400" value="homedecor">
+                <option className="text-gray-400" value="Homedecor">
                   Home Décor & Accessories
                 </option>
               </select>
@@ -116,13 +114,11 @@ const AddProduct = () => {
               </label>
               <select
                 {...register("secondCategory")}
-                name=""
-                id=""
                 className="border text-gray-400 border-none rounded-sm px-3 py-2">
-                <option className="text-gray-400" value="tshirts">
+                <option className="text-gray-400" value="clothing">
                   Clothing
                 </option>
-                <option className="text-gray-400" value="jeans">
+                <option className="text-gray-400" value="decor">
                   decor
                 </option>
               </select>
@@ -136,8 +132,6 @@ const AddProduct = () => {
               </label>
               <select
                 {...register("thirdCategory")}
-                name=""
-                id=""
                 className="border text-gray-400 border-none rounded-sm px-3 py-2">
                 <option className="text-gray-400" value="tshirts">
                   T-shirts
@@ -154,7 +148,7 @@ const AddProduct = () => {
                 <option className="text-gray-400" value="dresses">
                   Dresses
                 </option>
-                <option className="text-gray-400" value="skirts ">
+                <option className="text-gray-400" value="skirts">
                   Skirts
                 </option>
                 <option className="text-gray-400" value="pants">
@@ -166,6 +160,13 @@ const AddProduct = () => {
               </select>
               {errors.thirdCategory && <span>This field is required</span>}
             </div>
+            {/* <div>
+              <select {...register("gender")}>
+                <option value="female">female</option>
+                <option value="male">male</option>
+                <option value="other">other</option>
+              </select>
+            </div> */}
           </div>
           {/* ====================== THIRD ROW ================*/}
           <div className="md:flex gap-3 my-3">
