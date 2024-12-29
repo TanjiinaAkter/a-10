@@ -2,13 +2,14 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegHeart, FaSearch } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import logo from "../../../assets/log.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
 import { useState } from "react";
 // import useAllproducts from "../../../hooks/useAllproducts";
 const Header = () => {
   // const [allproducts] = useAllproducts();
+  const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [cart] = useCarts();
@@ -21,7 +22,7 @@ const Header = () => {
   };
   //========= DROPDOWN TOGGLE =========//
   const toggleDropDown = (category) => {
-    // category jodi theke thake then kichui dekhabo na ar na thakle category show korbo
+    // category jodi theke thake then kichui dekhabo na ar na thakle category(men, women, kids, or decor r ki) show korbo
     setIsOpen(isOpen === category ? null : category);
   };
   const lists = (
@@ -35,34 +36,28 @@ const Header = () => {
         <span className="text-[1rem] font-semibold">MEN</span>
         {isOpen === "Men" && (
           <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px] top-[27px] left-[-5rem] md:top-16 md:left-[-5rem] md:bg-[#000000C6] text-white  w-48 ">
-            {["tshirts", "jeans", "jackets", "pants"].map((category, index) => (
-              <li
-                key={index}
-                onClick={() => setIsOpen(null)}
-                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-                {category}
-              </li>
-            ))}
-
-            {/* <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-              shirt
-            </li>
-            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-              shirt
-            </li>
-            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-              shirt
-            </li>
-            <li className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-              shirt
-            </li> */}
+            {["tshirts", "jeans", "jackets", "pants"].map(
+              (thirdCategory, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setIsOpen(null);
+                    navigate(
+                      `/brandproducts?topCategory=Men&thirdCategory=${thirdCategory}`
+                    );
+                  }}
+                  className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+                  {thirdCategory}
+                </li>
+              )
+            )}
           </ul>
         )}
       </li>
       <li
         onClick={() => toggleDropDown("Women")}
         className="mr-4 relative text-[1rem] ">
-        <NavLink to="/brandproducts">WOMEN</NavLink>
+        WOMEN
         {isOpen === "Women" && (
           <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
             {[
@@ -73,11 +68,17 @@ const Header = () => {
               "dresses",
               "skirts",
               "pants",
-            ].map((category, index) => (
+            ].map((thirdCategory, index) => (
               <li
                 key={index}
+                onClick={() => {
+                  setIsOpen(null);
+                  navigate(
+                    `/brandproducts?topCategory=Women&thirdCategory=${thirdCategory}`
+                  );
+                }}
                 className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-                {category}{" "}
+                {thirdCategory}
               </li>
             ))}
           </ul>
@@ -86,8 +87,7 @@ const Header = () => {
       <li
         onClick={() => toggleDropDown("Kids")}
         className="mr-4  text-[1rem] font-semibold">
-        <NavLink to="/brandproducts">KIDS</NavLink>
-
+        KIDS
         {isOpen === "Kids" && (
           <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
             {[
@@ -98,11 +98,17 @@ const Header = () => {
               "dresses",
               "skirts",
               "pants",
-            ].map((category, index) => (
+            ].map((thirdCategory, index) => (
               <li
                 key={index}
+                onClick={() => {
+                  setIsOpen(null);
+                  navigate(
+                    `/brandproducts?topCategory=Kids&thirdCategory=${thirdCategory}`
+                  );
+                }}
                 className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-                {category}
+                {thirdCategory}
               </li>
             ))}
           </ul>
@@ -111,14 +117,20 @@ const Header = () => {
       <li
         onClick={() => toggleDropDown("Decor")}
         className="mr-4  uppercase text-[1rem] font-semibold">
-        <NavLink to="/brandproducts">Home Décor</NavLink>
+        Home Décor
         {isOpen === "Decor" && (
           <ul className=" absolute cursor-pointer  z-40 shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
-            {["decor"].map((decor, index) => (
+            {["decor"].map((thirdCategory, index) => (
               <li
                 className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full"
-                key={index}>
-                {decor}
+                key={index}
+                onClick={() => {
+                  setIsOpen(null);
+                  navigate(
+                    `/brandproducts?topCategory=Decor&thirdCategory=${thirdCategory}`
+                  );
+                }}>
+                {thirdCategory}
               </li>
             ))}
           </ul>

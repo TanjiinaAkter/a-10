@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/categorysubtypes",
-        element:<CategorySubTypes></CategorySubTypes>,
+        element: <CategorySubTypes></CategorySubTypes>,
       },
       {
         path: "/productdetails/:id",
@@ -114,11 +114,11 @@ const router = createBrowserRouter([
       },
       {
         path: "review",
-        element:<ReviewProducts></ReviewProducts>,
+        element: <ReviewProducts></ReviewProducts>,
       },
       {
         path: "wishlist",
-        element:<WishList></WishList>,
+        element: <WishList></WishList>,
       },
     ],
   },
