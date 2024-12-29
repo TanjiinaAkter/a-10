@@ -24,13 +24,13 @@ const BrandFour = () => {
       <div className="flex flex-col md:flex-row justify-start w-full">
         <div className="flex items-center justify-start gap-1 bg-[#b7c940] ">
           <IoIosPhonePortrait className=" text-4xl text-white py-2  h-full "></IoIosPhonePortrait>
-          <p className="text-white py-2 px-2 md:text-3xl">Kids wear </p>
+          <p className="text-white py-2 px-2 md:text-3xl">Home Decor</p>
         </div>
         <div className="border-t-2 border-t-[#9dad37] border-b border-b-gray-200 flex items-center flex-1">
           <p className=" text-[1.3rem] md:text-2xl pl-3 py-2">
             Product :
             <span className="text-[#b7c940] font-semibold">
-              Kids Collection
+              Home Decor Collection
             </span>
           </p>
         </div>

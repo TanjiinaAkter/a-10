@@ -12,39 +12,33 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaHeart } from "react-icons/fa";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useSearchParams } from "react-router-dom";
 
 const BrandProducts = () => {
-  // const { brandname } = location.state || {};
-  // Access the passed state , obj ta nilam brandname er amader current location e ..
-  //   const allprod = useLoaderData();
-  //   console.log(allprod);
+  const [searchParams] = useSearchParams();
+  const topCategory = searchParams.get("topCategory");
+  const thirdCategory = searchParams.get("thirdCategory");
 
-  //   const [matched, setMatched] = useState([]);
-  //======================
-  // useEffect use kortesi karon amader brandname change hote thakte pare tai.. ar dependency te brandname ar allprod thakbe eitao changable tai... ar location use kore amra oi location er state niye ekhane kaj kortesi, jodi brandname thake tahole ei kaj hobe
-  //======================
-  //   useEffect(() => {
-  //     // if (brandname) {
-  //     // Filter or perform any action based on brandname
-  //     const filteredProducts = allprod.filter(
-  //       (product) => product.brandname === brandname
-  //     );
-  //     setMatched(filteredProducts);
-  //     // }
-  //   }, [brandname, allprod]);
-  //   console.log(matched);
+  const axiosPublic = useAxiosPublic();
+  const { data: searchFromDropDown = [] } = useQuery({
+    queryKey: ["searchFromDropDown", topCategory, thirdCategory],
+    queryFn: async () => {
+      const res = await axiosPublic.get(
+        `/allproducts/DropDown?topCategory=${topCategory}&thirdCategory=${thirdCategory}`
+      );
+      return res.data;
+    },
+  });
+  console.log(searchFromDropDown);
   return (
     <div className="mt-24">
       <Helmet>
         <title>Havenique | Men</title>
       </Helmet>
       <Breadcrumb></Breadcrumb>
-      {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
-        <Link to="/" className="flex items-center gap-1">
-          <FaArrowLeftLong />
-          Back To Home
-        </Link>
-      </button> */}
+
       {/*================ SLIDER ================*/}
       <div className=" mx-auto w-full">
         <Swiper
@@ -116,16 +110,6 @@ const BrandProducts = () => {
           {/*================ Products of BRAND from sidebar================*/}
           <div className="col-span-1  flex flex-col gap-7">
             <div>
-              <h1 className="text-[1rem] uppercase">category</h1>
-              <ul className="mt-5 text-gray-400 ">
-                <li>red()</li>
-                <li>red</li>
-                <li>red</li>
-                <li>red</li>
-                <li>red</li>
-              </ul>
-            </div>
-            <div>
               <h1 className="text-[1rem] uppercase">SIZE</h1>
               <ul className="mt-5 text-gray-400 ">
                 <li>red()</li>
@@ -179,7 +163,9 @@ const BrandProducts = () => {
           <div className="col-span-4   justify-between flex flex-col gap-3">
             <div>
               <div className="flex flex-row justify-between">
-                <h2 className="text-gray-400">Showing all 8 results</h2>
+                <h2 className="text-gray-400">
+                  Showing all {searchFromDropDown.length} results
+                </h2>
                 <div>
                   <select
                     name=""
@@ -197,231 +183,71 @@ const BrandProducts = () => {
                   </select>
                 </div>
               </div>
+              {/* searchFromDropDown */}
               <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-12 ">
-                <div className="card-1">
-                  <div className="group  relative  w-full">
-                    <div className="w-full mx-auto">
-                      <img
-                        className="object-cover w-full md:h-[18rem]"
-                        src="https://depot.qodeinteractive.com/wp-content/uploads/2017/01/h1-product-6-550x550.jpg"
-                        alt=""
-                      />
+                {searchFromDropDown.map((product) => (
+                  <div key={product._id} className="card-1 md:w-[14rem]">
+                    <div className="group  relative  w-full">
+                      <Link to={`/productdetails/${product?._id}`}>
+                        <div className="w-full mx-auto bg-[#F3F3F3]">
+                          <img
+                            className="object-contain mx-auto w-[17rem] md:w-[90%] md:h-[18rem]"
+                            src={product?.photo}
+                            alt=""
+                          />
+                        </div>
+                      </Link>
+                      <div className="absolute bg-gray-200 top-3 text-black right-3 py-[2px] px-2 border-2 border-gray-300">
+                        {product?.discountedPercentage}%
+                      </div>
+                      <div className="left-0 w-full transform  transition-all duration-500 bottom-[-12%] group-hover:bottom-0 opacity-0 group-hover:opacity-100 bg-black absolute px-3 py-2 text-white flex items-center gap-3 justify-between">
+                        <Link to={`/productdetails/${product?._id}`}>
+                          <btn className="cursor-pointer border-r-2 pr-1 h-full text-[#9dad37] font-semibold text-[12px] ">
+                            Quick Look
+                          </btn>
+                        </Link>
+                        <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
+                        <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
+                          Add to cart
+                        </btn>
+                      </div>
                     </div>
-                    <div className="absolute top-3 text-[#9dad37] right-3 py-[2px] px-2 border-2 border-gray-300">
-                      30%
-                    </div>
-                    <div className="left-0 w-full transform  transition-all duration-500 bottom-[-12%] group-hover:bottom-0 opacity-0 group-hover:opacity-100 bg-black absolute px-3 py-2 text-white flex items-center gap-3 justify-between">
-                      <btn className="cursor-pointer border-r-2 pr-1 h-full text-[#9dad37] font-semibold text-[12px] ">
-                        Quick Look
-                      </btn>
-                      <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
-                      <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
-                        Add to cart
-                      </btn>
-                    </div>
-                  </div>
-                  <div className="text-center my-3">
-                    <h3 className="text-gray-500">Category</h3>
-                    <h1>name</h1>
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                        defaultChecked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                    </div>
-                    <p> price:$200</p>
-                  </div>
-                </div>
-                <div className="card-1">
-                  <div className="group  relative  w-full">
-                    <div className="w-full mx-auto">
-                      <img
-                        className="object-cover w-full md:h-[18rem]"
-                        src="https://depot.qodeinteractive.com/wp-content/uploads/2017/01/h1-product-6-550x550.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="absolute top-3 text-[#9dad37] right-3 py-[2px] px-2 border-2 border-gray-300">
-                      30%
-                    </div>
-                    <div className="left-0 w-full transform  transition-all duration-500 bottom-[-12%] group-hover:bottom-0 opacity-0 group-hover:opacity-100 bg-black absolute px-3 py-2 text-white flex items-center gap-3 justify-between">
-                      <btn className="cursor-pointer border-r-2 pr-1 h-full text-[#9dad37] font-semibold text-[12px] ">
-                        Quick Look
-                      </btn>
-                      <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
-                      <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
-                        Add to cart
-                      </btn>
+                    <div className="text-center my-3">
+                      <h1 className="text-[18px] uppercase mb-1 mt-2">
+                        {product?.title}
+                      </h1>
+                      <div className="rating">
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
+                          defaultChecked
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
+                        />
+                      </div>
+                      <p className="text-gray-400"> ${product?.price}</p>
                     </div>
                   </div>
-                  <div className="text-center my-3">
-                    <h3 className="text-gray-500">Category</h3>
-                    <h1>name</h1>
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                        defaultChecked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                    </div>
-                    <p> price:$200</p>
-                  </div>
-                </div>
-                <div className="card-1">
-                  <div className="group  relative  w-full">
-                    <div className="w-full mx-auto">
-                      <img
-                        className="object-cover w-full md:h-[18rem]"
-                        src="https://depot.qodeinteractive.com/wp-content/uploads/2017/01/h1-product-6-550x550.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="absolute top-3 text-[#9dad37] right-3 py-[2px] px-2 border-2 border-gray-300">
-                      30%
-                    </div>
-                    <div className="left-0 w-full transform  transition-all duration-500 bottom-[-12%] group-hover:bottom-0 opacity-0 group-hover:opacity-100 bg-black absolute px-3 py-2 text-white flex items-center gap-3 justify-between">
-                      <btn className="cursor-pointer border-r-2 pr-1 h-full text-[#9dad37] font-semibold text-[12px] ">
-                        Quick Look
-                      </btn>
-                      <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
-                      <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
-                        Add to cart
-                      </btn>
-                    </div>
-                  </div>
-                  <div className="text-center my-3">
-                    <h3 className="text-gray-500">Category</h3>
-                    <h1>name</h1>
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                        defaultChecked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                    </div>
-                    <p> price:$200</p>
-                  </div>
-                </div>
-                <div className="card-1">
-                  <div className="group  relative  w-full">
-                    <div className="w-full mx-auto">
-                      <img
-                        className="object-cover w-full md:h-[18rem]"
-                        src="https://depot.qodeinteractive.com/wp-content/uploads/2017/01/h1-product-6-550x550.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="absolute top-3 text-[#9dad37] right-3 py-[2px] px-2 border-2 border-gray-300">
-                      30%
-                    </div>
-                    <div className="left-0 w-full transform  transition-all duration-500 bottom-[-12%] group-hover:bottom-0 opacity-0 group-hover:opacity-100 bg-black absolute px-3 py-2 text-white flex items-center gap-3 justify-between">
-                      <btn className="cursor-pointer border-r-2 pr-1 h-full text-[#9dad37] font-semibold text-[12px] ">
-                        Quick Look
-                      </btn>
-                      <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
-                      <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
-                        Add to cart
-                      </btn>
-                    </div>
-                  </div>
-                  <div className="text-center my-3">
-                    <h3 className="text-gray-500">Category</h3>
-                    <h1>name</h1>
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                        defaultChecked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="mask mask-star-2 bg-orange-400 h-[20px] w-[20px]"
-                      />
-                    </div>
-                    <p> price:$200</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

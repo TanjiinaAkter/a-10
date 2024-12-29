@@ -25,11 +25,12 @@ const Header = () => {
     // category jodi theke thake then kichui dekhabo na ar na thakle category(men, women, kids, or decor r ki) show korbo
     setIsOpen(isOpen === category ? null : category);
   };
-
+  // proti ta topcategory ar thirdcategory niye notun object create hobe seta [] array er moddhe nibo
   const categoryMapping = {};
   allproducts.forEach((product) => {
     const { topCategory, thirdCategory } = product;
     if (!categoryMapping[topCategory]) {
+      // topcategory first time add hole nibo empty array er moddhe
       categoryMapping[topCategory] = [];
     }
     if (!categoryMapping[topCategory].includes(thirdCategory)) {
@@ -68,7 +69,7 @@ const Header = () => {
       </li>
       <li
         onClick={() => toggleDropDown("Women")}
-        className="mr-4 relative text-[1rem] ">
+        className="mr-4 cursor-pointer relative text-[1rem] ">
         WOMEN
         {isOpen === "Women" && (
           <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
@@ -98,10 +99,10 @@ const Header = () => {
       </li>
       <li
         onClick={() => toggleDropDown("Kids")}
-        className="mr-4  text-[1rem] font-semibold">
+        className="mr-4  cursor-pointer text-[1rem] font-semibold">
         KIDS
         {isOpen === "Kids" && (
-          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
+          <ul className="absolute  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
             {[
               "tshirts",
               "jeans",
@@ -119,7 +120,7 @@ const Header = () => {
                     `/brandproducts?topCategory=Kids&thirdCategory=${thirdCategory}`
                   );
                 }}
-                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
+                className=" hover:bg-[#9dad37db] rounded-sm cursor-pointer transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
                 {thirdCategory}
               </li>
             ))}
@@ -127,10 +128,10 @@ const Header = () => {
         )}
       </li>
       <li
-        onClick={() => toggleDropDown("Decor")}
-        className="mr-4  uppercase text-[1rem] font-semibold">
+        onClick={() => toggleDropDown("Homedecor")}
+        className="mr-4 cursor-pointer uppercase text-[1rem] font-semibold">
         Home Décor
-        {isOpen === "Decor" && (
+        {isOpen === "Homedecor" && (
           <ul className=" absolute cursor-pointer  z-40 shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
             {["decor"].map((thirdCategory, index) => (
               <li
@@ -139,7 +140,7 @@ const Header = () => {
                 onClick={() => {
                   setIsOpen(null);
                   navigate(
-                    `/brandproducts?topCategory=Decor&thirdCategory=${thirdCategory}`
+                    `/brandproducts?topCategory=Homedecor&thirdCategory=${thirdCategory}`
                   );
                 }}>
                 {thirdCategory}
