@@ -7,16 +7,22 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-// import { useEffect, useState } from "react";
-// import BrandProd from "../BrandProd/BrandProd";
+
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaHeart } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import useCarts from "../../hooks/useCarts";
 
 const BrandProducts = () => {
+  const [, refetch] = useCarts();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [searchParams] = useSearchParams();
   const topCategory = searchParams.get("topCategory");
   const thirdCategory = searchParams.get("thirdCategory");
@@ -32,6 +38,34 @@ const BrandProducts = () => {
     },
   });
   console.log(searchFromDropDown);
+
+  const handleAddToCart = (product) => {
+    if (user && user?.email) {
+      const itemData = {
+        title: product.title,
+        price: product.price,
+        photo: product.photo,
+        brandname: product.brandname,
+        color: product.color,
+        size: "M",
+        name: user?.displayName,
+        email: user?.email,
+      };
+      console.log(itemData);
+      axiosSecure.post("/carts", itemData).then((res) => {
+        if (res.data.insertedId) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${itemData.title} id added to the cart`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    }
+  };
   return (
     <div className="mt-24">
       <Helmet>
@@ -207,9 +241,11 @@ const BrandProducts = () => {
                           </btn>
                         </Link>
                         <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
-                        <btn className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
+                        <button
+                          onClick={() => handleAddToCart(product)}
+                          className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
                           Add to cart
-                        </btn>
+                        </button>
                       </div>
                     </div>
                     <div className="text-center my-3">
