@@ -273,16 +273,7 @@ const ProductDetail = () => {
             <p className="my-16">
               <b>DESCRIPTION </b> <br />
               <p className="mt-4 text-pretty text-gray-400">
-                ce romanized as Yossy, is a fictional anthropomorphic dinosaur
-                who appears in video games published by Nintendo. Yoshi debuted
-                in Super Mario World on the Super Nintendo Entertainment System
-                as Mario and sidekick. Yoshi later starred in platform and
-                puzzle games, including Super Mario World 2: Island,ory and olly
-                World. Yoshi also appears in many of the Mario spin-off games,
-                including Mario Party and Mario Kart, various Mario sports
-                games, andcrossover fighting game series Super Smash Bros. Yoshi
-                belongs to the species of the same name, which is characterized
-                by their variety of colors.
+              {singleDetail?.description}
               </p>
             </p>
           </TabPanel>

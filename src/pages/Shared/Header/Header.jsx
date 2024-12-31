@@ -30,16 +30,13 @@ const Header = () => {
   allproducts.forEach((product) => {
     const { topCategory, thirdCategory } = product;
     if (!categoryMapping[topCategory]) {
-      // topcategory first time add hole nibo empty array er moddhe ,,,,,,[top] mane hocche top :[] mane top er moddhe a=ekta array hobe jar moddhe value hobe tshirt, pant eigulo
-
-      // top(men) key newly add kora hole seta empty array hishebe initialize kora hobe
+      // topcategory first time add hole nibo empty array er moddhe
       categoryMapping[topCategory] = [];
     }
     if (!categoryMapping[topCategory].includes(thirdCategory)) {
       categoryMapping[topCategory].push(thirdCategory);
     }
   });
-  // result ta hobe like ....categoryMapping = {Men: ["tshirt", "pant"], Women: ["tops"]}// Value is an array 
 
   console.log(categoryMapping);
   const lists = (
@@ -47,112 +44,34 @@ const Header = () => {
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">
         <NavLink to="/">Home</NavLink>
       </li>
-      <li
-        className="flex items-center cursor-pointer select-none"
-        onClick={() => toggleDropDown("Men")}>
-        <span className="text-[1rem] font-semibold">MEN</span>
-        {isOpen === "Men" && (
-          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px] top-[27px] left-[-5rem] md:top-16 md:left-[-5rem] md:bg-[#000000C6] text-white  w-48 ">
-            {["tshirts", "jeans", "jackets", "pants"].map(
-              (thirdCategory, index) => (
+      {/* ekhane topcategory holo oije man women eigulo and thirdcat hocche men women er under e 'shirt','pant' eigulo so thirdCategory pabo ['shirt','pant'] emn.........jeta amra map kore ber kortesi dropdown e*/}
+      {Object.entries(categoryMapping).map(([topCategory, thirdCategories]) => (
+        <li
+          key={topCategory}
+          className="flex items-center cursor-pointer select-none"
+          onClick={() => toggleDropDown(topCategory)}>
+          <span className="text-[1rem] uppercase font-semibold">
+            {topCategory}
+          </span>
+          {isOpen === topCategory && (
+            <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px] top-[27px] left-[-5rem] md:top-16 md:left-[-5rem] md:bg-[#000000C6] text-white  w-48 ">
+              {thirdCategories.map((thirdCategory, index) => (
                 <li
                   key={index}
                   onClick={() => {
                     setIsOpen(null);
                     navigate(
-                      `/brandproducts?topCategory=Men&thirdCategory=${thirdCategory}`
+                      `/brandproducts?topCategory=${topCategory}&thirdCategory=${thirdCategory}`
                     );
                   }}
                   className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
                   {thirdCategory}
                 </li>
-              )
-            )}
-          </ul>
-        )}
-      </li>
-      <li
-        onClick={() => toggleDropDown("Women")}
-        className="mr-4 cursor-pointer relative text-[1rem] ">
-        WOMEN
-        {isOpen === "Women" && (
-          <ul className="absolute cursor-pointer  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
-            {[
-              "tshirts",
-              "jeans",
-              "jackets",
-              "tops",
-              "dresses",
-              "skirts",
-              "pants",
-            ].map((thirdCategory, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  setIsOpen(null);
-                  navigate(
-                    `/brandproducts?topCategory=Women&thirdCategory=${thirdCategory}`
-                  );
-                }}
-                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-                {thirdCategory}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-      <li
-        onClick={() => toggleDropDown("Kids")}
-        className="mr-4  cursor-pointer text-[1rem] font-semibold">
-        KIDS
-        {isOpen === "Kids" && (
-          <ul className="absolute  z-40   shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
-            {[
-              "tshirts",
-              "jeans",
-              "jackets",
-              "tops",
-              "dresses",
-              "skirts",
-              "pants",
-            ].map((thirdCategory, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  setIsOpen(null);
-                  navigate(
-                    `/brandproducts?topCategory=Kids&thirdCategory=${thirdCategory}`
-                  );
-                }}
-                className=" hover:bg-[#9dad37db] rounded-sm cursor-pointer transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full">
-                {thirdCategory}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-      <li
-        onClick={() => toggleDropDown("Homedecor")}
-        className="mr-4 cursor-pointer uppercase text-[1rem] font-semibold">
-        Home Décor
-        {isOpen === "Homedecor" && (
-          <ul className=" absolute cursor-pointer  z-40 shadow-lg rounded-md p-4 text-center bg-black text-[18px]  top-[27px] left-[-5rem] md:top-16 md:left-[-2rem] text-white  w-48 md:bg-[#000000C6]  ">
-            {["decor"].map((thirdCategory, index) => (
-              <li
-                className=" hover:bg-[#9dad37db] rounded-sm transition-all duration-500 px-2 py-2 ml-0 hover:text-white w-full"
-                key={index}
-                onClick={() => {
-                  setIsOpen(null);
-                  navigate(
-                    `/brandproducts?topCategory=Homedecor&thirdCategory=${thirdCategory}`
-                  );
-                }}>
-                {thirdCategory}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
     </div>
   );
 
