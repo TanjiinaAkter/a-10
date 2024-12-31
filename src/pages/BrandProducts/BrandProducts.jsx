@@ -18,8 +18,19 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useCarts from "../../hooks/useCarts";
+import { useState } from "react";
 
 const BrandProducts = () => {
+  const [filter, setFilter] = useState({
+    size: "",
+    color: "",
+    minPrice: 0,
+    maxPrice: 10000,
+    minDiscount: 0,
+    maxDiscount: 100,
+    availability: "",
+  });
+  const [sort, setSort] = useState("default");
   const [, refetch] = useCarts();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -29,10 +40,10 @@ const BrandProducts = () => {
 
   const axiosPublic = useAxiosPublic();
   const { data: searchFromDropDown = [] } = useQuery({
-    queryKey: ["searchFromDropDown", topCategory, thirdCategory],
+    queryKey: ["searchFromDropDown", topCategory, thirdCategory, sort, filter],
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/allproducts/DropDown?topCategory=${topCategory}&thirdCategory=${thirdCategory}`
+        `/allproducts/DropDown?topCategory=${topCategory}&thirdCategory=${thirdCategory}&sort=${sort}&color=${filter.color}&size=${filter.size}&minPrice=${filter.minPrice}&maxPrice=${filter.maxPrice}&minDiscount=${filter.minDiscount}&maxDiscount=${filter.maxDiscount}&availability=${filter.availability}`
       );
       return res.data;
     },
@@ -66,6 +77,10 @@ const BrandProducts = () => {
       });
     }
   };
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+  //console.log(sort)
   return (
     <div className="mt-24">
       <Helmet>
@@ -146,13 +161,25 @@ const BrandProducts = () => {
             <div>
               <h1 className="text-[1rem] uppercase">SIZE</h1>
               <ul className="mt-5 text-gray-400 ">
-                <li>red()</li>
-                <li>red</li>
-                <li>red</li>
-                <li>red</li>
-                <li>red</li>
+                <li>
+                  <input type="checkbox" name="" id="" />
+                  red
+                </li>
+                <li>
+                  <input type="checkbox" name="" id="" />
+                  red
+                </li>
+                <li>
+                  <input type="checkbox" name="" id="" />
+                  red
+                </li>
+                <li>
+                  <input type="checkbox" name="" id="" />
+                  red
+                </li>
               </ul>
             </div>
+            
             <div>
               <h1 className="text-[1rem] uppercase">Color</h1>
               <ul className="mt-5 text-gray-400 ">
@@ -202,7 +229,9 @@ const BrandProducts = () => {
                 </h2>
                 <div>
                   <select
-                    name=""
+                    onChange={handleSortChange}
+                    value={sort}
+                    name="sort"
                     id="priceSort"
                     className="border border-gray-300 rounded-sm px-3 py-2">
                     <option className="text-black" value="default">

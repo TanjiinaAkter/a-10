@@ -30,13 +30,17 @@ const Header = () => {
   allproducts.forEach((product) => {
     const { topCategory, thirdCategory } = product;
     if (!categoryMapping[topCategory]) {
-      // topcategory first time add hole nibo empty array er moddhe
+      // topcategory first time add hole nibo empty array er moddhe ,,,,,,[top] mane hocche top :[] mane top er moddhe a=ekta array hobe jar moddhe value hobe tshirt, pant eigulo
+
+      // top(men) key newly add kora hole seta empty array hishebe initialize kora hobe
       categoryMapping[topCategory] = [];
     }
     if (!categoryMapping[topCategory].includes(thirdCategory)) {
       categoryMapping[topCategory].push(thirdCategory);
     }
   });
+  // result ta hobe like ....categoryMapping = {Men: ["tshirt", "pant"], Women: ["tops"]}// Value is an array 
+
   console.log(categoryMapping);
   const lists = (
     <div className="flex flex-col space-y-4 md:space-y-0 lg:flex-row justify-between items-center  lg:text-white">
