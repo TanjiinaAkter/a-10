@@ -15,6 +15,13 @@ const AddProduct = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    data.quantitylarge = Number(data.quantitylarge);
+    data.quantitymedium = Number(data.quantitymedium);
+    data.quantitysmall = Number(data.quantitysmall);
+    data.price = Number(data.price);
+    data.discountedPrice = Number(data.discountedPrice);
+    data.discountedPercentage = Number(data.discountedPercentage);
+
     console.log(data);
     axiosSecure.post("/allproducts", data).then((res) => {
       console.log(res.data);

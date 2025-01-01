@@ -38,7 +38,7 @@ const ProductDetail = () => {
   //   },
   // });
   // console.log(singleUserCart);
-  //console.log(singleDetail);
+  console.log(singleDetail);
   useEffect(() => {
     if (id) {
       const prodDetail = allproducts.find((prod) => prod._id === id);
@@ -160,10 +160,12 @@ const ProductDetail = () => {
               {singleDetail?.title}
             </h3>
             <div className="flex justify-start items-center pt-2 gap-6">
-              <p className="text-lg text-black ">${singleDetail?.price}</p>
+              <p className="text-lg text-black ">
+                ${singleDetail?.discountedPrice}
+              </p>
               {/* //[discounted price] */}
               <p className="text-lg text-gray-400 ">
-                <del>${singleDetail?.discountedPrice}</del>
+                <del>${singleDetail?.price}</del>
               </p>
               {/* [discounted %] */}
               <p className="text-lg text-green-500 ">
@@ -273,7 +275,7 @@ const ProductDetail = () => {
             <p className="my-16">
               <b>DESCRIPTION </b> <br />
               <p className="mt-4 text-pretty text-gray-400">
-              {singleDetail?.description}
+                {singleDetail?.description}
               </p>
             </p>
           </TabPanel>
