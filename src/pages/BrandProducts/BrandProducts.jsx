@@ -36,7 +36,7 @@ const BrandProducts = () => {
   const [searchParams] = useSearchParams();
   const topCategory = searchParams.get("topCategory");
   const thirdCategory = searchParams.get("thirdCategory");
-
+  const [cartStatus, setCartStatus] = useState({});
   const axiosPublic = useAxiosPublic();
   const { data: searchFromDropDown = [] } = useQuery({
     queryKey: ["searchFromDropDown", topCategory, thirdCategory, sort, filter],
@@ -52,27 +52,37 @@ const BrandProducts = () => {
 
   const handleAddToCart = (product) => {
     if (user && user?.email) {
-      const itemData = {
-        title: product.title,
-        price: product.price,
-        photo: product.photo,
-        brandname: product.brandname,
-        color: product.color,
-        size: "M",
-        name: user?.displayName,
-        email: user?.email,
-      };
-      console.log(itemData);
-      axiosSecure.post("/carts", itemData).then((res) => {
-        if (res.data.insertedId) {
-          refetch();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${itemData.title} id added to the cart`,
-            showConfirmButton: false,
-            timer: 1500,
+      axiosSecure.get(`/carts/single?email=${user?.email}`).then((res) => {
+        const existingProduct = res.data.find(
+          (item) => item.productId === product._id
+        );
+        if (!existingProduct) {
+          const itemData = {
+            title: product.title,
+            price: product.price,
+            photo: product.photo,
+            brandname: product.brandname,
+            color: product.color,
+            size: "M",
+            name: user?.displayName,
+            email: user?.email,
+            productId: product._id,
+          };
+          axiosSecure.post("/carts", itemData).then((res) => {
+            if (res.data.insertedId) {
+              setCartStatus((prev) => ({ ...prev, [product._id]: true }));
+              refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${itemData.title} id added to the cart`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
           });
+        } else {
+          return Swal.fire("product is already added");
         }
       });
     }
@@ -337,9 +347,10 @@ const BrandProducts = () => {
                         </Link>
                         <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
                         <button
+                          disabled={cartStatus[product._id]}
                           onClick={() => handleAddToCart(product)}
                           className="cursor-pointer text-[#9dad37] font-semibold h-full border-l-2 pl-1 text-[12px] ">
-                          Add to cart
+                          {cartStatus[product._id] ? "Added" : "Add to cart"}
                         </button>
                       </div>
                     </div>
