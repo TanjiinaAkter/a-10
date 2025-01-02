@@ -125,7 +125,13 @@ const Header = () => {
         {/* ====================NAVBAR-3======================= */}
         <div className="flex mt-4 md:mt-0 items-center  md:justify-center justify-center">
           <FaSearch className="text-4xl mr-3 md:text-[2.5rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full"></FaSearch>
-          <FaRegHeart className="text-4xl mr-3 md:text-[2.5rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
+          {user && user?.email ? (
+            <Link to="/dashboard/wishlist">
+              <FaRegHeart className="text-4xl mr-3 md:text-[2.5rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
+            </Link>
+          ) : (
+            ""
+          )}
           <span className=" text-3xl hidden md:block text-white text-center mx-2">
             |
           </span>

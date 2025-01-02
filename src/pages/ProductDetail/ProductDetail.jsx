@@ -23,21 +23,22 @@ import useCarts from "../../hooks/useCarts";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
+  const [isInCart, setIsInCart] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [allproducts] = useAllproducts();
   const { id } = useParams();
   const [singleDetail, setSingleDetail] = useState(null);
   const [, refetch] = useCarts();
-  // const { data: singleUserCart = [], refetch } = useQuery({
-  //   queryKey: ["singleUserCart", user?.email],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/carts/single?email=${user?.email}`);
-  //     console.log(res.data);
-  //     return res.data;
-  //   },
-  // });
-  // console.log(singleUserCart);
+  useEffect(() => {
+    if (user?.email && id) {
+      axiosSecure.get(`/carts/single?email=${user?.email}`).then((res) => {
+        const cartItems = res.data || [];
+        const found = cartItems.some((item) => item.productId === id);
+        setIsInCart(found);
+      });
+    }
+  }, [axiosSecure, id, user]);
   console.log(singleDetail);
   useEffect(() => {
     if (id) {
@@ -58,7 +59,7 @@ const ProductDetail = () => {
     ? [singleDetail.photo, singleDetail.photo, singleDetail.photo]
     : [];
   const handleAddToCart = (singleDetail) => {
-    // console.log("item info", singleDetail);
+    //console.log("item info", singleDetail);
 
     if (user && user?.email) {
       const itemData = {
@@ -70,14 +71,15 @@ const ProductDetail = () => {
         size: selectedSize,
         name: user?.displayName,
         email: user?.email,
+        productId: singleDetail._id,
       };
-      //console.log("item info", itemData);
+
       axiosSecure
         .post("/carts", itemData)
         .then((res) => {
-          //console.log(res.data);
           if (res.data.insertedId) {
             refetch();
+            setIsInCart(true);
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -248,9 +250,11 @@ const ProductDetail = () => {
           <div className="join flex flex-wrap gap-2 my-12">
             <button
               onClick={() => handleAddToCart(singleDetail)}
-              // onClick={addInCartPage} //Add full product to cart on button click
-              className="btn uppercase rounded-none  border-1 text-[12px] text-white bg-black hover:bg-[#b7c940] hover:text-white">
-              Add To Cart <FaShoppingBag></FaShoppingBag>
+              disabled={isInCart}
+              //btn er css styles condition
+              className={`btn ${isInCart}? 'btn-disabled' :'btn-primary' uppercase rounded-none  border-1 text-[12px] text-white bg-black hover:bg-[#b7c940] hover:text-white`}>
+              {isInCart ? "Already in Cart" : "Add to Cart"}
+              <FaShoppingBag></FaShoppingBag>
             </button>
             <button className="btn text-[12px] uppercase border-1 rounded-none border-black text-gray-400 bg-transparent hover:bg-[#b7c940] hover:text-white">
               Add to wishlist <FaHeart></FaHeart>

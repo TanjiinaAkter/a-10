@@ -1,10 +1,40 @@
 import { MdDelete } from "react-icons/md";
 import DashboardBtn from "../../../components/dashboardBtn";
-
+import useUserWishlist from "../../../hooks/useUserWishlist";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { useState } from "react";
+import userCarts from "../../../hooks/useCarts";
 const WishList = () => {
+  const [addedToCart, setAddedToCart] = useState({});
+  const { user } = useAuth();
+  const [, refetch] = userCarts();
+  const axiosSecure = useAxiosSecure();
+  const [wishlist] = useUserWishlist();
+  const handleAddToCart = (list) => {
+    if (user && user?.email) {
+      axiosSecure.post("/carts", list).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          if (res.data.insertedId) {
+            setAddedToCart((prev) => ({ ...prev, [list._id]: true }));
+            refetch();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${list.title} id added to the cart`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        }
+      });
+    }
+  };
   return (
     <div className="md:mt-12">
-       <DashboardBtn></DashboardBtn>
+      <DashboardBtn></DashboardBtn>
       <p className="text-center mb-4 mt-[3rem] md:mt-0">Items you love</p>
       <hr className="w-[20%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
@@ -21,42 +51,43 @@ const WishList = () => {
 
               <th>Product Name</th>
               <th>Price</th>
-              <th>Stock</th>
+              <th>Color</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {/* row 1 */}
-            <tr className="border-b-2 border-gray-200 ">
-              <th>1</th>
+            {wishlist.map((list, index) => (
+              <tr key={list._id} className="border-b-2 border-gray-200 ">
+                <th>{index + 1}</th>
 
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-              <td>
-                <div className="flex gap-2">
-                  <button className="badge text-white bg-[#9dad37] py-[13px] px-6 font-semibold">
-                    Add to cart
-                  </button>
-                  <button className=" px-1 rounded-md hover:scale-105 transition-all duration-500 text-red-600 text-center py-1 bg-gray-200 text-2xl font-semibold">
-                    <MdDelete />
-                  </button>
-                </div>
-              </td>
-            </tr>
-            {/* row 2 */}
-            <tr className="hover">
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
+                <td>{list.title}</td>
+                <td>{list.price}</td>
+                <td>{list.color}</td>
+                <td>
+                  <div className="flex gap-4">
+                    {addedToCart[list._id] ? (
+                      <button
+                        disabled
+                        onClick={() => handleAddToCart(list)}
+                        className="badge text-white hover:scale-105 bg-[#9dad37] py-[13px] px-5 hover:bg-black transition-all duration-500 font-semibold">
+                        Added
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAddToCart(list)}
+                        className="badge text-white hover:scale-105 bg-[#9dad37] py-[13px] px-5 hover:bg-black transition-all duration-500 font-semibold">
+                        Add to cart
+                      </button>
+                    )}
+
+                    <button className=" px-1 rounded-md hover:scale-110 transition-all duration-300 text-red-600 text-center py-1 bg-gray-200 text-2xl font-semibold">
+                      <MdDelete />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
