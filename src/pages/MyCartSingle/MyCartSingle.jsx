@@ -1,25 +1,32 @@
 import { MdEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useState } from "react";
+// import { Link } from "react-router-dom";
 // import { useState, useEffect } from "react";
 
-const MycartSingle = ({ item, handleDelete, onTotalChange }) => {
-  //   const {
-  //     // photo,
-  //     // name,
-  //     // brandname,
-  //     // type,
-  //     // price,
-  //     // description,
-  //     // _id,
-  //     // rating,
-  //     quantity: initialQuantity,
-  //   } = item;
+const MycartSingle = ({ item }) => {
+  const {
+    photo,
+
+    brandname,
+
+    price,
+
+    _id,
+
+    quantity: initialQuantity,
+  } = item;
 
   // Initialize state with the passed quantity
-  //   const [quantity, setQuantity] = useState(
-  //     initialQuantity > 1 ? initialQuantity : 1
-  //   );
+  const [quantity, setQuantity] = useState(
+    initialQuantity > 1 ? initialQuantity : 1
+  );
+
+  const addTo = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+  };
   //   const addto = () => {
   //     const newQuantity = quantity + 1;
   //     setQuantity(newQuantity);
@@ -67,24 +74,24 @@ const MycartSingle = ({ item, handleDelete, onTotalChange }) => {
   //   }, [quantity, _id, initialQuantity]);
 
   return (
-    <div className="item pr-1 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
-      <div className=" bg-[#f3f3f3] flex justify-between">
+    <div className="item pr-1 my-5 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
+      <div className=" bg-[#f3f3f3] h-[6rem] w-[6rem]  items-center flex ">
         {/* {item.photo} */}
         <img
-          className="w-[6rem] h-full  object-contain"
-          src="https://i.ibb.co.com/QMtgGxK/images-removebg-preview.png"
+          className="h-full w-full  object-contain"
+          src={item.photo}
           alt=""
         />
       </div>
       <div className="flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-4">
         {/* {name}  */}
         <h3 className="text-[19px] md:text-[1.1rem] text-gray-400 ">
-          Rose Holdback
+          {item.title}
         </h3>
         {/* {price} */}
-        <h6 className="text-[19px] md:text-lg  text-gray-400">$560 </h6>
-        {/* {item.brandname} */}
-        <h2 className="text-[1rem] py-2 md:text-lg ">brandname</h2>
+        <h6 className="text-[19px] md:text-lg  text-gray-400">${item.price}</h6>
+
+        <h2 className="text-[1rem] py-2 md:text-lg "> {item.brandname}</h2>
         <div className="flex flex-row items-center justify-center">
           <button className="border border-gray-300 p-3">
             {/* onClick={minusTo} */}
@@ -96,11 +103,10 @@ const MycartSingle = ({ item, handleDelete, onTotalChange }) => {
             type="number"
             id="numberInput"
             name="number"
-            // value={quantity}
+            value={quantity}
             readOnly
           />
-          <button className="border border-gray-300 p-3">
-            {/* //onClick={addto} */}
+          <button onClick={addTo} className="border border-gray-300 p-3">
             <IoIosArrowUp className="text-gray-600" />
           </button>
         </div>

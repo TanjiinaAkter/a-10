@@ -66,7 +66,7 @@ const Banner = ({ handleScroll }) => {
           onSlideChange={handleSlideChange}
           className="mySwiper custom-swiper">
           <SwiperSlide className="relative ">
-            <img src="https://i.ibb.co/nbGF2z3/apple-1282241-640.jpg" alt="" />
+            <img src="https://i.ibb.co.com/Kh5jFWL/freestocks-3-Q3ts-J01nc-unsplash.jpg" alt="" />
             <div className="text-div ">
               <div className="absolute text">
                 <h2
@@ -83,7 +83,7 @@ const Banner = ({ handleScroll }) => {
             </div>
           </SwiperSlide>
           <SwiperSlide className="relative">
-            <img src="https://i.ibb.co/X5Q0JZn/laptop-5673901-640.jpg" alt="" />{" "}
+            <img src="https://i.ibb.co.com/sv4CFY5/istockphoto-1224014607-612x612.jpg" alt="" />{" "}
             <div className="text-div ">
               <div className="absolute text">
                 <h2
@@ -101,7 +101,7 @@ const Banner = ({ handleScroll }) => {
           </SwiperSlide>
           <SwiperSlide className="relative">
             <img
-              src="https://i.ibb.co/sQGBYK5/headphones-4434212-640.jpg"
+              src="https://i.ibb.co.com/p0rTfgw/jezael-melgoza-lay-Mb-SJ3-YOE-unsplash.jpg"
               alt=""
             />
             <div className="text-div ">
@@ -123,8 +123,8 @@ const Banner = ({ handleScroll }) => {
       </div>
       {/* row-3 */}
       <div className=" flex flex-col gap-4 row-span-3">
-        <img src="https://i.ibb.co/f1kpPH7/tv-627876-640.jpg" alt="" />
-        <img src="https://i.ibb.co/WG9n2PP/smart-watch-889639-640.jpg" alt="" />
+        <img src="https://i.ibb.co.com/QndHBVf/istockphoto-1301194623-612x612.webp" alt="" />
+        <img src="https://i.ibb.co.com/xCGrP0N/istockphoto-495737517-612x612.webp" alt="" />
       </div>
     </div>
   );

@@ -8,17 +8,19 @@ import "./MyCart.css";
 // import { MdDeleteOutline, MdEdit } from "react-icons/md";
 // import { useState } from "react";
 // import MycartSingle from "../MycartSingle/MycartSingle";
-import MycartSingle from "../MyCartSingle/MyCartSingle";
+import MyCartSingle from "../MyCartSingle/MyCartSingle";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
-
+import useCarts from "../../hooks/useCarts";
+import { useState } from "react";
 const MyCart = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-
+  const [cart, refetch] = useCarts();
+ 
+  console.log(cart);
   //   const [totals, setTotals] = useState({}); // Store totals for each item
 
   // ekhane jegulo add to cart korechi seta nicchi
@@ -90,16 +92,11 @@ const MyCart = () => {
         </h1>
         {/* ============== 2nd row ================*/}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mb-5">
-          <div className="col-span-1 md:col-span-2 lg:col-span-2 space-y-4 m-3 ">
+          <div className="col-span-1 md:col-span-2 lg:col-span-2 space-y-4 m-3 md:m-0 ">
             <div>
-              {/* {cartItems.map((item) => ( */}
-              <MycartSingle
-              // key={item._id}
-              // item={item}
-              // onTotalChange={handleTotalChange}
-              //  handleDelete={handleDelete}
-              ></MycartSingle>
-              {/* ))} */}
+              {cart.map((item) => (
+                <MyCartSingle key={item._id} item={item}></MyCartSingle>
+              ))}
             </div>
             <hr className="my-2" />
           </div>
