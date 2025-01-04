@@ -15,11 +15,12 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import useCarts from "../../hooks/useCarts";
 import { useState } from "react";
+import Breadcrumb from "../../components/Breadcrumb";
 const MyCart = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [cart, refetch] = useCarts();
- 
+
   console.log(cart);
   //   const [totals, setTotals] = useState({}); // Store totals for each item
 
@@ -80,13 +81,14 @@ const MyCart = () => {
       <Helmet>
         <title>Havenique | MyCart</title>
       </Helmet>
+      <Breadcrumb></Breadcrumb>
       {/* <button className="btn ml-6 mt-8 mb-3 rounded-sm bg-[#b7c940] text-white text-xl">
         <Link to="/" className="flex items-center gap-1">
           <FaArrowLeftLong />
           Back To Home
         </Link>
       </button> */}
-      <div className="mx-auto my-32 md:w-[80%]">
+      <div className="mx-auto my-5 md:w-[83%]">
         <h1 className="text-center mb-8 text-3xl font-semibold">
           My <span className="text-[#b7c940]">Shopping</span> bag
         </h1>
