@@ -132,7 +132,7 @@ const MyCart = () => {
                 </button>
               </Link>
               <Link to="/">
-                <button className="px-3 py-[6px] border-black hover:bg-black hover:text-white border text-sm uppercase font-semibold  mb-1 w-full bg-white text-black inline-block">
+                <button className="px-3 py-[6px] border-black hover:bg-black hover:text-white hover:transition-all duration-1000 border text-sm uppercase font-semibold  mb-1 w-full bg-white text-black inline-block">
                   Continue to shopping
                 </button>
               </Link>

@@ -10,6 +10,8 @@ import useCarts from "../../hooks/useCarts";
 // import { useState, useEffect } from "react";
 
 const MycartSingle = ({ item }) => {
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
   const [, refetch] = useCarts();
   console.log("check item props", item);
   const { user } = useAuth();
@@ -58,13 +60,20 @@ const MycartSingle = ({ item }) => {
     if (user?.email) {
       axiosSecure
         .patch(`/carts/single?email=${user?.email}`, {
-          color: item.color,
-          size: item.size,
+          color: selectedColor,
+          size: selectedSize,
+          productId: item._id,
         })
         .then((res) => {
           console.log(res.data);
         });
     }
+  };
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
   };
   return (
     <div className="border shadow-sm border-gray-200 p-4 item pr-1 my-5 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
@@ -109,8 +118,94 @@ const MycartSingle = ({ item }) => {
         </h6>
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <div className="bg-[#b7c940] text-xl text-white px-2 py-[8px]">
-          <MdEdit onClick={handleUserEditProduct(item)} />
+        <div className="bg-[#b7c940] text-xl text-white px-2 py-[4px]">
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <button
+            className=""
+            onClick={() =>
+              document.getElementById(`modal_${item._id}`).showModal()
+            }>
+            <MdEdit />
+          </button>
+          {item && (
+            <dialog id={`modal_${item._id}`} className="modal">
+              <div className="modal-box max-h-full rounded-none">
+                <div className="border flex p-1 justify-between items-center gap-2 text-black border-gray-400">
+                  <div className="w-[5rem] bg-gray-200 h-[5rem] ">
+                    <img
+                      className="w-full h-full object-cover"
+                      src={item.photo}
+                      alt=""
+                    />
+                  </div>
+                  <h5 className="text-sm font-semibold text-gray-500">
+                    {item.title}
+                  </h5>
+                  <h5 className="text-sm font-semibold text-gray-500">
+                    {item.brandname}
+                  </h5>
+                  <h5 className="text-sm font-semibold text-gray-500">
+                    price: {item.price}
+                  </h5>
+                </div>
+                <div className="text-black my-7">
+                  <h5 className="text-base font-semibold text-gray-500">
+                    Change size From- {item.size} to {selectedSize}
+                  </h5>
+                  <div className="flex gap-3 my-3  items-center">
+                    {["S", "M", "L"].map((size) => (
+                      <button
+                        type="button"
+                        key={size}
+                        className={`px-[11px] py-[6px] border text-sm rounded-full font-medium transition-all ${
+                          selectedSize === size
+                            ? "bg-purple-600 text-white "
+                            : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                        }`}
+                        onClick={() => handleSizeClick(size)}>
+                        {/* ekahne amra key theke pawa btn name ta diye dicchi ui te
+                    show korar jonno */}
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="text-base font-semibold text-gray-500">
+                  <h5 className="my-2">
+                    Change color from- {item.color} to {selectedColor}
+                  </h5>
+                  <div className="flex items-center gap-3">
+                    {["red", "white", "blue", "black"].map((color) => (
+                      <p
+                        className={` ${
+                          selectedColor?.toLowerCase() === color?.toLowerCase()
+                            ? " bg-violet-500 border-none  text-white"
+                            : ""
+                        }  text-black cursor-pointer px-[8px] py-[10px] bg-gray-200 hover rounded-full`}
+                        onClick={() => handleColorClick(color)}
+                        key={color}>
+                        {color}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex my-7  w-full">
+                  <button
+                    className="bg-black hover:bg-gray-200 hover:scale-105 transition-all duration-1000 text-white  w-full px-3 py-2"
+                    onClick={() => handleUserEditProduct(item)}>
+                    Add to cart
+                  </button>
+                </div>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+          )}
         </div>
         <div className="bg-red-500 text-xl rounded-r-sm text-white px-2 py-[8px]">
           <MdDeleteOutline onClick={() => handleDelete(_id)} />
