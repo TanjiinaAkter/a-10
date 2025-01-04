@@ -5,6 +5,7 @@ import { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import useCarts from "../../hooks/useCarts";
+import Swal from "sweetalert2";
 
 // import { Link } from "react-router-dom";
 // import { useState, useEffect } from "react";
@@ -12,7 +13,7 @@ import useCarts from "../../hooks/useCarts";
 const MycartSingle = ({ item }) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [, refetch] = useCarts();
+  const [cart, refetch] = useCarts();
   console.log("check item props", item);
   const { user } = useAuth();
   const [itemPrice, setItemPrice] = useState(
@@ -37,7 +38,28 @@ const MycartSingle = ({ item }) => {
       return updateQuantityAndPrice(newQuantity, newPrice, item);
     }
   };
-
+  const handleDelete = (item) => {
+    console.log(item._id);
+    if (user?.email) {
+      axiosSecure
+        .delete(`/carts/single/${item?._id}`, {
+          id: item._id,
+        })
+        .then((res) => {
+          refetch();
+          console.log(res.data);
+          if (res.data.deletedCount === 1) {
+            Swal.fire({
+              position: "top-end",
+              icon: "Deleted",
+              title: `${item.title} has been deleted!!`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    }
+  };
   const updateQuantityAndPrice = (quantity, itemPrice, item) => {
     if (user?.email) {
       axiosSecure
@@ -76,7 +98,7 @@ const MycartSingle = ({ item }) => {
     setSelectedColor(color);
   };
   return (
-    <div className="border shadow-sm border-gray-200 p-4 item pr-1 my-5 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
+    <div className="border hover:bg-gray-100 shadow-sm border-gray-200 p-4 item pr-1 my-5 flex flex-wrap lg:flex-nowrap items-center justify-center md:justify-between md:flex-row  lg:col-span-2 md:col-span-3 gap-[8px]">
       <div className=" bg-[#f3f3f3] h-[6rem] w-[6rem]  items-center flex ">
         {/* {item.photo} */}
         <img
@@ -118,7 +140,7 @@ const MycartSingle = ({ item }) => {
         </h6>
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <div className="bg-[#b7c940] text-xl text-white px-2 py-[4px]">
+        <div className="bg-[#b7c940] hover:bg-black hover:transition-all hover:scale-110 text-xl text-white px-2 py-[4px]">
           {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
             className=""
@@ -200,15 +222,15 @@ const MycartSingle = ({ item }) => {
                 <div className="modal-action">
                   <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
+                    <button className="btn rounded-none">Close</button>
                   </form>
                 </div>
               </div>
             </dialog>
           )}
         </div>
-        <div className="bg-red-500 text-xl rounded-r-sm text-white px-2 py-[8px]">
-          <MdDeleteOutline onClick={() => handleDelete(_id)} />
+        <div className="bg-red-500 text-xl hover:bg-black hover:transition-all hover:scale-110 duration-500 rounded-r-sm text-white px-2 py-[8px]">
+          <MdDeleteOutline onClick={() => handleDelete(item)} />
         </div>
       </div>
     </div>
