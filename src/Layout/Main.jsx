@@ -8,7 +8,7 @@ import useCarts from "../hooks/useCarts";
 const Main = () => {
   const { user } = useAuth();
   const location = useLocation();
-  const [cart, refetch] = useCarts();
+  const [cart] = useCarts();
   const [subTotal, setSubTotal] = useState(0);
   const [calculation, setcalculation] = useState(0);
 
