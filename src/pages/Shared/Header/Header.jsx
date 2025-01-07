@@ -38,7 +38,7 @@ const Header = () => {
     }
   });
 
-  console.log(categoryMapping);
+  //console.log(categoryMapping);
   const lists = (
     <div className="flex flex-col space-y-4 md:space-y-0 lg:flex-row justify-between items-center  lg:text-white">
       <li className="mr-4 text-green uppercase text-[1rem] font-semibold">

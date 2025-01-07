@@ -19,7 +19,7 @@ const Main = () => {
         (acc, cartItem) => acc + (cartItem.itemPrice || cartItem.price),
         0
       );
-      console.log(subtotalPrice);
+      //console.log(subtotalPrice);
       const tax = (subtotalPrice * 15) / 100;
       const finalCalculation = subtotalPrice + tax;
       setSubTotal(subtotalPrice);
