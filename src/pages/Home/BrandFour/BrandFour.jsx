@@ -7,8 +7,6 @@ import BrandOneCart from "../BrandOneCart/BrandOneCart";
 
 const BrandFour = () => {
   const [allproducts] = useAllproducts();
-
-  console.log(allproducts);
   const [decor, setDecor] = useState(null);
   useEffect(() => {
     if (allproducts) {

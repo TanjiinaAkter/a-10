@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
+import SubTotalCard from "../../components/subTotalCard";
 
 const CheckOut = () => {
+  const { subTotal, calculation } = useOutletContext();
   return (
     <div>
       <Breadcrumb className=" pl-8 md:pl-0 md:mt-0 "></Breadcrumb>
@@ -121,29 +123,9 @@ const CheckOut = () => {
           </div>
           <div>
             {/*================= SUBTOTAL ======================*/}
-            <div className="mt-[10rem]  shadow-md p-4 rounded-sm h-max">
-              <h2 className="uppercase font-semibold">Order Summary</h2>
-              <hr className="my-2 bg-black w-full h-[2px]" />
-              <div className="flex justify-between items-end">
-                {/* {subtotal} */}
-                <h2 className=" font-semibold mt-6">subtotal</h2>
-                <p className=" font-semibold">$230</p>
-              </div>
-              <hr className="my-1" />
-              <div className="flex justify-between items-end">
-                <h2 className="font-semibold  mt-6">Tax</h2>
-                <p className="font-semibold">$00</p>
-              </div>
-              <hr className="my-1" />
-              <div className="flex justify-between items-end">
-                <h2 className=" font-bold uppercase mt-6">Order Total</h2>
-                <p className="font-semibold">$30</p>
-              </div>
-              <hr className="my-1" />
-              <p className="text-gray-400 font-semibold my-4 text-[14px]">
-                Tax included & shipping calculated at checkout
-              </p>
-            </div>
+            <SubTotalCard
+              subTotal={subTotal}
+              calculation={calculation}></SubTotalCard>
           </div>
         </div>
       </div>
