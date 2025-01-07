@@ -46,9 +46,9 @@ const MycartSingle = ({ item }) => {
           id: item._id,
         })
         .then((res) => {
-          refetch();
           console.log(res.data);
           if (res.data.deletedCount === 1) {
+            refetch();
             Swal.fire({
               position: "top-end",
               icon: "Deleted",

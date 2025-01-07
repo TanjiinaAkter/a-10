@@ -4,10 +4,11 @@
 import "./MyCart.css";
 import SubTotalCard from "../../components/subTotalCard";
 import MyCartSingle from "../MyCartSingle/MyCartSingle";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useCarts from "../../hooks/useCarts";
 import Breadcrumb from "../../components/Breadcrumb";
+import {  FaRegArrowAltCircleRight } from "react-icons/fa";
 const MyCart = () => {
   const { subTotal, calculation } = useOutletContext();
   const [cart] = useCarts();
@@ -30,6 +31,14 @@ const MyCart = () => {
               {cart.map((item) => (
                 <MyCartSingle key={item._id} item={item}></MyCartSingle>
               ))}
+              {cart.length === 0 && (
+                <Link to="/">
+                  <p className="my-20 flex justify-center gap-1 items-center text-[20px] font-semibold text-center mx-auto text-gray-500 ">
+                    Your cart is empty, continue shopping!!!
+                    <FaRegArrowAltCircleRight className="text-2xl" />
+                  </p>
+                </Link>
+              )}
             </div>
             <hr className="my-2" />
           </div>

@@ -13,8 +13,8 @@ const Main = () => {
   const [calculation, setcalculation] = useState(0);
 
   useEffect(() => {
+    // item age theke add na thakle first item 1 tar price show korbo
     if (user?.email && cart.length > 0) {
-      // item age theke add na thakle first item 1 tar price show korbo
       const subtotalPrice = cart.reduce(
         (acc, cartItem) => acc + (cartItem.itemPrice || cartItem.price),
         0
@@ -24,9 +24,11 @@ const Main = () => {
       const finalCalculation = subtotalPrice + tax;
       setSubTotal(subtotalPrice);
       setcalculation(finalCalculation);
-      refetch();
+    } else {
+      setSubTotal(0);
+      setcalculation(0);
     }
-  }, [cart, refetch, user]);
+  }, [cart, user]);
   console.log(subTotal, calculation);
   const isLoginOrReg =
     location.pathname === "/login" || location.pathname === "/registration";
