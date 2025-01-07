@@ -14,8 +14,9 @@ const Main = () => {
 
   useEffect(() => {
     if (user?.email && cart.length > 0) {
+      // item age theke add na thakle first item 1 tar price show korbo
       const subtotalPrice = cart.reduce(
-        (acc, cartItem) => acc + (cartItem.itemPrice || 0),
+        (acc, cartItem) => acc + (cartItem.itemPrice || cartItem.price),
         0
       );
       console.log(subtotalPrice);

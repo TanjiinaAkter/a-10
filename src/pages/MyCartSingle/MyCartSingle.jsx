@@ -11,10 +11,10 @@ import Swal from "sweetalert2";
 // import { useState, useEffect } from "react";
 
 const MycartSingle = ({ item }) => {
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [cart, refetch] = useCarts();
-  console.log("check item props", item);
+  const [selectedSize, setSelectedSize] = useState(item.size);
+  const [selectedColor, setSelectedColor] = useState(item.color);
+  const [, refetch] = useCarts();
+  console.log(selectedSize, selectedColor);
   const { user } = useAuth();
   const [itemPrice, setItemPrice] = useState(
     () => (item.quantity || 1) * item.price
@@ -63,7 +63,7 @@ const MycartSingle = ({ item }) => {
   const updateQuantityAndPrice = (quantity, itemPrice, item) => {
     if (user?.email) {
       axiosSecure
-        .patch(`/carts/single?email=${user?.email}`, {
+        .patch(`/carts/single/${item._id}`, {
           quantity,
           itemPrice,
           // ekhane item._id ditesi karon productId dile main all cart er item er props add hoye change hobe
@@ -81,9 +81,9 @@ const MycartSingle = ({ item }) => {
   const handleUserEditProduct = (item) => {
     if (user?.email) {
       axiosSecure
-        .patch(`/carts/single?email=${user?.email}`, {
-          color: selectedColor,
-          size: selectedSize,
+        .patch(`/carts/single/${item._id}`, {
+          color: selectedColor || item.color,
+          size: selectedSize || item.size,
           productId: item._id,
         })
         .then((res) => {
@@ -212,10 +212,10 @@ const MycartSingle = ({ item }) => {
                     ))}
                   </div>
                 </div>
-                <div className="flex my-7  w-full">
-                  <button
-                    className="bg-black hover:bg-gray-200 hover:scale-105 transition-all duration-1000 text-white  w-full px-3 py-2"
-                    onClick={() => handleUserEditProduct(item)}>
+                <div
+                  onClick={() => handleUserEditProduct(item)}
+                  className="flex my-7  w-full">
+                  <button className="bg-black hover:bg-gray-200 hover:scale-105 transition-all duration-1000 text-white  w-full px-3 py-2">
                     Add to cart
                   </button>
                 </div>
@@ -229,8 +229,10 @@ const MycartSingle = ({ item }) => {
             </dialog>
           )}
         </div>
-        <div className="bg-red-500 text-xl hover:bg-black hover:transition-all hover:scale-110 duration-500 rounded-r-sm text-white px-2 py-[8px]">
-          <MdDeleteOutline onClick={() => handleDelete(item)} />
+        <div
+          onClick={() => handleDelete(item)}
+          className="bg-red-500 text-xl hover:bg-black hover:transition-all hover:scale-110 duration-500 rounded-r-sm text-white px-2 py-[8px]">
+          <MdDeleteOutline />
         </div>
       </div>
     </div>

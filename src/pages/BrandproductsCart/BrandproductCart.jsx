@@ -30,6 +30,7 @@ const BrandproductCart = ({ product }) => {
         name: user?.displayName,
         email: user?.email,
         productId: product._id,
+        quantity: 1,
       };
       axiosSecure.post("/carts", itemData).then((res) => {
         if (res.data.insertedId) {

@@ -72,6 +72,7 @@ const ProductDetail = () => {
         name: user?.displayName,
         email: user?.email,
         productId: singleDetail._id,
+        quantity: 1,
       };
 
       axiosSecure
