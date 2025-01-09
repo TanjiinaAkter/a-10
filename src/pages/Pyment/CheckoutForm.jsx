@@ -4,10 +4,12 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useCarts from "../../hooks/useCarts";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const CheckoutForm = () => {
+  const navigate = useNavigate();
   const [transactionId, setTransactionId] = useState("");
   const [calculation, setCalculation] = useState(0);
-  const [cart] = useCarts();
+  const [cart, refetch] = useCarts();
   const [clientSecret, setClientSecret] = useState("");
   const { user } = useAuth();
   // 1.ekhane publishable key deyar pore........ single user er total purchase price ta niye server e send kortesi secret key pete karon sei client sk diye payment korte hobe,client secret key pawar mane hocche sob thik thak ase
@@ -85,14 +87,31 @@ const CheckoutForm = () => {
     } else {
       console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Payment done successfully!!!!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
         setTransactionId(paymentIntent.id);
+        //5. SAVE ON DATABASE
+        const payment = {
+          email: user?.email,
+          price: calculation,
+          transactionId: paymentIntent.id,
+          date: new Date(),
+          // jei item add korse oi id gulo nibo
+          cartIds: cart.map((item) => item._id),
+          status: "pending",
+        };
+        axiosSecure.post("/payments", payment).then((res) => {
+          console.log(res.data);
+          refetch();
+          if (res.data?.result?.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Payment done successfully!!!!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/dashboard/orderhistory");
+          }
+        });
       }
     }
   };

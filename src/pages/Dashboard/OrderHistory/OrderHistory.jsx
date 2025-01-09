@@ -1,11 +1,29 @@
 import { Link } from "react-router-dom";
 import DashboardBtn from "../../../components/dashboardBtn";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const OrderHistory = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { data: payments = [] } = useQuery({
+    queryKey: ["payments", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/payments/single?email=${user?.email}`
+      );
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  console.log(payments);
   return (
     <div className="md:mt-12">
-       <DashboardBtn></DashboardBtn>
-       <p className="text-center mb-4 mt-[3rem] md:mt-0">Everything you've ordered</p>
+      <DashboardBtn></DashboardBtn>
+      <p className="text-center mb-4 mt-[3rem] md:mt-0">
+        Everything you've ordered
+      </p>
       <hr className="w-[30%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
         Your <span className="text-[#9dad37]">Order History</span>
@@ -38,27 +56,33 @@ const OrderHistory = () => {
               {/* row 1 */}
               {/* {Object.values(singleApplicantsData).map((data) => ( */}
               {/* key={data._id} */}
-              <tr>
-                <td>
-                  {/* <h3>{data.name}</h3> */}
-                  <h3 className="font-semibold">Price</h3>
-                </td>
-                <td>
-                  {/* <h3>{data.email}</h3> */}
-                  <h3 className="text-[#88bda9] font-semibold">
-                    transaction id
-                  </h3>
-                </td>
+              {payments.map((payment, index) => (
+                <tr key={payment._id}>
+                  <td>
+                    <h3 className="font-semibold">{index}</h3>
+                  </td>
+                  <td>
+                    {/* <h3>{data.name}</h3> */}
+                    <h3 className="font-semibold">{payment.price}</h3>
+                  </td>
+                  <td>
+                    {/* <h3>{data.email}</h3> */}
+                    <h3 className="text-[#88bda9] font-semibold">
+                      {payment.transactionId}
+                    </h3>
+                  </td>
 
-                <td>
-                  <h3 className="font-semibold">date</h3>
-                  {/* <h3>{data.jobTitle}</h3> */}
-                </td>
-                <td>
-                  {/* <h3>{data.company}</h3> */}
-                  <h3 className="font-semibold">pending</h3>
-                </td>
-                {/* {
+                  <td>
+                    <h3 className="font-semibold">{payment.date}</h3>
+                    {/* <h3>{data.jobTitle}</h3> */}
+                  </td>
+                  <td>
+                    {/* <h3>{data.company}</h3> */}
+                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
+                      {payment.status}
+                    </button>
+                  </td>
+                  {/* {
                   <td>
                     <a
                       href={`https://job-seeker-server-gamma.vercel.app/uploads/${data.resume}`} // Link to download the resume
@@ -69,34 +93,37 @@ const OrderHistory = () => {
                     </a>
                   </td>
                 } */}
-                <td>
+                  {/* <td> */}
                   {/* {data?.status?.status ||
                       (data?.status === "accepted" && ( */}
                   {/* /dashboard/interview */}
-                  <Link to="">
-                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-green-500 text-white  ">
-                      {/* {data?.status?.status || data?.status} */}
-                      status
-                    </button>
-                  </Link>
+                  {/* <Link to="">
+                      <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-green-500 text-white  ">
+                        {data?.status?.status || data?.status}
+                        status
+                      </button>
+                    </Link> */}
+
                   {/* // ))} */}
                   {/* {data?.status?.status ||
                       (data?.status === "rejected" && ( */}
-                  <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
-                    {/* {data?.status?.status || data?.status} */}
-                  </button>
+                  {/* <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
+                      {data?.status?.status || data?.status}
+                    </button> */}
                   {/* ))} */}
+
                   {/* {data?.status?.status ||
                     data?.status === "pending" ||
                     "" ? ( */}
-                  <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
-                    pending
-                  </button>
+                  {/* <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
+                      pending
+                    </button> */}
                   {/* ) : (
                       ""
                     )} */}
-                </td>
-              </tr>
+                  {/* </td> */}
+                </tr>
+              ))}
               {/* ))} */}
             </tbody>
 
