@@ -29,7 +29,7 @@ const Main = () => {
       setcalculation(0);
     }
   }, [cart, user]);
-  console.log(subTotal, calculation);
+  //console.log(subTotal, calculation);
   const isLoginOrReg =
     location.pathname === "/login" || location.pathname === "/registration";
   return (

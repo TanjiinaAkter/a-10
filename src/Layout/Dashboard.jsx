@@ -16,8 +16,8 @@ import { MdHistoryEdu, MdRateReview } from "react-icons/md";
 // import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
-   // const isAdmin = false;
-  const isAdmin = true;
+  const isAdmin = false;
+   // const isAdmin = true;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* ========================== SIDEBAR CONTENT  ==========================*/}
