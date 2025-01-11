@@ -3,21 +3,79 @@ import DashboardBtn from "../../../components/dashboardBtn";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
+
+import useAllproducts from "../../../hooks/useAllproducts";
+import { FaStar } from "react-icons/fa";
 
 const OrderHistory = () => {
+  const [prodIdAndImages, setProdIdAndImages] = useState([]);
+  const [allproducts] = useAllproducts();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { data: payments = [] } = useQuery({
+
+  const { data: payments = [], refetch } = useQuery({
     queryKey: ["payments", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/payments/single?email=${user?.email}`
       );
-      console.log(res.data);
+      //console.log(res.data);
       return res.data;
     },
   });
   console.log(payments);
+  useEffect(() => {
+    if (allproducts.length > 0 && payments.length > 0) {
+      // Step 1: Find products related to the payment
+      const matchedProducts = payments.flatMap(
+        (payment) =>
+          payment.prodIds.map((prodId) =>
+            allproducts.find((product) => product._id === prodId)
+          )
+        // Filter out any undefined values
+      );
+
+      // Step 2: Remove duplicates by product ID
+      //at first proti element k notun array banabo jekhane key hobe item id ar value hobe pura item ta,
+      // new Map([
+      //["1", { _id: "1", name: "Product A" }],
+      //["2", { _id: "2", name: "Product B" }],
+      //["1", { _id: "1", name: "Product A" }] // Overwrites the previous "1"
+      //])
+
+      //
+      //  new Map er kaj hocche key value gulo store kore jekhane key obosshoi unique hoy, .values() iterable kore ,,,,Array.from holo unique items niye notun array create kore
+      const uniqueMatchedProducts = Array.from(
+        new Map(matchedProducts.map((item) => [item._id, item])).values()
+      );
+      console.log(uniqueMatchedProducts);
+      // Step 3: Create a list of products with necessary details
+      const productDetails = uniqueMatchedProducts.map((item) => ({
+        photo: item.photo, // Product image
+        title: item.title, // Product title
+        _id: item._id, // Product ID
+        color: item.color, // Product color
+        price: item.price, // Product price
+      }));
+
+      setProdIdAndImages(productDetails); // Update state with product data
+      refetch(); // Re-fetch data to keep it fresh
+    }
+  }, [allproducts, payments, refetch]); // Run when any of these change
+
+  // Extract product photo and title
+  // const prodIdAndImages = uniqueMatchedProducts.map((item) => ({
+  //   photo: item.photo,
+  //   title: item.title,
+  //   _id: item._id,
+  //   color: item.color,
+  //   price: item.price,
+  // }));
+  //   setProdIdAndImages(prodIdAndImages);
+  //   refetch();
+  console.log("prodIdAndImages", prodIdAndImages);
+
   return (
     <div className="md:mt-12">
       <DashboardBtn></DashboardBtn>
@@ -31,104 +89,64 @@ const OrderHistory = () => {
       <hr className="w-[30%] mx-auto h-[3px] bg-black" />
 
       <div>
-        <div>
-          total length
-          {/* <UserPageHeader
-            userheading={`Applied Jobs : ${singleApplicantsData.length} `}></UserPageHeader> */}
-        </div>
+        <div className="orderDetails my-12 ">
+          {payments.map((payment) => {
+            // Filter products for the current payment
+            const relatedProducts = prodIdAndImages.filter((prod) =>
+              payment.prodIds.includes(prod._id)
+            );
 
-        {/* Table */}
-        <div className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-md md:w-[90%] shadow-xl w-[90%]  mb-12">
-          <table className="table w-full p-8">
-            {/* head#b0c5ca 353547*/}
-            <thead className="bg-[#f5f7fa]">
-              <tr className="text-[1rem] font-base text-gray-500 ">
-                <th>#</th>
-                <th>Price</th>
+            return (
+              <div
+                key={payment._id}
+                className="mb-6 p-4 w-full md:w-[80%]  mx-auto shadow-sm rounded-none">
+                {/* Payment Info */}
+                <div className="flex p-3 flex-wrap gap-2 text-gray-500 bg-blue-50 justify-between items-center ">
+                  <p> Placed in : {payment.date}</p>
+                  <p>Total: {payment.price}</p>
+                  <p>Transaction ID: {payment.transactionId}</p>
 
-                <th>Transaction ID</th>
-                <th>Date</th>
+                  <p>Status: {payment.status}</p>
+                </div>
 
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {/* row 1 */}
-              {/* {Object.values(singleApplicantsData).map((data) => ( */}
-              {/* key={data._id} */}
-              {payments.map((payment, index) => (
-                <tr key={payment._id}>
-                  <td>
-                    <h3 className="font-semibold">{index}</h3>
-                  </td>
-                  <td>
-                    {/* <h3>{data.name}</h3> */}
-                    <h3 className="font-semibold">{payment.price}</h3>
-                  </td>
-                  <td>
-                    {/* <h3>{data.email}</h3> */}
-                    <h3 className="text-[#88bda9] font-semibold">
-                      {payment.transactionId}
-                    </h3>
-                  </td>
+                {/* Products under this payment */}
+                <div className="grid grid-cols-1  md:grid-cols-1 gap-4">
+                  {relatedProducts.map((prod, index) => (
+                    <div
+                      key={prod._id}
+                      className="p-3  border border-gray-200  flex justify-between  items-center">
+                      <div className="flex gap-5 items-center">
+                        <p>{index + 1}</p>
+                        <div className="bg-gray-100 ">
+                          <img
+                            src={prod.photo}
+                            alt={prod.title}
+                            className="w-[5rem] ml-1 h-[5rem] object-cover rounded-md mb-2"
+                          />
+                        </div>
+                        <div className="flex flex-col ">
+                          <p className="text-justify text-gray-500 font-semibold">
+                            {prod.title}
+                          </p>
+                          <p className="text-justify text-gray-500 font-semibold">
+                            {prod.color}
+                          </p>
+                          <p className="text-justify text-gray-500  font-semibold">
+                            {prod.price}
+                          </p>
+                        </div>
+                      </div>
 
-                  <td>
-                    <h3 className="font-semibold">{payment.date}</h3>
-                    {/* <h3>{data.jobTitle}</h3> */}
-                  </td>
-                  <td>
-                    {/* <h3>{data.company}</h3> */}
-                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
-                      {payment.status}
-                    </button>
-                  </td>
-                  {/* {
-                  <td>
-                    <a
-                      href={`https://job-seeker-server-gamma.vercel.app/uploads/${data.resume}`} // Link to download the resume
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn  text-[#447de6] btn-sm rounded-full">
-                     <FaDownload></FaDownload> 
-                    </a>
-                  </td>
-                } */}
-                  {/* <td> */}
-                  {/* {data?.status?.status ||
-                      (data?.status === "accepted" && ( */}
-                  {/* /dashboard/interview */}
-                  {/* <Link to="">
-                      <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-green-500 text-white  ">
-                        {data?.status?.status || data?.status}
-                        status
-                      </button>
-                    </Link> */}
-
-                  {/* // ))} */}
-                  {/* {data?.status?.status ||
-                      (data?.status === "rejected" && ( */}
-                  {/* <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
-                      {data?.status?.status || data?.status}
-                    </button> */}
-                  {/* ))} */}
-
-                  {/* {data?.status?.status ||
-                    data?.status === "pending" ||
-                    "" ? ( */}
-                  {/* <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
-                      pending
-                    </button> */}
-                  {/* ) : (
-                      ""
-                    )} */}
-                  {/* </td> */}
-                </tr>
-              ))}
-              {/* ))} */}
-            </tbody>
-
-            {/* foot */}
-          </table>
+                      <div className="flex  flex-col md:flex-row items-center gap-2 border-b-2 text-[#e3a92c]">
+                        <FaStar></FaStar>
+                        <button className="">Add A Review</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

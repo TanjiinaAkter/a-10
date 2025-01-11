@@ -96,6 +96,7 @@ const CheckoutForm = () => {
           date: new Date(),
           // jei item add korse oi id gulo nibo
           cartIds: cart.map((item) => item._id),
+          prodIds: cart.map((prod) => prod.productId),
           status: "pending",
         };
         axiosSecure.post("/payments", payment).then((res) => {
