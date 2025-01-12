@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 
 import useAllproducts from "../../../hooks/useAllproducts";
-import { FaStar } from "react-icons/fa";
+
 import OrderHistoryCard from "./OrderHistoryCard";
 
 const OrderHistory = () => {
@@ -111,7 +111,10 @@ const OrderHistory = () => {
                 {/* Products under this payment */}
                 <div className="grid grid-cols-1  md:grid-cols-1 gap-4">
                   {relatedProducts.map((prod, index) => (
-                    <OrderHistoryCard key={prod._id} index={index} prod={prod}></OrderHistoryCard>
+                    <OrderHistoryCard
+                      key={prod._id}
+                      index={index}
+                      prod={prod}></OrderHistoryCard>
                   ))}
                 </div>
               </div>
