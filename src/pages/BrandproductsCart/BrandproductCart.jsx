@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { IoHeart } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useCarts from "../../hooks/useCarts";
 import Swal from "sweetalert2";
-
+import useUserWishlist from "../../hooks/useUserWishlist";
 const BrandproductCart = ({ product }) => {
   const navigate = useNavigate();
   const [isInCart, setIsInCart] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [cart, refetch] = useCarts();
+  const [wishlist, wishlistRefetch] = useUserWishlist();
+  useEffect(() => {
+    if (wishlist.length > 0 && product._id) {
+      const found = wishlist.find(
+        (prod) => prod.singleDetail._id === product._id
+      );
+      setIsInWishlist(found);
+    }
+  }, [wishlist, product._id]);
   useEffect(() => {
     if (user?.email && product._id) {
       const found = cart.some((item) => item.productId === product._id);
@@ -62,6 +72,25 @@ const BrandproductCart = ({ product }) => {
       });
     }
   };
+  const handleWishlist = (product) => {
+    console.log(product._id);
+    if (user?.email) {
+      axiosSecure
+        .post("/wishlist", {
+          singleDetail: product,
+          email: user?.email,
+          name: user?.displayName,
+          date: new Date(),
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            wishlistRefetch();
+            setIsInWishlist(true);
+          }
+        });
+    }
+  };
   return (
     <div key={product._id} className="card-1 md:w-[14rem]">
       <div className="group  relative  w-full">
@@ -83,7 +112,11 @@ const BrandproductCart = ({ product }) => {
               Quick Look
             </btn>
           </Link>
-          <FaHeart className="text-white cursor-pointer text-3xl px-[6px]"></FaHeart>
+          <IoHeart
+            onClick={() => handleWishlist(product)}
+            className={` ${
+              isInWishlist ? "text-red-600 btn-disabled" : "text-white "
+            } cursor-pointer text-[37px] px-[6px]`}></IoHeart>
           <button
             onClick={() => handleAddToCart(product)}
             disabled={isInCart}
