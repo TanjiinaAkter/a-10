@@ -20,16 +20,33 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 // import { useQuery } from "@tanstack/react-query";
 import useCarts from "../../hooks/useCarts";
+import useUserWishlist from "../../hooks/useUserWishlist";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const [isInCart, setIsInCart] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [allproducts] = useAllproducts();
   const { id } = useParams();
   const [singleDetail, setSingleDetail] = useState(null);
   const [, refetch] = useCarts();
+  const [, wishlistRefetch] = useUserWishlist();
+
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure
+        .get(`/wishlist/userwishlist?email=${user?.email}`)
+        .then((res) => {
+          const getUserWishlistData = res.data || [];
+          const found = getUserWishlistData.find(
+            (data) => data.singleDetail._id === id
+          );
+          setIsInWishlist(found);
+        });
+    }
+  }, [axiosSecure, id, user?.email]);
   useEffect(() => {
     if (user?.email && id) {
       axiosSecure.get(`/carts/single?email=${user?.email}`).then((res) => {
@@ -110,6 +127,26 @@ const ProductDetail = () => {
       });
     }
   };
+
+  const handleWishlist = (singleDetail) => {
+    if (user?.email) {
+      axiosSecure
+        .post("/wishlist", {
+          email: user?.email,
+          name: user?.displayName,
+          date: new Date(),
+          singleDetail,
+        })
+        .then((res) => {
+          if (res.data.insertedId) {
+            wishlistRefetch();
+            setIsInWishlist(true);
+            console.log(res.data);
+          }
+        });
+    }
+  };
+
   return (
     <div className="mx-auto w-[90%] p-5 mt-[12rem] md:mt-[8rem] pt-0">
       {/* <Breadcrumb></Breadcrumb> */}
@@ -257,8 +294,21 @@ const ProductDetail = () => {
               {isInCart ? "Already in Cart" : "Add to Cart"}
               <FaShoppingBag></FaShoppingBag>
             </button>
-            <button className="btn text-[12px] uppercase border-1 rounded-none border-black text-gray-400 bg-transparent hover:bg-[#b7c940] hover:text-white">
-              Add to wishlist <FaHeart></FaHeart>
+            <button
+              disabled={isInWishlist}
+              onClick={() => handleWishlist(singleDetail)}
+              className={`btn ${
+                isInWishlist ? "btn-disabled" : ""
+              } text-[12px] uppercase border-1 rounded-none border-black text-gray-400 bg-transparent hover:bg-[#b7c940] hover:text-white`}>
+              {isInWishlist ? (
+                <>
+                  Added to wishlist <FaHeart></FaHeart>
+                </>
+              ) : (
+                <>
+                  Add to wishlist <FaHeart></FaHeart>
+                </>
+              )}
             </button>
           </div>
           <div>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import DashboardBtn from "../../../components/dashboardBtn";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
@@ -80,7 +79,7 @@ const OrderHistory = () => {
     <div className="md:mt-12">
       <DashboardBtn></DashboardBtn>
       <p className="text-center mb-4 mt-[3rem] md:mt-0">
-        Everything you've ordered
+        Everything you have ordered
       </p>
       <hr className="w-[30%] mx-auto h-[3px] bg-black" />
       <h2 className="text-gray-500 md:text-3xl  text-center my-1  font-semibold text-[1rem] ">
