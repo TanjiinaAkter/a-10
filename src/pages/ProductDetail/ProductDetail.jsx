@@ -24,6 +24,7 @@ import useUserWishlist from "../../hooks/useUserWishlist";
 import { useQuery } from "@tanstack/react-query";
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
   const [singleDetail, setSingleDetail] = useState(null);
   const { id } = useParams();
   const { data: reviews = [] } = useQuery({
@@ -33,9 +34,9 @@ const ProductDetail = () => {
       return res.data;
     },
   });
-// ei specific id ter review gulo ekhane pabo
+  // ei specific id ter review gulo ekhane pabo
   const [reviewsAll, setReviewsAll] = useState([]);
-  console.log(reviewsAll)
+  console.log(reviewsAll);
   useEffect(() => {
     if (reviews.length > 0 && id) {
       const review = reviews.filter((item) => item.prodId === id);
@@ -45,7 +46,7 @@ const ProductDetail = () => {
   }, [reviews, id]);
 
   console.log("ekhane all id matched reviews pabo", reviewsAll);
-  const navigate = useNavigate();
+
   const [isInCart, setIsInCart] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const axiosSecure = useAxiosSecure();
@@ -165,6 +166,21 @@ const ProductDetail = () => {
             console.log(res.data);
           }
         });
+    } else {
+      Swal.fire({
+        title: "want to add in wishlist?",
+        text: "please login first!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ok, log in!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+          navigate("/login");
+        }
+      });
     }
   };
 
@@ -317,12 +333,7 @@ const ProductDetail = () => {
               )}
             </button>
           </div>
-          <div>
-            <button className="text-blue-600 flex items-center gap-3 underline font-semibold text-[1rem]">
-              <FaStar className="" />
-              Write a Review
-            </button>
-          </div>
+          
         </div>
       </div>
       <div>

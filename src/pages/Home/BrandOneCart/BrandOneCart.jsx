@@ -29,7 +29,7 @@ const BrandOneCart = ({ item }) => {
     }
   }, [wishlist, item._id]);
 
-  console.log("Checking wishlist for item:", item._id);
+  //console.log("Checking wishlist for item:", item._id);
   useEffect(() => {
     if (user?.email && item._id) {
       const found = cart.some((cartItem) => cartItem.productId === item._id);
