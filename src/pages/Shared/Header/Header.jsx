@@ -158,7 +158,7 @@ const Header = () => {
             {user ? (
               <>
                 <div className=" w-full flex justify-between gap-6 items-center">
-                  <Link to="/dashboard/adminprofile">
+                  <Link to="/dashboard/userprofile">
                     <img
                       className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
                       src={user.photoURL}
