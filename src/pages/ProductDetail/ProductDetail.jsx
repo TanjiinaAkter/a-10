@@ -21,16 +21,37 @@ import Swal from "sweetalert2";
 // import { useQuery } from "@tanstack/react-query";
 import useCarts from "../../hooks/useCarts";
 import useUserWishlist from "../../hooks/useUserWishlist";
+import { useQuery } from "@tanstack/react-query";
 
 const ProductDetail = () => {
+  const [singleDetail, setSingleDetail] = useState(null);
+  const { id } = useParams();
+  const { data: reviews = [] } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/reviews");
+      return res.data;
+    },
+  });
+// ei specific id ter review gulo ekhane pabo
+  const [reviewsAll, setReviewsAll] = useState([]);
+  console.log(reviewsAll)
+  useEffect(() => {
+    if (reviews.length > 0 && id) {
+      const review = reviews.filter((item) => item.prodId === id);
+
+      setReviewsAll(review);
+    }
+  }, [reviews, id]);
+
+  console.log("ekhane all id matched reviews pabo", reviewsAll);
   const navigate = useNavigate();
   const [isInCart, setIsInCart] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [allproducts] = useAllproducts();
-  const { id } = useParams();
-  const [singleDetail, setSingleDetail] = useState(null);
+
   const [, refetch] = useCarts();
   const [, wishlistRefetch] = useUserWishlist();
 
@@ -56,7 +77,7 @@ const ProductDetail = () => {
       });
     }
   }, [axiosSecure, id, user]);
-  console.log(singleDetail);
+  //console.log(singleDetail);
   useEffect(() => {
     if (id) {
       const prodDetail = allproducts.find((prod) => prod._id === id);
@@ -215,41 +236,25 @@ const ProductDetail = () => {
           </div>
           <div className="my-12">
             <div className="flex gap-2 items-center mb-5">
-              <div className="rating">
-                <input
-                  type="radio"
-                  name="rating-2"
-                  className="mask mask-star-2 bg-yellow-400 h-[20px] w-[20px]"
-                />
-                <input
-                  type="radio"
-                  name="rating-2"
-                  className="mask mask-star-2 bg-yellow-400 h-[20px] w-[20px]"
-                  defaultChecked
-                />
-                <input
-                  type="radio"
-                  name="rating-2"
-                  className="mask mask-star-2 bg-yellow-400 h-[20px] w-[20px]"
-                />
-                <input
-                  type="radio"
-                  name="rating-2"
-                  className="mask mask-star-2 bg-yellow-400 h-[20px] w-[20px]"
-                />
-                <input
-                  type="radio"
-                  name="rating-2"
-                  className="mask mask-star-2 bg-yellow-400 h-[20px] w-[20px]"
-                />
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <FaStar
+                    key={star._id}
+                    className={`${
+                      reviewsAll[0]?.rating >= star
+                        ? "text-orange-400"
+                        : "text-gray-400"
+                    } `}></FaStar>
+                ))}
               </div>
-              <p className="text-gray-400 text-sm ">(1 customer review)</p>
+              <p className="text-gray-400 text-sm ">
+                ({reviewsAll.length} customer review)
+              </p>
             </div>
             <p className="text-gray-400">
-              Customer reveiw Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit. In ut ullamcorper leo, eget euismod orci. Cum sociis natoque
-              penatibus et magnis dis parturient montes nascetur ridiculus mus.
-              Vestibulum ultricies aliquam convallis.
+              {reviewsAll[0]?.reviewDescription
+                ? `${reviewsAll[0]?.reviewDescription}`
+                : "no review yet"}
             </p>
           </div>
 
@@ -262,6 +267,7 @@ const ProductDetail = () => {
             </h4>
             <div className="flex items-center gap-4">
               <h4>Size</h4>
+
               <div className="flex space-x-4">
                 {/* proti ta size er jonno btn toiri hocche */}
                 {["S", "M", "L"].map((size) => (
@@ -335,21 +341,44 @@ const ProductDetail = () => {
             </p>
           </TabPanel>
           <TabPanel>
-            <p className="my-16">
-              <b className="uppercase">1 review for product name</b> <br />
-              <p className="mt-4 text-pretty text-gray-400">
-                ce romanized as Yossy, is a fictional anthropomorphic dinosaur
-                who appears in video games published by Nintendo. Yoshi debuted
-                in Super Mario World on the Super Nintendo Entertainment System
-                as Mario and sidekick. Yoshi later starred in platform and
-                puzzle games, including Super Mario World 2: Island,ory and olly
-                World. Yoshi also appears in many of the Mario spin-off games,
-                including Mario Party and Mario Kart, various Mario sports
-                games, andcrossover fighting game series Super Smash Bros. Yoshi
-                belongs to the species of the same name, which is characterized
-                by their variety of colors.
-              </p>
-            </p>
+            <div className="my-16">
+              <b className="uppercase">
+                {reviewsAll.length} review for this product
+              </b>{" "}
+              <br />
+              {reviewsAll.map((item) => (
+                <div className="card p-3 w-[80%]  gap-2" key={item._id}>
+                  <div className="flex gap-4 items-center">
+                    <img
+                      className="w-[4rem] h-[4rem] object-cover"
+                      src={item.userphoto}
+                      alt=""
+                    />
+                    <div>
+                      <div className="flex">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <FaStar
+                            key={star._id}
+                            className={`${
+                              item.rating >= star
+                                ? "text-orange-400"
+                                : "text-gray-400"
+                            } `}></FaStar>
+                        ))}
+                      </div>
+                      <h3 className="capitalize text-gray-600 font-semibold">
+                        {item.name}
+                      </h3>
+                      <h2 className="text-gray-400">{item.reviewtitle}</h2>
+                    </div>
+                  </div>
+                  <p className="text-gray-400 mt-4 mb-2">
+                    {item.reviewDescription}
+                  </p>
+                </div>
+              ))}
+              <div className="divider"></div>
+            </div>
           </TabPanel>
         </Tabs>
       </div>

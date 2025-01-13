@@ -1,6 +1,52 @@
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const OrderHistoryCard = ({ prod, index }) => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [rating, setRating] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  console.log(user.photo);
+  const onSubmit = (data) => {
+    const Getdata = {
+      ...data,
+      rating,
+      prodId: prod._id,
+      photo: prod.photo,
+      title: prod.title,
+      color: prod.color,
+      size: prod.size,
+      email: user?.email,
+      name: user?.displayName,
+      userphoto: user?.photoURL,
+    };
+    console.log("checking sending product data", Getdata);
+    if (user?.email) {
+      axiosSecure.post("/reviews", Getdata).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "Deleted",
+            title: "Your Review has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    }
+
+    document.getElementById(`${prod._id}`).close();
+  };
   return (
     <div
       key={prod._id}
@@ -38,13 +84,32 @@ const OrderHistoryCard = ({ prod, index }) => {
         </button>
         <dialog id={`${prod._id}`} className="modal">
           <div className="modal-box  rounded-none ">
-            <div className="modal-action">
-              <form method="dialog" className="card-body">
+            <div className="modal-action flex-col">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                method="dialog"
+                className="card-body">
                 <div className="form-control shadow-slate-200 shadow-md p-3">
                   <label className="label">
                     <span className="label-text font-semibold text-[1rem]">
                       Rate this Product
                     </span>
+
+                    <div className="amarr flex">
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        return (
+                          <FaStar
+                            className={`${
+                              rating >= star
+                                ? "text-yellow-400"
+                                : "text-gray-400"
+                            }`}
+                            onClick={() => setRating(star)}
+                            key={star}
+                          />
+                        );
+                      })}
+                    </div>
                   </label>
                 </div>
                 <div className="form-control">
@@ -54,11 +119,13 @@ const OrderHistoryCard = ({ prod, index }) => {
                     </span>
                   </label>
                   <input
+                    {...register("reviewtitle", { required: true })}
                     type="text"
                     placeholder="title"
                     className="input input-bordered rounded-none text-black"
                     required
                   />
+                  {errors.reviewtitle && <span>This field is required</span>}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -67,21 +134,27 @@ const OrderHistoryCard = ({ prod, index }) => {
                     </span>
                   </label>
                   <textarea
+                    {...register("reviewDescription", { required: true })}
                     className="border focus:outline-gray-400  border-gray-300"
-                    name=""
-                    id=""
                     rows={5}
                     cols={10}></textarea>
+                  {errors.reviewDescription && (
+                    <span>This field is required</span>
+                  )}
                 </div>
                 <div className="form-control mt-6">
-                  <button className="btn btn-primary">Login</button>
-                </div>
-                <div className="flex justify-end  mt-3">
                   <button className="rounded-none px-3 py-2 hover:bg-gray-600 hover:scale-95 transition-all duration-500 bg-black text-white">
-                    Close
+                    Submit Review
                   </button>
                 </div>
               </form>
+              <div className="flex  justify-end w-fit  mt-3">
+                <button
+                  onClick={() => document.getElementById(`${prod._id}`).close()}
+                  className="rounded-none px-3 py-2 hover:bg-gray-600 hover:scale-95 transition-all duration-500 bg-red-600 text-white">
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </dialog>
