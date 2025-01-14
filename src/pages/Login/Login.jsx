@@ -12,6 +12,7 @@ const Login = () => {
   const { user, resetPassword } = useAuth();
   console.log(user);
   const { login, logOut } = useAuth();
+ 
   const {
     register,
     handleSubmit,

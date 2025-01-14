@@ -105,7 +105,7 @@ const router = createBrowserRouter([
         element: <UserProfile></UserProfile>,
       },
       {
-        path: "editprofile",
+        path: "editprofile/:email",
         element: <EditProfile></EditProfile>,
       },
       {

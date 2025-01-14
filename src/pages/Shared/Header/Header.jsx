@@ -7,7 +7,10 @@ import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
 import { useState } from "react";
 import useAllproducts from "../../../hooks/useAllproducts";
+import useAdmin from "../../../hooks/useAdmin";
 const Header = () => {
+
+
   const [allproducts] = useAllproducts();
   const navigate = useNavigate();
   const { user, logOut } = useAuth();

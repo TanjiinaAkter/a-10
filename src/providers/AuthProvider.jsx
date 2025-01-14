@@ -31,7 +31,6 @@ const AuthProvider = ({ children }) => {
   // ===============  3.LOGGED IN USER OBSERVATION =====================//
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setLoading(false);
       setUser(currentUser);
 
       if (currentUser) {
@@ -49,11 +48,12 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("access-token");
         setLoading(false);
       }
+      // setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, [axiosPublic]);
+  }, [axiosPublic, auth]);
 
   // ===============  4.LOGOUT USER  =====================//
   const logOut = () => {

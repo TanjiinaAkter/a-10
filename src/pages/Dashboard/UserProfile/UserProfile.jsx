@@ -56,14 +56,11 @@ const UserProfile = () => {
 
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Gender :</h2>
-            <h2 className=" text-lg text-gray-500">
-           
-              {userData?.gender || ""}
-            </h2>
+            <h2 className=" text-lg text-gray-500">{userData?.gender || ""}</h2>
           </div>
 
           <div className="card-actions">
-            <Link to="/dashboard/editprofile">
+            <Link to={`/dashboard/editprofile/${user?.email}`}>
               <button className="btn px-12 bg-black text-white rounded-sm">
                 Edit profile
               </button>

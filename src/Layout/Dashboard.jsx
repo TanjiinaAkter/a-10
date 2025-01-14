@@ -13,11 +13,14 @@ import { IoStatsChart } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { BiLogOut } from "react-icons/bi";
 import { MdHistoryEdu, MdRateReview } from "react-icons/md";
+import useAdmin from "../hooks/useAdmin";
+import useAuth from "../hooks/useAuth";
 // import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
-  // const isAdmin = false;
-  const isAdmin = true;
+  const { user } = useAuth();
+  const [isAdmin] = useAdmin();
+  // const isAdmin = true;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* ========================== SIDEBAR CONTENT  ==========================*/}
@@ -26,14 +29,13 @@ const Dashboard = () => {
           {isAdmin ? (
             <>
               <li className="text-[1rem]">
-                <NavLink to="/dashboard/userprofile">
+                <NavLink to="/dashboard/adminprofile">
                   <CgProfile className="text-2xl text-[#9dad37]" />
                   Admin Profile
                 </NavLink>
               </li>
               <li className="text-[1rem]">
                 <NavLink to="/dashboard/stats">
-                  {" "}
                   <IoStatsChart className="text-2xl text-[#9dad37]" /> Stats
                 </NavLink>
               </li>
@@ -70,7 +72,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li className="text-[1rem]">
-                <NavLink to="/dashboard/editprofile">
+                <NavLink to={`/dashboard/editprofile/${user?.email}`}>
                   <FaUserEdit className="text-2xl text-[#9dad37]" /> Profile
                   Edit
                 </NavLink>
