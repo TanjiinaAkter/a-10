@@ -1,22 +1,27 @@
-import { useForm } from "react-hook-form";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAllUsers from "../../../hooks/useAllUsers";
-const EditProfile = () => {
-  const [userData, setUserData] = useState(null);
-  const axiosSecure = useAxiosSecure();
-  const { user, updateUserProfile } = useAuth();
-  const [allUsers, refetch] = useAllUsers();
-  useEffect(() => {
-    if (user?.email && allUsers.length > 0) {
-      const getInfo = allUsers.find((data) => data.email === user?.email);
 
-      setUserData(getInfo);
+import useAllUsers from "../../../hooks/useAllUsers";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+
+const EditUserProfile = () => {
+  const [userData, setUserData] = useState("");
+
+  const axiosSecure = useAxiosSecure();
+  const [allusers, refetch] = useAllUsers();
+  const { user, updateUserProfile } = useAuth();
+
+  useEffect(() => {
+    console.log(allusers, user?.email);
+    if (user && allusers.length > 0) {
+      const userInfo = allusers.find((info) => info.email === user?.email);
+      setUserData(userInfo);
     }
-  }, [allUsers, user?.email]);
-  console.log(userData);
+  }, [user, user?.email, allusers]);
+  console.log("dekhi koyta user pawa jay for user", userData);
   const {
     register,
     setValue,
@@ -32,7 +37,7 @@ const EditProfile = () => {
   }, [setValue, user]);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    //console.log(data);
     const editprofile = {
       name: data.name,
       email: data.email,
@@ -89,7 +94,6 @@ const EditProfile = () => {
                 <span className="label-text font-medium">User Name</span>
               </label>
               <input
-                defaultValue={userData?.name}
                 placeholder="name"
                 {...register("name", { required: true })}
                 type="text"
@@ -137,7 +141,7 @@ const EditProfile = () => {
               <input
                 {...register("role", { required: true })}
                 type="text"
-                defaultValue={userData?.role}
+                defaultValue={userData?.role || "user"}
                 readOnly
                 placeholder="role"
                 className="input input-bordered focus:outline-none rounded-sm"
@@ -210,4 +214,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditUserProfile;

@@ -9,17 +9,18 @@ import "./Brands.css";
 const Brands = () => {
   const [allproducts] = useAllproducts();
   const [brands, setBrands] = useState([]);
-
+  //console.log(allproducts);
   useEffect(() => {
     if (allproducts) {
       const brandData = allproducts.map((brand) => ({
+        _id: brand._id,
         brandname: brand.brandname,
         photo: brand.photo,
       }));
       setBrands(brandData);
     }
   }, [allproducts]);
-  console.log(brands);
+  //console.log(brands);
   return (
     <div className="mx-auto md:w-[80%] my-[5rem]">
       <h2 className="text-xl flex text-gray-500 md:text-3xl font-semibold mb-4">

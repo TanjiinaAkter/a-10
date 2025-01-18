@@ -11,7 +11,7 @@ const useAxiosSecure = () => {
     function (config) {
       const token = localStorage.getItem("access-token");
 
-      config.headers.authorization = `Barear ${token}`;
+      config.headers.authorization = `Bearer ${token}`;
       //console.log("axios secure token", token);
       return config;
     },

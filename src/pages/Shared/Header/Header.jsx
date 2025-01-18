@@ -9,8 +9,7 @@ import { useState } from "react";
 import useAllproducts from "../../../hooks/useAllproducts";
 import useAdmin from "../../../hooks/useAdmin";
 const Header = () => {
-
-
+  const [isAdmin] = useAdmin();
   const [allproducts] = useAllproducts();
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
@@ -158,10 +157,30 @@ const Header = () => {
             </div>
           )}
           <div>
-            {user ? (
+            {user && isAdmin === false ? (
               <>
                 <div className=" w-full flex justify-between gap-6 items-center">
                   <Link to="/dashboard/userprofile">
+                    <img
+                      className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
+                      src={user.photoURL}
+                      alt=""
+                    />
+                  </Link>
+                  <span className="text-[#9dad37] text-lg font-semibold">
+                    Hi! {user.displayName}
+                  </span>
+                  <button
+                    onClick={handleLogOut}
+                    className=" font-semibold text-lg text-white px-3 py-1 rounded-sm bg-[#9dad37]">
+                    logout
+                  </button>
+                </div>
+              </>
+            ) : user && isAdmin === true ? (
+              <>
+                <div className=" w-full flex justify-between gap-6 items-center">
+                  <Link to="/dashboard/adminprofile">
                     <img
                       className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
                       src={user.photoURL}
@@ -193,7 +212,6 @@ const Header = () => {
                 </ul>
               </details>
             )}
-
             {/* )} */}
           </div>
         </div>

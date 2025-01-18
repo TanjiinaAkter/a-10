@@ -17,12 +17,14 @@ import Stats from "../pages/Dashboard/Stats/Stats";
 import ManageProducts from "../pages/Dashboard/ManageProducts/ManageProducts";
 import OrderManagement from "../pages/Dashboard/OrderManagement/OrderManagement";
 import Users from "../pages/Dashboard/Users/Users";
-import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
-import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
+
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
 import ReviewProducts from "../pages/Dashboard/ReviewProducts/ReviewProducts";
 import WishList from "../pages/Dashboard/WishList/WishList";
 import CategorySubTypes from "../pages/CategorySubTypes/CategorySubTypes";
+import EditUserProfile from "../pages/Dashboard/EditUserProfile/EditUserProfile";
+import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
+import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
@@ -84,6 +86,10 @@ const router = createBrowserRouter([
         element: <AdminProfile></AdminProfile>,
       },
       {
+        path: "editprofile/:email",
+        element: <EditProfile></EditProfile>,
+      },
+      {
         path: "stats",
         element: <Stats></Stats>,
       },
@@ -105,8 +111,8 @@ const router = createBrowserRouter([
         element: <UserProfile></UserProfile>,
       },
       {
-        path: "editprofile/:email",
-        element: <EditProfile></EditProfile>,
+        path: "edituserprofile/:email",
+        element: <EditUserProfile></EditUserProfile>,
       },
       {
         path: "orderhistory",

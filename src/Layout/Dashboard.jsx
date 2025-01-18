@@ -72,7 +72,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li className="text-[1rem]">
-                <NavLink to={`/dashboard/editprofile/${user?.email}`}>
+                <NavLink to={`/dashboard/edituserprofile/${user?.email}`}>
                   <FaUserEdit className="text-2xl text-[#9dad37]" /> Profile
                   Edit
                 </NavLink>

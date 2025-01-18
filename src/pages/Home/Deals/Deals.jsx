@@ -1,4 +1,4 @@
-import {  FaTags } from "react-icons/fa6";
+import { FaTags } from "react-icons/fa6";
 
 import "./Deals.css";
 // import { useLoaderData } from "react-router-dom";
@@ -19,7 +19,7 @@ const Deals = () => {
     queryKey: ["deals"],
     queryFn: async () => {
       const res = await axiosPublic.get("/deals");
-      console.log(deals);
+     // console.log(deals);
       return res.data;
     },
   });
@@ -66,7 +66,7 @@ const Deals = () => {
           {/* {deals.map((deal) => ( */}
           {/* key={deal._id} */}
           {deals.map((deal) => (
-           <DealCard key={deal._id} deal={deal}></DealCard>
+            <DealCard key={deal._id} deal={deal}></DealCard>
           ))}
 
           {/* ))} */}
