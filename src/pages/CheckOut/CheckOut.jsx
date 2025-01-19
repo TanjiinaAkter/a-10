@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import SubTotalCard from "../../components/subTotalCard";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 
 const CheckOut = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const {
     register,
@@ -27,6 +28,7 @@ const CheckOut = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate("/payment");
         }
       });
     }
@@ -163,13 +165,12 @@ const CheckOut = () => {
                 </div>
                 <div className="form-control mt-6">
                   {/* /payment */}
-                  <Link to="/payment">
-                    <input
-                      className="btn bg-black text-white rounded-none"
-                      type="submit"
-                      value="Continue to payment"
-                    />
-                  </Link>
+
+                  <input
+                    className="btn bg-black text-white rounded-none"
+                    type="submit"
+                    value="Continue to payment"
+                  />
                 </div>
               </form>
             </div>

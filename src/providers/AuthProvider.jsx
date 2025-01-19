@@ -35,29 +35,29 @@ const AuthProvider = ({ children }) => {
 
   // ============================ 3. LOGGED IN USER OBSERVATION ============================ //
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      "currentuser", currentUser;
+      setUser(currentUser);
       if (currentUser) {
-        setUser(currentUser);
         const userInfo = { email: currentUser.email };
 
         // Fetch JWT token
-        axiosPublic
-          .post("/jwt", userInfo)
-          .then((res) => {
-            if (res.data.token) {
-              localStorage.setItem("access-token", res.data.token);
-            }
-          })
-          .finally(() => setLoading(false)); // Ensure loading state is set to false after token fetching
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
+          }
+        });
       } else {
-        setUser(null);
         localStorage.removeItem("access-token");
         setLoading(false); // Make sure loading state is set to false when no user is logged in
       }
     });
 
     // Cleanup the subscription on unmount
-    return () => unsubscribe();
+    return () => {
+      return unSubscribe();
+    };
   }, [axiosPublic, auth]);
 
   // ============================ 4. LOGOUT USER ============================ //

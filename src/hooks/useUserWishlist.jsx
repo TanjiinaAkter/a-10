@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useUserWishlist = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: wishlist = [], refetch: wishlistRefetch } = useQuery({
     queryKey: ["wishlist", user?.email],
@@ -13,6 +13,7 @@ const useUserWishlist = () => {
       );
       return res.data;
     },
+    enabled: !loading && !!user?.email,
   });
   return [wishlist, wishlistRefetch];
 };
