@@ -1,29 +1,15 @@
 import DashboardBtn from "../../../components/dashboardBtn";
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-
 import useAllproducts from "../../../hooks/useAllproducts";
 
 import OrderHistoryCard from "./OrderHistoryCard";
+import usePayments from "../../../hooks/usePayments";
 
 const OrderHistory = () => {
   const [prodIdAndImages, setProdIdAndImages] = useState([]);
   const [allproducts] = useAllproducts();
-  const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
 
-  const { data: payments = [], refetch } = useQuery({
-    queryKey: ["payments", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/payments/single?email=${user?.email}`
-      );
-      //console.log(res.data);
-      return res.data;
-    },
-  });
+  const [payments, refetch] = usePayments();
   console.log(payments);
   useEffect(() => {
     if (allproducts.length > 0 && payments.length > 0) {
@@ -138,7 +124,24 @@ const OrderHistory = () => {
                   <p> Placed in : {payment.date}</p>
                   <p>Total: {payment.price}</p>
                   <p>Transaction ID: {payment.transactionId}</p>
-                  <p>Status: {payment.status}</p>
+                  <p>
+                    Status:
+                    <span
+                      className={` pl-1 font-semibold
+                        ${
+                          payment.status === "confirmed"
+                            ? "text-yellow-500"
+                            : ""
+                        }
+                        ${
+                          payment.status === "delivered" ? "text-green-600" : ""
+                        }
+                        ${payment.status === "shipped" ? "text-blue-600" : ""}
+                        ${payment.status === "pending" ? "text-red-600" : ""}
+                      `}>
+                      {payment.status}
+                    </span>
+                  </p>
                 </div>
 
                 {/* Products under this payment */}

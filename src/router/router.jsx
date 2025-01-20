@@ -25,6 +25,7 @@ import CategorySubTypes from "../pages/CategorySubTypes/CategorySubTypes";
 import EditUserProfile from "../pages/Dashboard/EditUserProfile/EditUserProfile";
 import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
 import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
+import UpdateProduct from "../pages/Dashboard/UpdateProduct/UpdateProduct";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "addproduct",
         element: <AddProduct></AddProduct>,
+      },
+      {
+        path: "updateproduct",
+        element: <UpdateProduct></UpdateProduct>,
       },
       {
         path: "adminprofile",
