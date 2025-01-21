@@ -45,12 +45,6 @@ const ManageProducts = () => {
       </h2>
       <hr className="w-[30%] mx-auto h-[3px] bg-black" />
       <div>
-        <div>
-          total length
-          {/* <UserPageHeader
-                      userheading={`Applied Jobs : ${singleApplicantsData.length} `}></UserPageHeader> */}
-        </div>
-
         {/* Table */}
         <div className="overflow-x-auto md:overflow-x-visible  mt-12 m-1 mx-auto card rounded-none md:w-[90%] shadow-xl w-[90%]  mb-12">
           <table className="table w-full p-8">
@@ -101,9 +95,8 @@ const ManageProducts = () => {
                   </td>
                   <td>{product.price}</td>
                   <td className="text-gray-500  ">
-                    S- {product.quantitysmall},
-                    M- {product.quantitymedium},
-                    L- {product.quantitylarge}
+                    S- {product.quantitysmall}, M- {product.quantitymedium}, L-{" "}
+                    {product.quantitylarge}
                   </td>
                   <td>
                     <Link to="/dashboard/updateproduct" state={{ product }}>

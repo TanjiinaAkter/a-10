@@ -124,7 +124,7 @@ const OrderManagement = () => {
                       <h3 className="font-semibold">${payment.price}</h3>
                     </td>
                     <td>{payment.transactionId}</td>
-                    <td>
+                    {/* <td>
                       <span
                         className={` font-semibold 
                           ${payment.status === "pending" ? "text-red-600" : ""}
@@ -138,6 +138,24 @@ const OrderManagement = () => {
                             : ""
                         } ${
                           payment.status === "shipped" ? "text-blue-600" : ""
+                        }`}>
+                        {payment.status}
+                      </span>
+                    </td> */}
+                     <td>
+                      <span
+                        className={`text-white badge-md rounded-full py-[2px] font-semibold 
+                          ${payment.status === "pending" ? "bg-red-500" : ""}
+                          ${
+                            payment.status === "delivered"
+                              ? "bg-green-600"
+                              : ""
+                          } ${
+                          payment.status === "confirmed"
+                            ? "bg-yellow-400"
+                            : ""
+                        } ${
+                          payment.status === "shipped" ? "bg-blue-500" : ""
                         }`}>
                         {payment.status}
                       </span>

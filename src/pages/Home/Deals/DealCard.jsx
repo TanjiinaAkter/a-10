@@ -14,7 +14,7 @@ const DealCard = ({ deal }) => {
   const { user } = useAuth();
   const [cart, refetch] = useCarts();
 
-  console.log(cart);
+  //console.log(cart);
   const [isInCart, setIsInCart] = useState(false);
   useEffect(() => {
     if (cart && deal._id) {
