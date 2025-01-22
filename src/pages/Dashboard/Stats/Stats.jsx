@@ -1,24 +1,58 @@
 import { useEffect, useState } from "react";
 import DashboardBtn from "../../../components/dashboardBtn";
-import useAllProducts from "../../../hooks/useAllproducts";
-import usePayments from "../../../hooks/usePayments";
+
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 const Stats = () => {
-  const [allproducts] = useAllProducts();
-  const [payments] = usePayments();
-  const totalRevenue = payments.reduce((acc, total) => {
-    return acc + parseFloat(total.price || 0);
-  }, 0);
-  const [mostUnique, setMostUnique] = useState({});
+  const axiosSecure = useAxiosSecure();
+  const { data: adminStats = {} } = useQuery({
+    queryKey: ["adminStats"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/admin-stats");
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  const [statusPie, setStatusPie] = useState([]);
+  console.log(typeof adminStats.getstatusPercantage);
   useEffect(() => {
-    if (allproducts.length > 0) {
-      const mostUnique = [
-        ...new Set(allproducts.map((product) => product.topCategory)),
-      ];
-      console.log(mostUnique);
-      setMostUnique(mostUnique);
+    if (adminStats.getstatusPercantage && adminStats.getstatusPercantage) {
+      const pieData = adminStats.getstatusPercantage.map((data) => ({
+        name: data.status,
+        value: parseFloat(data.statusPercantage),
+      }));
+      setStatusPie(pieData);
     }
-  }, [allproducts]);
-  // console.log(mostUnique);
+  }, [adminStats]);
+  console.log(statusPie);
+  const COLORS = ["#0088FE", "#FF9D23", "#A294F9", "#C30E59"];
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
   return (
     <div className="md:mt-12">
       <DashboardBtn></DashboardBtn>
@@ -42,7 +76,7 @@ const Stats = () => {
           {/* Content */}
           <div className="flex h-full relative text-white flex-col font-semibold z-10 ">
             <h3 className="font-semibold text-lg">ORDERS</h3>
-            <p className="font-bold text-2xl">{payments.length}</p>
+            <p className="font-bold text-2xl">{adminStats.orders}</p>
           </div>
         </div>
         <div
@@ -56,7 +90,7 @@ const Stats = () => {
           <div className="absolute bg-opacity-80 bg-[#82161f] inset-0"></div>
           <div className="flex h-full relative text-white flex-col font-semibold z-10 ">
             <h3 className="font-semibold text-lg">PRODUCTS</h3>
-            <p className="font-bold text-2xl">{allproducts.length}</p>
+            <p className="font-bold text-2xl">{adminStats.products}</p>
           </div>
         </div>
         <div
@@ -70,7 +104,7 @@ const Stats = () => {
           <div className="absolute inset-0 bg-blue-700 bg-opacity-60"></div>
           <div className="relative z-10 flex flex-col text-white">
             <h3 className="font-semibold text-lg">REVENUE</h3>
-            <p className="font-bold text-2xl">$ {totalRevenue.toFixed(2)}</p>
+            <p className="font-bold text-2xl">$ {adminStats.revenue}</p>
           </div>
         </div>
         <div
@@ -84,11 +118,35 @@ const Stats = () => {
           <div className="absolute bg-green-600 inset-0 bg-opacity-50"></div>
           <div className="flex flex-col relative z-10 text-white">
             <h3 className="font-semibold text-lg">CATEGORIES</h3>
-            <p className="font-bold text-2xl">{mostUnique.length}</p>
+            <p className="font-bold text-2xl">
+              {adminStats.topCategoriesLength}
+            </p>
           </div>
         </div>
       </div>
-      <div className="shadow-md"></div>
+      <div className=" w-full">
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={statusPie}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value">
+              {statusPie.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Legend></Legend>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
