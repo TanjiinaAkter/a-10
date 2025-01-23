@@ -18,6 +18,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import usePayments from "../../../hooks/usePayments";
+import { MdPending } from "react-icons/md";
+import { FaCircle } from "react-icons/fa";
 
 const Stats = () => {
   const axiosSecure = useAxiosSecure();
@@ -37,10 +39,12 @@ const Stats = () => {
       const pieData = adminStats.getstatusPercantage.map((data) => ({
         name: data.status,
         value: parseFloat(data.statusPercantage),
+        count: data.count,
       }));
       setStatusPie(pieData);
     }
   }, [adminStats]);
+  console.log(statusPie);
 
   //============= PIE CHART =================//
   const COLORS = ["#0088FE", "#FF9D23", "#A294F9", "#e63629"];
@@ -77,7 +81,7 @@ const Stats = () => {
   // Step 2: Create an empty array to hold sales data for the past 7 days
   const last7DaysData = [];
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 30; i++) {
     const eachDate = new Date();
     //today theke i mane 1,2,3,4,5,6,7 emn kore minus kore ager day pacchi
     eachDate.setDate(today.getDate() - i);
@@ -160,29 +164,49 @@ const Stats = () => {
           </div>
         </div>
       </div>
-      <div className=" w-full">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart width={400} height={400}>
-            <Pie
-              data={statusPie}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={renderCustomizedLabel}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value">
-              {statusPie.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Legend></Legend>
-          </PieChart>
-        </ResponsiveContainer>
+      {/* ================ PIE CHART ============= */}
+
+      <div className="mx-auto w-full md:w-[89%]">
+        <hr className="w-[13%] h-[3px] bg-gray-300" />
+        <div className=" flex justify-between flex-col md:flex-row ">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={statusPie}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value">
+                {statusPie.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Legend></Legend>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="mb-2 w-[90%] md:w-[70%]  p-5 border border-gray-200  mx-auto ">
+            <h3 className="text-lg mb-2 text-gray-500 ">Orders Overview -</h3>
+            {statusPie.map((item) => (
+              <div
+                key={item._id}
+                className="flex justify-between items-end gap-3">
+                <div className="flex p-2 items-center gap-2">
+                  <FaCircle className="text-xs  text-[#a294f9]" />
+                  <p className="text-lg ttext-gray-500">{item.name}</p>
+                </div>
+                <p className="text-gray-500 font-semibold">{item.count}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+      {/* ================ BAR CHART ============= */}
       <div className=" w-full md:w-[70%] mx-auto">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={last7DaysData}>
@@ -196,7 +220,7 @@ const Stats = () => {
             <Bar
               dataKey="totalSale"
               fill="#D91656"
-              activeBar={<Rectangle fill="green" stroke="blue" />}
+              activeBar={<Rectangle fill="#37AFE1" />}
             />
           </BarChart>
         </ResponsiveContainer>
