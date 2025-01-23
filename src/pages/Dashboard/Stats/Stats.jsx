@@ -1,12 +1,27 @@
 import { useEffect, useState } from "react";
 import DashboardBtn from "../../../components/dashboardBtn";
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  BarChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Bar,
+  Rectangle,
+} from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import usePayments from "../../../hooks/usePayments";
 
 const Stats = () => {
   const axiosSecure = useAxiosSecure();
+  const [payments] = usePayments();
   const { data: adminStats = {} } = useQuery({
     queryKey: ["adminStats"],
     queryFn: async () => {
@@ -16,7 +31,7 @@ const Stats = () => {
     },
   });
   const [statusPie, setStatusPie] = useState([]);
-  console.log(typeof adminStats.getstatusPercantage);
+
   useEffect(() => {
     if (adminStats.getstatusPercantage && adminStats.getstatusPercantage) {
       const pieData = adminStats.getstatusPercantage.map((data) => ({
@@ -26,9 +41,9 @@ const Stats = () => {
       setStatusPie(pieData);
     }
   }, [adminStats]);
-  console.log(statusPie);
-  const COLORS = ["#0088FE", "#FF9D23", "#A294F9", "#C30E59"];
 
+  //============= PIE CHART =================//
+  const COLORS = ["#0088FE", "#FF9D23", "#A294F9", "#e63629"];
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
@@ -53,6 +68,27 @@ const Stats = () => {
       </text>
     );
   };
+
+  //============= BAR CHART =================//
+
+  // Step 1: Get today's date
+  const today = new Date();
+
+  // Step 2: Create an empty array to hold sales data for the past 7 days
+  const last7DaysData = [];
+
+  for (let i = 0; i < 7; i++) {
+    const eachDate = new Date();
+    //today theke i mane 1,2,3,4,5,6,7 emn kore minus kore ager day pacchi
+    eachDate.setDate(today.getDate() - i);
+    const getShortDate = eachDate.toISOString().split("T")[0];
+    const totalSale = payments
+      .filter((payment) => payment.date.startsWith(getShortDate))
+      .reduce((acc, total) => acc + total.price, 0);
+    console.log(totalSale);
+    last7DaysData.push({ date: getShortDate, totalSale });
+  }
+  last7DaysData.reverse();
   return (
     <div className="md:mt-12">
       <DashboardBtn></DashboardBtn>
@@ -145,6 +181,24 @@ const Stats = () => {
             </Pie>
             <Legend></Legend>
           </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className=" w-full md:w-[70%] mx-auto">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={last7DaysData}>
+            {/* graph paper er moto grid line gulo show korbe */}
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            {/* legend hocceh konta ki color */}
+            <Legend></Legend>
+            <Bar
+              dataKey="totalSale"
+              fill="#D91656"
+              activeBar={<Rectangle fill="green" stroke="blue" />}
+            />
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
