@@ -11,7 +11,7 @@ import BrandOneCart from "../BrandOneCart/BrandOneCart";
 const BrandTwo = () => {
   const [allproducts] = useAllproducts();
 
-  console.log(allproducts);
+  //console.log(allproducts);
   const [womens, setWomens] = useState(null);
   useEffect(() => {
     if (allproducts) {

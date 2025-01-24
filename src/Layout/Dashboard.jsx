@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import {
   FaBoxOpen,
@@ -18,9 +18,14 @@ import useAuth from "../hooks/useAuth";
 // import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const [isAdmin] = useAdmin();
   // const isAdmin = true;
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    logOut();
+    navigate("/");
+  };
   return (
     <div className="flex flex-col md:flex-row ">
       {/* ========================== SIDEBAR CONTENT  ==========================*/}
@@ -112,10 +117,10 @@ const Dashboard = () => {
             </NavLink>
           </li>
           <li className=" text-[1rem]">
-            <NavLink to="/">
+            <div onClick={handleLogOut}>
               <BiLogOut className="text-2xl text-[#9dad37]"></BiLogOut>
               Logout
-            </NavLink>
+            </div>
           </li>
         </ul>
       </div>

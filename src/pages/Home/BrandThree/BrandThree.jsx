@@ -10,7 +10,7 @@ import BrandOneCart from "../BrandOneCart/BrandOneCart";
 const BrandThree = () => {
   const [allproducts] = useAllproducts();
 
-  console.log(allproducts);
+  //console.log(allproducts);
   const [kids, setKids] = useState(null);
   useEffect(() => {
     if (allproducts) {

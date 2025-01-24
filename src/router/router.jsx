@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
-
 import BrandProducts from "../pages/BrandProducts/BrandProducts";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import MyCart from "../pages/MyCart/MyCart";
@@ -17,15 +16,14 @@ import Stats from "../pages/Dashboard/Stats/Stats";
 import ManageProducts from "../pages/Dashboard/ManageProducts/ManageProducts";
 import OrderManagement from "../pages/Dashboard/OrderManagement/OrderManagement";
 import Users from "../pages/Dashboard/Users/Users";
-
 import OrderHistory from "../pages/Dashboard/OrderHistory/OrderHistory";
 import ReviewProducts from "../pages/Dashboard/ReviewProducts/ReviewProducts";
 import WishList from "../pages/Dashboard/WishList/WishList";
-import CategorySubTypes from "../pages/CategorySubTypes/CategorySubTypes";
 import EditUserProfile from "../pages/Dashboard/EditUserProfile/EditUserProfile";
 import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
 import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct/UpdateProduct";
+import PrivateRouter from "./PrivateRouter";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
@@ -43,24 +41,36 @@ const router = createBrowserRouter([
         element: <BrandProducts></BrandProducts>,
       },
       {
-        path: "/categorysubtypes",
-        element: <CategorySubTypes></CategorySubTypes>,
-      },
-      {
         path: "/productdetails/:id",
-        element: <ProductDetail></ProductDetail>,
+        element: (
+          <PrivateRouter>
+            <ProductDetail></ProductDetail>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/mycart",
-        element: <MyCart></MyCart>,
+        element: (
+          <PrivateRouter>
+            <MyCart></MyCart>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/checkout",
-        element: <CheckOut></CheckOut>,
+        element: (
+          <PrivateRouter>
+            <CheckOut></CheckOut>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/payment",
-        element: <Pyment></Pyment>,
+        element: (
+          <PrivateRouter>
+            <Pyment></Pyment>
+          </PrivateRouter>
+        ),
       },
 
       {
@@ -76,7 +86,11 @@ const router = createBrowserRouter([
   //================ADMIN DASHBOARD====================//
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRouter>
+        <Dashboard></Dashboard>
+      </PrivateRouter>
+    ),
     children: [
       {
         path: "addproduct",
@@ -113,23 +127,43 @@ const router = createBrowserRouter([
       //================USER DASHBOARD====================//
       {
         path: "userprofile",
-        element: <UserProfile></UserProfile>,
+        element: (
+          <PrivateRouter>
+            <UserProfile></UserProfile>
+          </PrivateRouter>
+        ),
       },
       {
         path: "edituserprofile/:email",
-        element: <EditUserProfile></EditUserProfile>,
+        element: (
+          <PrivateRouter>
+            <EditUserProfile></EditUserProfile>
+          </PrivateRouter>
+        ),
       },
       {
         path: "orderhistory",
-        element: <OrderHistory></OrderHistory>,
+        element: (
+          <PrivateRouter>
+            <OrderHistory></OrderHistory>
+          </PrivateRouter>
+        ),
       },
       {
         path: "review",
-        element: <ReviewProducts></ReviewProducts>,
+        element: (
+          <PrivateRouter>
+            <ReviewProducts></ReviewProducts>
+          </PrivateRouter>
+        ),
       },
       {
         path: "wishlist",
-        element: <WishList></WishList>,
+        element: (
+          <PrivateRouter>
+            <WishList></WishList>
+          </PrivateRouter>
+        ),
       },
     ],
   },

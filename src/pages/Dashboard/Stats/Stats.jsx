@@ -18,7 +18,6 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import usePayments from "../../../hooks/usePayments";
-import { MdPending } from "react-icons/md";
 import { FaCircle } from "react-icons/fa";
 
 const Stats = () => {

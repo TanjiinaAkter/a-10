@@ -1,18 +1,23 @@
 import { Helmet } from "react-helmet-async";
 import { FaHome } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useState } from "react";
 
 const Login = () => {
-  const [noEmail, setNoEmail] = useState("");
+  const location = useLocation();
+  //console.log(location);
   const navigate = useNavigate();
-  const { user, resetPassword } = useAuth();
-  console.log(user);
-  const { login, logOut } = useAuth();
- 
+  //private route thakle login er por oi route tay jacchi ar norlam route theke login e gele home e '/' e jacchi
+  const from = location?.state?.from?.pathname || "/";
+  console.log("from er value ki", location.state);
+  const [noEmail, setNoEmail] = useState("");
+
+  const { login, logOut, resetPassword } = useAuth();
+  // console.log(user);
+
   const {
     register,
     handleSubmit,
@@ -43,7 +48,7 @@ const Login = () => {
               `,
             },
           });
-          navigate("/");
+          navigate(from, { replace: true });
         } else {
           Swal.fire({
             position: "top-end",

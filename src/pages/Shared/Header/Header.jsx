@@ -2,7 +2,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaRegHeart, FaSearch } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import logo from "../../../assets/log.png";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
 import { useState } from "react";
@@ -11,6 +11,8 @@ import useAdmin from "../../../hooks/useAdmin";
 const Header = () => {
   const [isAdmin] = useAdmin();
   const [allproducts] = useAllproducts();
+  const location = useLocation();
+  console.log(location.state);
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +78,15 @@ const Header = () => {
       ))}
     </div>
   );
-
+  const handleNavigateToMyCart = () => {
+    console.log("Navigating to my cart", user);
+    if (user?.email) {
+      navigate("/mycart");
+    } else {
+      // Pass the current location (/mycart) as state to the login page
+      navigate("/login", { state: { from: location }, replace: true });
+    }
+  };
   return (
     //bg-[#B58753]
 
@@ -137,25 +147,15 @@ const Header = () => {
           <span className=" text-3xl hidden md:block text-white text-center mx-2">
             |
           </span>
-          {user && user?.email ? (
-            <div className="relative">
-              <Link to="/mycart">
-                <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
-              </Link>
-              <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
-                {cart.length}
-              </span>
-            </div>
-          ) : (
-            <div className="relative">
-              <Link to="/mycart">
-                <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
-              </Link>
-              <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
-                0
-              </span>
-            </div>
-          )}
+
+          <div className="relative" onClick={handleNavigateToMyCart}>
+            <HiOutlineShoppingBag className="text-5xl md:text-[2.7rem] text-white hover:text-[#9dad37] transition-all duration-300 hover:bg-white p-2 rounded-full" />
+
+            <span className="w-5 h-5 absolute top-[-6%] right-[-19%] bg-red-500 inline-block text-center text-lg text-white leading-6 rounded-full">
+              {user?.email ? cart.length : 0}
+            </span>
+          </div>
+
           <div>
             {user && isAdmin === false ? (
               <>
