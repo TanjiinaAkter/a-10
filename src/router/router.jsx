@@ -24,6 +24,7 @@ import EditProfile from "../pages/Dashboard/EditProfile/EditProfile";
 import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct/UpdateProduct";
 import PrivateRouter from "./PrivateRouter";
+import AdminPrivateRoute from "./AdminPrivateRoute";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
@@ -94,35 +95,67 @@ const router = createBrowserRouter([
     children: [
       {
         path: "addproduct",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <AdminPrivateRoute>
+            <AddProduct></AddProduct>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "updateproduct",
-        element: <UpdateProduct></UpdateProduct>,
+        element: (
+          <AdminPrivateRoute>
+            <UpdateProduct></UpdateProduct>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "adminprofile",
-        element: <AdminProfile></AdminProfile>,
+        element: (
+          <AdminPrivateRoute>
+            <AdminProfile></AdminProfile>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "editprofile/:email",
-        element: <EditProfile></EditProfile>,
+        element: (
+          <AdminPrivateRoute>
+            <EditProfile></EditProfile>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "stats",
-        element: <Stats></Stats>,
+        element: (
+          <AdminPrivateRoute>
+            <Stats></Stats>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "manageproduct",
-        element: <ManageProducts></ManageProducts>,
+        element: (
+          <AdminPrivateRoute>
+            <ManageProducts></ManageProducts>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "ordermanagement",
-        element: <OrderManagement></OrderManagement>,
+        element: (
+          <AdminPrivateRoute>
+            <OrderManagement></OrderManagement>
+          </AdminPrivateRoute>
+        ),
       },
       {
         path: "users",
-        element: <Users></Users>,
+        element: (
+          <AdminPrivateRoute>
+            <Users></Users>
+          </AdminPrivateRoute>
+        ),
       },
       //================USER DASHBOARD====================//
       {

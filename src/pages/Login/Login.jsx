@@ -11,7 +11,7 @@ const Login = () => {
   //console.log(location);
   const navigate = useNavigate();
   //private route thakle login er por oi route tay jacchi ar norlam route theke login e gele home e '/' e jacchi
-  const from = location?.state?.from?.pathname || "/";
+  const from = location.state?.from.pathname || "/";
   console.log("from er value ki", location.state);
   const [noEmail, setNoEmail] = useState("");
 
