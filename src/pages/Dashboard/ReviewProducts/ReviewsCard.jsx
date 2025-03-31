@@ -74,8 +74,8 @@ const ReviewsCard = ({ item }) => {
           </div>
         </div>
       </div>
-      <div>
-        <div className="mt-3 flex gap-1 ">
+      <div className="mt-4">
+        <div className="mt-3 flex gap-1 my-4">
           <FaFileAlt className=" text-[1.4rem] text-[#9dad37] " />
           <p className="text-[1.1rem] text-gray-500">
             Product desctiption: <br />

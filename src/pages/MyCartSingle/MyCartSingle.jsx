@@ -16,6 +16,7 @@ const MycartSingle = ({ item }) => {
   const [, refetch] = useCarts();
   console.log(selectedSize, selectedColor);
   const { user } = useAuth();
+
   const [itemPrice, setItemPrice] = useState(
     () => (item.quantity || 1) * item.price
   );
@@ -29,6 +30,7 @@ const MycartSingle = ({ item }) => {
     setItemPrice(newPrice);
     return updateQuantityAndPrice(newQuantity, newPrice, item);
   };
+  // return kore dicchi karon plus korle setai jeno value te set hoy porer function e jeno na jay
   const minusTo = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
@@ -88,6 +90,15 @@ const MycartSingle = ({ item }) => {
         })
         .then((res) => {
           console.log(res.data);
+          if (res.data.modifiedCount === 1) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "product preference updated successfully!!!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         });
     }
   };
@@ -135,7 +146,7 @@ const MycartSingle = ({ item }) => {
             <IoIosArrowUp className="text-gray-600" />
           </button>
         </div>
-        <h6 className="text-[19px] md:text-lg  text-gray-400">
+        <h6 className="text-[19px] md:text-lg md:text-nowrap text-center text-gray-400">
           total $ {itemPrice}
         </h6>
       </div>

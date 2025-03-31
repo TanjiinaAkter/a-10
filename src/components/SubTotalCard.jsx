@@ -32,11 +32,13 @@ const SubTotalCard = ({ subTotal, calculation }) => {
       </p>
       <div className=" w-full">
         {cart.length === 0 ? (
-          <button disabled className=" px-3 py-[8px] uppercase text-sm transition-all duration-500 hover:bg-gray-300 hover:text-black font-semibold  mb-4 w-full bg-black text-white inline-block">
+          <button
+            disabled
+            className=" px-3 py-[8px] uppercase text-sm transition-all duration-500 hover:bg-gray-300 hover:text-black font-semibold  mb-4 w-full bg-black text-white inline-block">
             Proceed to checkout
           </button>
         ) : (
-          <Link to="/checkout">
+          <Link to="/payment">
             <button className=" px-3 py-[8px] uppercase text-sm transition-all duration-500 hover:bg-gray-300 hover:text-black font-semibold  mb-4 w-full bg-black text-white inline-block">
               Proceed to checkout
             </button>

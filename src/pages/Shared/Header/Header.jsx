@@ -126,7 +126,7 @@ const Header = () => {
           </div>
         </div>
         {/*==================== NAVBAR-1==================== */}
-        <div className="flex mt-1 md:flex-1  justify-center   gap-1">
+        <div className="flex mt-1 md:flex-1  justify-center  gap-1">
           <img className="w-[2rem] h-[2rem] mt-1" src={logo} alt="" />
           <Link to="/">
             <span className="font-extrabold text-3xl md:text-4xl mt-3 text-white">

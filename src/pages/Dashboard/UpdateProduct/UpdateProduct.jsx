@@ -52,8 +52,6 @@ const UpdateProduct = () => {
     axiosSecure.patch(`/allproducts/${data._id}`, updatedData).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount === 1) {
-        reset();
-        refetch();
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -61,6 +59,8 @@ const UpdateProduct = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        refetch();
+        reset();
       }
     });
   };

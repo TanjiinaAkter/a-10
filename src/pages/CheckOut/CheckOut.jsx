@@ -167,9 +167,9 @@ const CheckOut = () => {
                   {/* /payment */}
 
                   <input
-                    className="btn bg-black text-white rounded-none"
+                    className="btn bg-black uppercase text-white rounded-none"
                     type="submit"
-                    value="Continue to payment"
+                    value="Continue To Payment"
                   />
                 </div>
               </form>

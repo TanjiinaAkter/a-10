@@ -166,7 +166,6 @@ const Stats = () => {
       {/* ================ PIE CHART ============= */}
 
       <div className="mx-auto w-full md:w-[89%]">
-        <hr className="w-[13%] h-[3px] bg-gray-300" />
         <div className=" flex justify-between flex-col md:flex-row ">
           <ResponsiveContainer width="100%" height={300}>
             <PieChart width={400} height={400}>
@@ -206,7 +205,7 @@ const Stats = () => {
         </div>
       </div>
       {/* ================ BAR CHART ============= */}
-      <div className=" w-full md:w-[70%] mx-auto">
+      <div className=" my-5 w-full md:w-[70%] mx-auto">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={last7DaysData}>
             {/* graph paper er moto grid line gulo show korbe */}

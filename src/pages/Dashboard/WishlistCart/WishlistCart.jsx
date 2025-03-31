@@ -57,21 +57,35 @@ const WishlistCart = ({ list = { list } }) => {
     }
   };
   const handleDeleteWishlist = (list) => {
-    if (user?.email) {
-      axiosSecure.delete(`/wishlist/userwishlist/${list._id}`).then((res) => {
-        console.log(res.data);
-        if (res.data.deletedCount === 1) {
-          wishlistRefetch();
-          Swal.fire({
-            position: "top-end",
-            icon: "Deleted",
-            title: `${list.singleDetail.title} has been deleted!!`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (user?.email) {
+          axiosSecure
+            .delete(`/wishlist/userwishlist/${list._id}`)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.deletedCount === 1) {
+                wishlistRefetch();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "Deleted",
+                  title: `${list.singleDetail.title} has been deleted!!`,
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
+            });
         }
-      });
-    }
+      }
+    });
   };
   return (
     <tr key={list._id} className="border-y-2 border-gray-200 ">
@@ -90,7 +104,13 @@ const WishlistCart = ({ list = { list } }) => {
       <td> {list.singleDetail.color}</td>
       <td>
         <div className="flex flex-col gap-[4px]">
-          added on {list.date}
+          <div className="text-gray-500 mb-2 font-medium">
+            {" "}
+            added on{" "}
+            <span className="text-green-500 font-medium">
+              {new Date(list.date).toLocaleDateString("en-gb")}
+            </span>{" "}
+          </div>
           <button
             disabled={addedToCart}
             onClick={() => handleAddToCart(list)}

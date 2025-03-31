@@ -87,7 +87,7 @@ const DealCard = ({ deal }) => {
           <h3 className=" text-red-600">
             <del className="text-gray-500">$ {deal.price} </del>
           </h3>
-          <h3>{deal.price}</h3>
+          <h3>{deal.discountedPrice}</h3>
         </div>
         <div className="flex items-center  justify-normal gap-2">
           <div className="">

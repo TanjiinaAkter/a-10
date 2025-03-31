@@ -44,55 +44,6 @@ const OrderHistory = () => {
     }
   }, [allproducts, payments, refetch]);
 
-  // useEffect(() => {
-  //   if (allproducts.length > 0 && payments.length > 0) {
-  //     // Step 1: Find products related to the payment
-  //     const matchedProducts = payments.flatMap(
-  //       (payment) =>
-  //         payment.prodIds.map((prodId) =>
-  //           allproducts.find((product) => product._id === prodId)
-  //         )
-  //       // Filter out any undefined values
-  //     );
-
-  //     // Step 2: Remove duplicates by product ID
-  //     //at first proti element k notun array banabo jekhane key hobe item id ar value hobe pura item ta,
-  //     // new Map([
-  //     //["1", { _id: "1", name: "Product A" }],
-  //     //["2", { _id: "2", name: "Product B" }],
-  //     //["1", { _id: "1", name: "Product A" }] // Overwrites the previous "1"
-  //     //])
-
-  //     //
-  //     //  new Map er kaj hocche key value gulo store kore jekhane key obosshoi unique hoy, .values() iterable kore ,,,,Array.from holo unique items niye notun array create kore
-  //     const uniqueMatchedProducts = Array.from(
-  //       new Map(matchedProducts.map((item) => [item._id, item])).values()
-  //     );
-  //     console.log(uniqueMatchedProducts);
-  //     // Step 3: Create a list of products with necessary details
-  //     const productDetails = uniqueMatchedProducts.map((item) => ({
-  //       photo: item.photo, // Product image
-  //       title: item.title, // Product title
-  //       _id: item._id, // Product ID
-  //       color: item.color, // Product color
-  //       price: item.price, // Product price
-  //     }));
-
-  //     setProdIdAndImages(productDetails); // Update state with product data
-  //     refetch(); // Re-fetch data to keep it fresh
-  //   }
-  // }, [allproducts, payments, refetch]); // Run when any of these change
-
-  // Extract product photo and title
-  // const prodIdAndImages = uniqueMatchedProducts.map((item) => ({
-  //   photo: item.photo,
-  //   title: item.title,
-  //   _id: item._id,
-  //   color: item.color,
-  //   price: item.price,
-  // }));
-  //   setProdIdAndImages(prodIdAndImages);
-  //   refetch();
   console.log("prodIdAndImages", prodIdAndImages);
 
   return (
@@ -121,7 +72,11 @@ const OrderHistory = () => {
                 className="mb-6 p-4 w-full md:w-[80%]  mx-auto shadow-sm rounded-none">
                 {/* Payment Info */}
                 <div className="flex p-3 flex-wrap gap-2 text-gray-500 bg-blue-50 justify-between items-center ">
-                  <p> Placed in : {payment.date}</p>
+                  <p>
+                    {" "}
+                    Placed in :{" "}
+                    {new Date(payment.date).toLocaleDateString("en-gb")}
+                  </p>
                   <p>Total: {payment.price}</p>
                   <p>Transaction ID: {payment.transactionId}</p>
                   <p>
