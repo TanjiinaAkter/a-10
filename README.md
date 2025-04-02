@@ -48,19 +48,39 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
 - 404 page
 
 ## Features:
-## User Dashboard:
-- User can see his/her profile information
-- User can edit their personal details
-- Cab browse products and purchase with Stripe payment
-- View Order History with order status 
-- Leave product reviews & ratings for purchased items
-- User can add a favorite product to his/her wishlist 
+## User Features:
+  - **Authentication:** Firebase email/password login & registration.
+  - **Browse & Purchase:**
+     - Men's Fashion: Pants, Jeans, T-shirts, Jackets.
+     - Women's Fashion: Pants, Jeans, T-shirts, Jackets, Skirts, Tops,Dresses.
+     - Kids' Fashion: Pants, Jeans, T-shirts, Jackets, Skirts, Tops,Dresses.
+     - Home Decor: Bed sheets, Lamps etc
+  - **Filtering & Sorting:**
+     - Filter by size, color, price range, discount range.
+     - Sort by price (low to high, high to low).
+  - **Cart Management:**
+     - Add items to cart.
+     - Edit product quantity,color,size.
+     - Remove items from the cart.
+  - **User Dashboard**:
+    - User can see his/her profile information
+    - User can edit their personal details
+    - Cab browse products and purchase with Stripe payment
+    - View Order History with order status 
+    - Leave product reviews & ratings for purchased items
+    - User can add a favorite product to his/her wishlist 
 
 
-## Admin Dashboard:
-- Admin can see his/her profile information
-- Admin can edit their personal details
-- View Order Overview
+## Admin Features:
+-
+- **Admin Dashboard** 
+   - Admin can see his/her profile information
+   - Admin can edit their personal details
+  
+- **View Order Overview:**
+  - See the **total number of orders** and their **status breakdown**.
+  - View the **percentage of each order status**.
+  - Track **last 8 days' total sales**, with a **daily sales percentage breakdown**.
 - Post new jobs & manage job listings like edit,delete,view
 - Make Schedule for interview
 - View & update applicants’ status
