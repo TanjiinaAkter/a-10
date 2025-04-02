@@ -86,7 +86,7 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
 
 
 ## Admin Features:
-- **Admin Dashboard:**
+## Admin Dashboard
    - Admin can see his/her profile information
    - Admin can edit their personal details
   
