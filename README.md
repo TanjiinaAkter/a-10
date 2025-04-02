@@ -47,21 +47,35 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
 - Admin dashboard
 - 404 page
 
-## Features:
+# Features:
 ## User Features:
   - **Authentication:** Firebase email/password login & registration.
+    
   - **Browse & Purchase:**
      - Men's Fashion: Pants, Jeans, T-shirts, Jackets.
      - Women's Fashion: Pants, Jeans, T-shirts, Jackets, Skirts, Tops,Dresses.
      - Kids' Fashion: Pants, Jeans, T-shirts, Jackets, Skirts, Tops,Dresses.
      - Home Decor: Bed sheets, Lamps etc
+       
   - **Filtering & Sorting:**
      - Filter by size, color, price range, discount range.
      - Sort by price (low to high, high to low).
+       
   - **Cart Management:**
      - Add items to cart.
      - Edit product quantity,color,size.
      - Remove items from the cart.
+       
+  - **Wishlist:**
+     - Add products to wishlist.
+     - Remove from wishlist or move to cart.
+     - Add product from wishlist to the cart.
+   
+  - **Checkout & Payment:**
+     - Secure payment with Stripe Payment Gateway.
+     -Order status updates: Pending → Confirmed.
+     - Add product review after product purchase.
+       
   - **User Dashboard**:
     - User can see his/her profile information
     - User can edit their personal details
@@ -72,40 +86,27 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
 
 
 ## Admin Features:
--
-- **Admin Dashboard** 
+- **Admin Dashboard:**
    - Admin can see his/her profile information
    - Admin can edit their personal details
   
+- **User Management:**
+   - View all users.
+   - Promote users to Admin.
+
+- **Product Management:**
+   - Add, Edit, Delete, View products.
+
+- **Order Management:**
+   - Update order status (Pending, Confirmed, Shipped, Delivered).
+   - Delete orders if necessary.
+     
 - **View Order Overview:**
   - See the **total number of orders** and their **status breakdown**.
   - View the **percentage of each order status**.
   - Track **last 8 days' total sales**, with a **daily sales percentage breakdown**.
-- Post new jobs & manage job listings like edit,delete,view
-- Make Schedule for interview
-- View & update applicants’ status
-- View total users, total jobs, total applicants and details
-- Decline or approve applications
--Can make a user an admin
+ 
 
-## Job Application & Tracking:
-- Users can apply for jobs directly after registration and login
-- Jobs filtered based on job title, location, and category based on fulltime, parttime,remote,hybrid
-- Application progress tracking
-
-## Interview Scheduling System:
-- Users can see scheduled interview details, including: Date & Time,Job Location,Applied Position,Interviewer Email & Name
-
-## Secure Authentication & Authorization:
-- Firebase Authentication (Email/Password)
-- JWT Authentication for backend security
-
-## Advanced Search & Filters:
-- Filter jobs based on job title, location, and category based on fulltime, parttime,remote,hybrid
-
-## Resume & Profile Management:
-- Upload resumes 
-- View and edit profile information
 
 ## Payment & Subscription (Future Implementation):
 - Stripe/Aamar Pay for premium job posts & subscriptions
