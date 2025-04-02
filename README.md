@@ -109,7 +109,7 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
 
 
 ## Payment & Subscription (Future Implementation):
-- Stripe/Aamar Pay for premium job posts & subscriptions
+- Stripe Payment  for product purchase
 
 ## Miscellaneous Features:
 - 404 Page for non-existing routes
