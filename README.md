@@ -108,7 +108,7 @@ This is a full-stack eCommerce platform where users can browse and purchase prod
  
 
 
-## Payment & Subscription (Future Implementation):
+## Payment integration
 - Stripe Payment  for product purchase
 
 ## Miscellaneous Features:
