@@ -25,12 +25,14 @@ import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct/UpdateProduct";
 import PrivateRouter from "./PrivateRouter";
 import AdminPrivateRoute from "./AdminPrivateRoute";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   //======================= UI PART=====================//
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
