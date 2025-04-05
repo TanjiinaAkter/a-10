@@ -75,6 +75,7 @@ const Registration = () => {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire("This email is already registered. Try logging in instead.");
       });
   };
   return (

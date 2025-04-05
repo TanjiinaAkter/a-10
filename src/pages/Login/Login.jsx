@@ -62,6 +62,13 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "auth/invalid-credential, Please try again.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
 
