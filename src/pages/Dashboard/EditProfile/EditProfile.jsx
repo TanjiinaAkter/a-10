@@ -26,10 +26,10 @@ const EditProfile = () => {
   } = useForm();
   useEffect(() => {
     //default value gulo te ei value show korabo
-    setValue("name", user?.displayName);
-    setValue("email", user?.email);
-    setValue("photo", user?.photoURL);
-  }, [setValue, user]);
+    setValue("name", userData?.name || user?.displayName);
+    setValue("email",  user?.email);
+    setValue("photo", userData?.photo || user?.photoURL);
+  }, [setValue, user, userData]);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -135,7 +135,7 @@ const EditProfile = () => {
                 <span className="label-text font-medium">Role</span>
               </label>
               <input
-                {...register("role", { required: true })}
+                {...register("role")}
                 type="text"
                 defaultValue={userData?.role}
                 readOnly

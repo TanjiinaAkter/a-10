@@ -8,9 +8,9 @@
 ## Server side repo - [Backend Repository](https://github.com/TanjiinaAkter/a-server)
  
 ## Admin Login Credentials
-Email: role3443@gmail.com
+Email: admin2@gmail.com
 
-Password:Admin1@
+Password:Admin123
 
 # Technologies Used
 ## Frontend:

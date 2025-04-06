@@ -5,13 +5,16 @@ import logo from "../../../assets/log.png";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCarts from "../../../hooks/useCarts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAllproducts from "../../../hooks/useAllproducts";
 import useAdmin from "../../../hooks/useAdmin";
+import useAllUsers from "../../../hooks/useAllUsers";
 const Header = () => {
   const [isAdmin] = useAdmin();
   const [allproducts] = useAllproducts();
   const location = useLocation();
+  const [userData, setUserData] = useState(null);
+
   console.log(location.state);
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
@@ -24,6 +27,15 @@ const Header = () => {
         console.log(error);
       });
   };
+  const [allUsers] = useAllUsers();
+  useEffect(() => {
+    if (user?.email && allUsers.length > 0) {
+      const getInfo = allUsers.find((data) => data.email === user?.email);
+
+      setUserData(getInfo);
+    }
+  }, [allUsers, user?.email]);
+  console.log("userData", userData);
   //========= DROPDOWN TOGGLE =========//
   const toggleDropDown = (category) => {
     // category jodi theke thake then kichui dekhabo na ar na thakle category(men, women, kids, or decor r ki) show korbo
@@ -163,12 +175,12 @@ const Header = () => {
                   <Link to="/dashboard/userprofile">
                     <img
                       className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
-                      src={user.photoURL}
+                      src={userData?.photo || user.photoURL}
                       alt=""
                     />
                   </Link>
                   <span className="text-[#9dad37] text-lg font-semibold">
-                    Hi! {user.displayName}
+                    Hi! {userData?.name || user?.displayName}
                   </span>
                   <button
                     onClick={handleLogOut}
@@ -182,13 +194,13 @@ const Header = () => {
                 <div className=" w-full flex justify-between gap-6 items-center">
                   <Link to="/dashboard/adminprofile">
                     <img
-                      className="w-[2.5rem] rounded-full h-[2.5rem] md:w-[3rem] md:h-[3rem] object-cover"
-                      src={user.photoURL}
+                      className="w-[2.5rem] rounded-full h-[2.5rem] border-2 border-[#9dad37] md:w-[3rem] md:h-[3rem] object-cover"
+                      src={userData?.photo || user.photoURL}
                       alt=""
                     />
                   </Link>
-                  <span className="text-[#9dad37] text-lg font-semibold">
-                    Hi! {user.displayName}
+                  <span className="text-[#9dad37] text-lg font-semibold ">
+                    Hi! {userData?.name || user.displayName}
                   </span>
                   <button
                     onClick={handleLogOut}
